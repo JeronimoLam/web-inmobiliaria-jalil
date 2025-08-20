@@ -14,6 +14,7 @@
   --primary-foreground: #34344c;
   --secondary: #34344c;
   --secondary-foreground: #f2f2f2;
+  --secondary-dark: #262638;
   --muted: #f3f4f6;
   --muted-foreground: #8e8e8e;
   --accent: #34344c;
@@ -37,8 +38,6 @@
   --sidebar-border: #e5e7eb;
   --sidebar-ring: #ff9900;
 
-
-  --radius: 0.5rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 1px 2px -2px hsl(0 0% 0% / 0.10);
@@ -62,6 +61,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-dark: var(--secondary-dark);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -85,11 +85,6 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
@@ -98,6 +93,9 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  /* Customs */
+  --spacing-selects: 23px;
 }
 
 .dark {
@@ -153,4 +151,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes cycle {
+  0% { opacity: 0; transform: scale(1.01); }
+  10% { opacity: 1; transform: scale(1.02); }
+  40% { opacity: 1; transform: scale(1.02); }
+  50% { opacity: 0; transform: scale(1.01); }
+  100% { opacity: 0; transform: scale(1.01); }
+}
+
+@theme {
+  --animate-cycle: cycle 1s linear infinite; /* valor dummy, lo sobreescribimos inline */
 }
