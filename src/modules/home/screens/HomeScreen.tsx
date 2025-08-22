@@ -73,9 +73,10 @@ export const HomeScreen = ({
 					</PageContainer>
 				</div>
 			</section>
-
-			<OurBestOfferSection typeOffer="Venta" properties={properties} />
-			<OurBestOfferSection typeOffer="Alquiler" properties={properties} />
+			<div className="pb-14">
+				<OurBestOfferSection typeOffer="Venta" properties={properties} />
+				<OurBestOfferSection typeOffer="Alquiler" properties={properties} />
+			</div>
 		</>
 	);
 };
