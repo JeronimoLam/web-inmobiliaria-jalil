@@ -7,6 +7,8 @@ export type GetProperty = {
 	bedrooms: number;
 	area: number;
 	bathrooms: number;
+	price?: number;
+	expense?: number;
 };
 
 export type PropertyTypes =

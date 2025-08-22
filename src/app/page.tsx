@@ -99,6 +99,8 @@ const properties = [
 		area: 61.0,
 		bathrooms: 1,
 		code: "494",
+		price: 3800000,
+		expense: 284000,
 	},
 	{
 		images: ["/images/c0005511v.jpg", "/images/0006121v.jpg", "/images/c0004951v.jpg"],
@@ -109,25 +111,30 @@ const properties = [
 		area: 85.5,
 		bathrooms: 2,
 		code: "495",
+		price: 4200000,
+		// sin expensas
 	},
 	{
 		images: ["/images/c0002311v.jpg", "/images/0006121v.jpg", "/images/c0004941v.jpg"],
-		type: "Apartamento",
+		type: "Casa",
 		location: "South Beach",
 		title: "Ocean Drive 850",
 		bedrooms: 3,
 		area: 120.0,
 		bathrooms: 2,
 		code: "496",
+		// sin precio ni expensas
 	},
 	{
 		images: ["/images/c0004951v.jpg", "/images/c0004941v.jpg", "/images/c0005511v.jpg"],
-		type: "Apartamento",
+		type: "Casa",
 		location: "South Beach",
 		title: "Ocean Drive 850",
 		bedrooms: 3,
 		area: 120.0,
 		bathrooms: 2,
 		code: "497",
+		price: 5100000,
+		expense: 350000,
 	},
 ];
