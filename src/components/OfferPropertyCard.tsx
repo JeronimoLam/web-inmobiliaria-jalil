@@ -19,11 +19,11 @@ export interface OfferPropertyCardProps {
 
 export function OfferPropertyCard({ property, onConsult }: OfferPropertyCardProps) {
 	return (
-		<Card className="w-full max-w-sm h-full flex flex-col">
-			<Carousel className="min-h-[200px]">
+		<Card className="w-full h-full flex flex-col">
+			<Carousel className="min-h-[220px]">
 				<CarouselContent>
 					{property.images.map((image, index) => (
-						<CarouselItem key={index} className="relative w-full h-[200px]">
+						<CarouselItem key={index} className="relative w-full h-[220px]">
 							<Image src={image} alt={property.title} fill className="h-full w-full object-cover" />
 						</CarouselItem>
 					))}

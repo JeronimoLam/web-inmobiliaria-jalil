@@ -25,7 +25,7 @@ export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps
 					</h2>
 				</PageContainer>
 			</div>
-			<PageContainer className="flex gap-8 items-center justify-between py-8">
+			<PageContainer className="py-8">
 				<Carousel
 					className="w-full relative"
 					opts={{
@@ -33,13 +33,14 @@ export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps
 						watchDrag: false,
 						slidesToScroll: 1,
 						containScroll: "trimSnaps",
+						align: "start",
 					}}
 				>
 					<CarouselContent>
 						{properties.map((property) => (
 							<CarouselItem
 								key={property.code}
-								className="basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 flex justify-center items-center"
+								className="basis-full sm:basis-1/2 lg:basis-1/3 2xl:basis-1/4 flex justify-center items-center"
 							>
 								<OfferPropertyCard
 									key={property.code}
@@ -49,8 +50,8 @@ export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious className="-left-6 sm:-right-5 md:-left-10 size-12" />
-					<CarouselNext className="-right-6 sm:-right-5 md:-right-10 size-12" />
+					<CarouselPrevious className="-left-6 sm:-left-6 md:-left-6 size-12 shadow-md" />
+					<CarouselNext className="-right-6 sm:-right-6 md:-right-6 size-12 shadow-md" />
 				</Carousel>
 			</PageContainer>
 		</section>
