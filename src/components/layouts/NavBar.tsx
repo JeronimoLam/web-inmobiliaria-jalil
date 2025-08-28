@@ -60,7 +60,7 @@ export function NavBar() {
 					"fixed top-0 left-0 right-0 z-50 border-b-muted transition-all ease-in-out",
 					hasBackground
 						? "bg-secondary-dark border-border duration-300"
-						: "bg-transparent border-transparent duration-300",
+						: "bg-transparent border-transparent duration-0",
 					currentPage !== "/" && "duration-0",
 				)}
 			>

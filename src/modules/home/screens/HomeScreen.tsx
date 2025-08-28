@@ -38,7 +38,7 @@ export const HomeScreen = ({
 			<section id="home-hero" className="mt-[-70px] relative bg-black z-10">
 				<HomeHeroSlider images={heroImages} slideDuration={5} />
 
-				<div className="absolute top-0 h-full xl:h-1/2 w-full flex items-center xl:items-end justify-center text-white">
+				<div className="absolute top-0 h-full 2xl:h-1/2 w-full flex items-center 2xl:items-end justify-center text-white">
 					<PageContainer>
 						<div className="flex flex-col gap-7">
 							<h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold w-fit">
