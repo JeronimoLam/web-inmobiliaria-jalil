@@ -4,41 +4,41 @@ import { Search } from "lucide-react";
 import React from "react";
 
 interface PropertySearchFormProps {
-	propertyTypes: { value: string; label: string }[];
-	localities: { value: string; label: string }[];
-	onSearch: (params: { propertyType: string; locality: string }) => void;
+	tiposPropiedad: { value: string; label: string }[];
+	localidades: { value: string; label: string }[];
+	onSearch: (params: { tipoPropiedad: string; localidad: string }) => void;
 }
 
 export const PropertySearchForm: React.FC<PropertySearchFormProps> = ({
-	propertyTypes,
-	localities,
+	tiposPropiedad,
+	localidades,
 	onSearch,
 }) => {
-	const [propertyType, setPropertyType] = React.useState("");
-	const [locality, setLocality] = React.useState("");
+	const [tipoPropiedad, setTipoPropiedad] = React.useState("");
+	const [localidad, setLocalidad] = React.useState("");
 
 	const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		onSearch({ propertyType, locality });
+		onSearch({ tipoPropiedad, localidad });
 	};
 
 	return (
 		<form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 md:gap-0">
 			<SelectWithSearch
-				data={propertyTypes}
+				data={tiposPropiedad}
 				label="Tipo de propiedad"
 				labelEmpty="No se encontró ningún tipo de propiedad."
 				labelSearch="Buscar tipo de propiedad..."
 				className="flex-1 md:rounded-r-none px-7 py-selects border-r border-r-input focus-visible:ring-transparent"
-				onSelect={setPropertyType}
+				onSelect={setTipoPropiedad}
 			/>
 			<SelectWithSearch
-				data={localities}
+				data={localidades}
 				label="Localidad"
 				labelEmpty="No se encontró ninguna localidad."
 				labelSearch="Buscar localidad..."
 				className="flex-1 md:rounded-none px-7 py-selects border-l border-l-input focus-visible:ring-transparent"
-				onSelect={setLocality}
+				onSelect={setLocalidad}
 			/>
 			<Button
 				type="submit"

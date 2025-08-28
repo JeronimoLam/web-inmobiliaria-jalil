@@ -4,11 +4,11 @@ import { useParams } from "next/navigation";
 import React from "react";
 
 export const PropiedadDetailScreen = () => {
-	const { id } = useParams<{ id: string }>();
+	const { propiedadId } = useParams<{ propiedadId: string }>();
 
 	return (
 		<div className="h-screen">
-			<PageContainer>PropiedadDetailScreen {id}</PageContainer>
+			<PageContainer>PropiedadDetailScreen {propiedadId}</PageContainer>
 		</div>
 	);
 };

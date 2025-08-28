@@ -8,15 +8,20 @@ import { OurBestOfferSection } from "../../../components/OurBestOfferSection";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 
 interface HomeScreenProps {
-	propertyTypes: { value: string; label: string }[];
-	localities: { value: string; label: string }[];
+	tiposPropiedad: { value: string; label: string }[];
+	localidades: { value: string; label: string }[];
 	heroImages: string[];
 	propiedades: Propiedad[];
 }
 
+interface handleSearchProps {
+	tipoPropiedad: string | null;
+	localidad: string | null;
+}
+
 export const HomeScreen = ({
-	propertyTypes,
-	localities,
+	tiposPropiedad,
+	localidades,
 	heroImages,
 	propiedades,
 }: HomeScreenProps) => {
@@ -25,11 +30,11 @@ export const HomeScreen = ({
 	const handleVentaSelect = () => setOperation("venta");
 	const handleAlquilerSelect = () => setOperation("alquiler");
 
-	const handleSearch = ({ propertyType, locality }: { propertyType: string; locality: string }) => {
+	const handleSearch = ({ tipoPropiedad, localidad }: handleSearchProps) => {
 		console.log({
-			propertyType: propertyType || null,
-			locality: locality || null,
-			operation,
+			tipo_propiedad: tipoPropiedad || null,
+			localidad: localidad || null,
+			estado_publicacion: operation,
 		});
 	};
 
@@ -63,8 +68,8 @@ export const HomeScreen = ({
 								</div>
 								<div className="md:w-[650px]">
 									<PropertySearchForm
-										propertyTypes={propertyTypes}
-										localities={localities}
+										tiposPropiedad={tiposPropiedad}
+										localidades={localidades}
 										onSearch={handleSearch}
 									/>
 								</div>

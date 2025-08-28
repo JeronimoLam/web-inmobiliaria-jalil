@@ -1,20 +1,28 @@
+import { Footer } from "@/components/layouts/Footer";
+import { NavBar } from "@/components/layouts/NavBar";
 import { HomeScreen } from "@/modules/home/screens/HomeScreen";
 import { propiedades } from "@/modules/propiedades/data/propiedades.data";
 
 export default function Home() {
 	return (
-		<HomeScreen
-			propertyTypes={propertyTypes}
-			localities={localities}
-			heroImages={heroImages}
-			propiedades={propiedades}
-		/>
+		<>
+			<NavBar transparent />
+			<main className="pt-[70px]">
+				<HomeScreen
+					tiposPropiedad={tiposPropiedad}
+					localidades={localidades}
+					heroImages={heroImages}
+					propiedades={propiedades}
+				/>
+			</main>
+			<Footer />
+		</>
 	);
 }
 
 const heroImages = ["/images/carousel0.webp", "/images/carousel1.webp", "/images/carousel2.webp"];
 
-const propertyTypes = [
+const tiposPropiedad = [
 	{
 		value: "casa",
 		label: "Casa",
@@ -41,7 +49,7 @@ const propertyTypes = [
 	},
 ];
 
-const localities = [
+const localidades = [
 	{
 		value: "la-plata",
 		label: "La Plata",
