@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { BedDouble, Bath, Grid2x2Plus } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { GetProperty } from "@/types/property.type";
 import {
 	Carousel,
 	CarouselContent,
@@ -11,77 +10,111 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "./ui/carousel";
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
+import Link from "next/link";
 
 export interface OfferPropertyCardProps {
-	property: GetProperty;
+	propiedad: Propiedad;
 	onConsult?: () => void;
 }
 
-export function OfferPropertyCard({ property, onConsult }: OfferPropertyCardProps) {
+export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	return (
-		<Card className="w-full h-full flex flex-col">
-			<Carousel className="min-h-[220px]">
-				<CarouselContent>
-					{property.images.map((image, index) => (
-						<CarouselItem key={index} className="relative w-full h-[220px]">
-							<Image src={image} alt={property.title} fill className="h-full w-full object-cover" />
-						</CarouselItem>
-					))}
-				</CarouselContent>
+		<Card className="w-full h-full flex flex-col hover:shadow-2xl transition-shadow group">
+			<Carousel
+				className="min-h-[220px]"
+				opts={{
+					loop: true,
+				}}
+			>
+				<Link href={`/propiedades/${propiedad.id}`}>
+					<CarouselContent>
+						{propiedad.imagenes.map((imagen, index) => (
+							<CarouselItem key={index} className="relative w-full h-[220px]">
+								<Image
+									src={imagen.url}
+									alt={propiedad.descripcion}
+									fill
+									className="h-full w-full object-cover"
+								/>
+							</CarouselItem>
+						))}
+					</CarouselContent>
+				</Link>
 				<CarouselPrevious />
 				<CarouselNext />
 			</Carousel>
 
-			{/* Property Information */}
-			<div className="p-[15px] pb-0">
-				<div className="flex items-center justify-between">
-					<p className="font-medium text-sm text-muted-foreground">
-						{property.type} • {property.location}
-					</p>
-					<Badge variant="outline" className="">
-						{property.code}
-					</Badge>
-				</div>
-
-				<h3 className="text-lg font-semibold text-gray-900 mb-4">{property.title}</h3>
-
-				{/* Property Details */}
-				<div className="space-y-2 mb-3">
-					<div className="flex items-center gap-2 text-gray-600">
-						<BedDouble className="h-[22px] w-h-[22px] text-orange-500" />
-						<span className="font-medium text-sm">Habitaciones</span>
-						<span className="font-semibold text-sm">{property.bedrooms}</span>
+			<Link href={`/propiedades/${propiedad.id}`}>
+				{/* Property Information */}
+				<div className="p-[15px] pb-0">
+					<div className="flex items-center justify-between">
+						<p className="font-medium text-sm text-muted-foreground">
+							{propiedad.tipo_propiedad.value} • {propiedad.localidad.nombre}
+						</p>
+						<Badge variant="outline" className="">
+							{propiedad.codigo}
+						</Badge>
 					</div>
 
-					<div className="flex items-center gap-2 text-gray-600">
-						<Grid2x2Plus className="h-[22px] w-h-[22px] text-orange-500" />
-						<span className="font-medium text-sm">Superficie cubierta</span>
-						<span className="font-semibold text-sm">{property.area.toFixed(2)} m²</span>
-					</div>
+					<h3 className="text-lg font-semibold text-gray-900 mb-4">
+						{propiedad.calle} {propiedad.numero} {propiedad.entre_calles}
+					</h3>
 
-					<div className="flex items-center gap-2 text-gray-600">
-						<Bath className="h-[22px] w-h-[22px] text-orange-500" />
-						<span className="font-medium text-sm">Baños</span>
-						<span className="font-semibold text-sm">{property.bathrooms}</span>
+					{/* Property Details */}
+					<div className="space-y-2 mb-3">
+						<div className="flex items-center gap-2 text-gray-600">
+							<BedDouble className="h-[22px] w-h-[22px] text-orange-500" />
+							<span className="font-medium text-sm">Habitaciones</span>
+							<span className="font-semibold text-sm">{propiedad.dormitorios}</span>
+						</div>
+
+						<div className="flex items-center gap-2 text-gray-600">
+							<Grid2x2Plus className="h-[22px] w-h-[22px] text-orange-500" />
+							<span className="font-medium text-sm">Superficie cubierta</span>
+							<span className="font-semibold text-sm">
+								{propiedad.superficie_cubierta?.toFixed(2)} m²
+							</span>
+						</div>
+
+						<div className="flex items-center gap-2 text-gray-600">
+							<Bath className="h-[22px] w-h-[22px] text-orange-500" />
+							<span className="font-medium text-sm">Baños</span>
+							<span className="font-semibold text-sm">{propiedad.cantidad_banos}</span>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<Button
-				onClick={onConsult}
-				variant="secondary"
-				className="w-full text-white px-4 py-9 rounded-none mt-auto justify-start"
-			>
-				<div className="flex flex-col text-start">
-					{property.price && <span className="font-semibold text-lg">${property.price}</span>}
-					{property.expense && (
-						<span className="font-light text-sm">${property.expense} Expensas</span>
-					)}
-					{!property.price && !property.expense && (
-						<span className="font-semibold text-lg">Consultar</span>
-					)}
-				</div>
-			</Button>
+				<Button
+					onClick={onConsult}
+					variant="secondary"
+					className="w-full text-white px-4 py-9 rounded-none mt-auto justify-start transition group-hover:bg-secondary-dark"
+				>
+					<div className="flex flex-col text-start">
+						<PropiedadPrecios propiedad={propiedad} />
+					</div>
+				</Button>
+			</Link>
 		</Card>
 	);
 }
+
+const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
+	const precio = propiedad.precios[0];
+
+	if (propiedad.precios.length === 0) {
+		return <span className="font-semibold text-lg">Consultar</span>;
+	}
+
+	return (
+		<div className="flex gap-1 items-center">
+			{propiedad.precios.length === 0 && <span className="font-semibold text-lg">Consultar</span>}
+			{precio.importe && precio.divisa && (
+				<>
+					<span className="font-semibold text-xl">{precio.importe}</span>
+					<span className="font-light text-xl">{precio.divisa}</span>
+				</>
+			)}
+		</div>
+	);
+};

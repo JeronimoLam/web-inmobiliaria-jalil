@@ -1,6 +1,5 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
 import { OfferPropertyCard } from "./OfferPropertyCard";
-import { GetProperty } from "@/types/property.type";
 import {
 	Carousel,
 	CarouselContent,
@@ -8,13 +7,14 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "./ui/carousel";
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 
 interface OurBestOfferProps {
 	typeOffer: string;
-	properties: GetProperty[];
+	propiedades: Propiedad[];
 }
 
-export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps) => {
+export const OurBestOfferSection = ({ typeOffer, propiedades }: OurBestOfferProps) => {
 	return (
 		<section className="overflow-x-hidden">
 			<div className="bg-muted-secondary">
@@ -29,7 +29,7 @@ export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps
 				<Carousel
 					className="w-full relative"
 					opts={{
-						loop: false,
+						loop: true,
 						watchDrag: false,
 						slidesToScroll: 1,
 						containScroll: "trimSnaps",
@@ -37,15 +37,15 @@ export const OurBestOfferSection = ({ typeOffer, properties }: OurBestOfferProps
 					}}
 				>
 					<CarouselContent>
-						{properties.map((property) => (
+						{propiedades.map((propiedad) => (
 							<CarouselItem
-								key={property.code}
+								key={propiedad.id}
 								className="basis-full sm:basis-1/2 lg:basis-1/3 2xl:basis-1/4 flex justify-center items-center"
 							>
 								<OfferPropertyCard
-									key={property.code}
-									property={property}
-									onConsult={() => console.log(`Consultar propiedad ${property.code}`)}
+									key={propiedad.id}
+									propiedad={propiedad}
+									onConsult={() => console.log(`Consultar propiedad ${propiedad.codigo}`)}
 								/>
 							</CarouselItem>
 						))}

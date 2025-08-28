@@ -1,15 +1,14 @@
 import { HomeScreen } from "@/modules/home/screens/HomeScreen";
+import { propiedades } from "@/modules/propiedades/data/propiedades.data";
 
 export default function Home() {
 	return (
-		<main>
-			<HomeScreen
-				propertyTypes={propertyTypes}
-				localities={localities}
-				heroImages={heroImages}
-				properties={properties}
-			/>
-		</main>
+		<HomeScreen
+			propertyTypes={propertyTypes}
+			localities={localities}
+			heroImages={heroImages}
+			propiedades={propiedades}
+		/>
 	);
 }
 
@@ -86,103 +85,5 @@ const localities = [
 	{
 		value: "villa-elisa",
 		label: "Villa Elisa",
-	},
-];
-
-const properties = [
-	{
-		images: ["/images/c0004941v.jpg", "/images/c0004951v.jpg", "/images/c0005511v.jpg"],
-		type: "Departamento",
-		location: "Miami",
-		title: "Collins Ave 5401 (Miami)",
-		bedrooms: 1,
-		area: 61.0,
-		bathrooms: 1,
-		code: "494",
-		price: 3800000,
-		expense: 284000,
-	},
-	{
-		images: ["/images/c0005511v.jpg", "/images/0006121v.jpg", "/images/c0004951v.jpg"],
-		type: "Departamento",
-		location: "Miami",
-		title: "Brickell Bay Drive 1200",
-		bedrooms: 2,
-		area: 85.5,
-		bathrooms: 2,
-		code: "495",
-		price: 4200000,
-		// sin expensas
-	},
-	{
-		images: ["/images/c0002311v.jpg", "/images/0006121v.jpg", "/images/c0004941v.jpg"],
-		type: "Casa",
-		location: "South Beach",
-		title: "Ocean Drive 850",
-		bedrooms: 3,
-		area: 120.0,
-		bathrooms: 2,
-		code: "496",
-		// sin precio ni expensas
-	},
-	{
-		images: ["/images/c0004951v.jpg", "/images/c0004941v.jpg", "/images/c0005511v.jpg"],
-		type: "Casa",
-		location: "South Beach",
-		title: "Ocean Drive 850",
-		bedrooms: 3,
-		area: 120.0,
-		bathrooms: 2,
-		code: "497",
-		price: 5100000,
-		expense: 350000,
-	},
-
-	{
-		images: ["/images/c0004941v.jpg", "/images/c0004951v.jpg", "/images/c0005511v.jpg"],
-		type: "Departamento",
-		location: "Miami",
-		title: "Collins Ave 5401 (Miami)",
-		bedrooms: 1,
-		area: 61.0,
-		bathrooms: 1,
-		code: "498",
-		price: 3800000,
-		expense: 284000,
-	},
-	{
-		images: ["/images/c0005511v.jpg", "/images/0006121v.jpg", "/images/c0004951v.jpg"],
-		type: "Departamento",
-		location: "Miami",
-		title: "Brickell Bay Drive 1200",
-		bedrooms: 2,
-		area: 85.5,
-		bathrooms: 2,
-		code: "499",
-		price: 4200000,
-		// sin expensas
-	},
-	{
-		images: ["/images/c0002311v.jpg", "/images/0006121v.jpg", "/images/c0004941v.jpg"],
-		type: "Casa",
-		location: "South Beach",
-		title: "Ocean Drive 850",
-		bedrooms: 3,
-		area: 120.0,
-		bathrooms: 2,
-		code: "500",
-		// sin precio ni expensas
-	},
-	{
-		images: ["/images/c0004951v.jpg", "/images/c0004941v.jpg", "/images/c0005511v.jpg"],
-		type: "Casa",
-		location: "South Beach",
-		title: "Ocean Drive 850",
-		bedrooms: 3,
-		area: 120.0,
-		bathrooms: 2,
-		code: "501",
-		price: 5100000,
-		expense: 350000,
 	},
 ];

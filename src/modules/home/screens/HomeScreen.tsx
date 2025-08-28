@@ -5,20 +5,20 @@ import { PropertySearchForm } from "../../../components/PropertySearchForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { OurBestOfferSection } from "../../../components/OurBestOfferSection";
-import { GetProperty } from "@/types/property.type";
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 
 interface HomeScreenProps {
 	propertyTypes: { value: string; label: string }[];
 	localities: { value: string; label: string }[];
 	heroImages: string[];
-	properties: GetProperty[];
+	propiedades: Propiedad[];
 }
 
 export const HomeScreen = ({
 	propertyTypes,
 	localities,
 	heroImages,
-	properties,
+	propiedades,
 }: HomeScreenProps) => {
 	const [operation, setOperation] = useState<"venta" | "alquiler">("venta");
 
@@ -35,7 +35,7 @@ export const HomeScreen = ({
 
 	return (
 		<>
-			<section id="home-hero" className="relative bg-black z-10">
+			<section id="home-hero" className="mt-[-70px] relative bg-black z-10">
 				<HomeHeroSlider images={heroImages} slideDuration={5} />
 
 				<div className="absolute top-0 h-full xl:h-1/2 w-full flex items-center xl:items-end justify-center text-white">
@@ -74,8 +74,8 @@ export const HomeScreen = ({
 				</div>
 			</section>
 			<div className="pb-14">
-				<OurBestOfferSection typeOffer="Venta" properties={properties} />
-				<OurBestOfferSection typeOffer="Alquiler" properties={properties} />
+				<OurBestOfferSection typeOffer="Venta" propiedades={propiedades} />
+				<OurBestOfferSection typeOffer="Alquiler" propiedades={propiedades} />
 			</div>
 		</>
 	);

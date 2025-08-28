@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { PageContainer } from "./PageContainer";
 import { TabAnimation } from "../ui/TabAnimation";
 import { Logo } from "../Logo";
+import { usePathname } from "next/navigation";
 
 const navItems = [
 	{ name: "Inicio", href: "/" },
-	{ name: "Alquiler", href: "#alquiler" },
-	{ name: "Venta", href: "#venta" },
-	{ name: "Transacciones", href: "#transacciones" },
-	{ name: "Nosotros", href: "#nosotros" },
+	{ name: "Alquiler", href: "/propiedades/alquiler" },
+	{ name: "Venta", href: "/propiedades/venta" },
+	{ name: "Transacciones", href: "transacciones" },
+	{ name: "Nosotros", href: "/nosotros" },
 ];
 
 export function NavBar() {
@@ -19,20 +20,29 @@ export function NavBar() {
 	const [activeSection, setActiveSection] = useState("Alquiler");
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+	const currentPage = usePathname();
+
 	useEffect(() => {
 		const controlNavbar = () => {
 			const currentScrollY = window.scrollY;
-
-			if (currentScrollY > 0) {
-				setHasBackground(true);
+			if (currentPage === "/") {
+				setHasBackground(currentScrollY > 0);
 			} else {
-				setHasBackground(false);
+				setHasBackground(true);
 			}
 		};
 
 		window.addEventListener("scroll", controlNavbar);
 		return () => window.removeEventListener("scroll", controlNavbar);
-	}, []);
+	}, [currentPage]);
+
+	useEffect(() => {
+		if (currentPage === "/") {
+			setHasBackground(window.scrollY > 0);
+		} else {
+			setHasBackground(true);
+		}
+	}, [currentPage]);
 
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -44,11 +54,14 @@ export function NavBar() {
 	};
 
 	return (
-		<>
+		<header>
 			<nav
 				className={cn(
-					"fixed top-0 left-0 right-0 z-50 border-b-muted transition-all duration-300 ease-in-out",
-					hasBackground ? "bg-secondary-dark border-border" : "bg-transparent border-transparent",
+					"fixed top-0 left-0 right-0 z-50 border-b-muted transition-all ease-in-out",
+					hasBackground
+						? "bg-secondary-dark border-border duration-300"
+						: "bg-transparent border-transparent duration-300",
+					currentPage !== "/" && "duration-0",
 				)}
 			>
 				<PageContainer>
@@ -146,6 +159,6 @@ export function NavBar() {
 					</div>
 				</div>
 			</div>
-		</>
+		</header>
 	);
 }
