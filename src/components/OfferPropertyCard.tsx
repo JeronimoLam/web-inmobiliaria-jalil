@@ -40,6 +40,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 									src={imagen.url}
 									alt={propiedad.descripcion}
 									fill
+									sizes="(max-width: 768px) 100vw, 100vw"
 									className="h-full w-full object-cover"
 								/>
 							</CarouselItem>

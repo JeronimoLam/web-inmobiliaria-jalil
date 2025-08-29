@@ -47,7 +47,7 @@ export class PropiedadesService {
 			const response = new Promise<Propiedad[]>((resolve) => {
 				setTimeout(() => {
 					resolve(propiedades);
-				}, 2000);
+				}, 1000);
 			});
 			return await response;
 		} catch {
@@ -64,7 +64,7 @@ export class PropiedadesService {
 			const response = new Promise<Propiedad[]>((resolve) => {
 				setTimeout(() => {
 					resolve(propiedades);
-				}, 2000);
+				}, 1000);
 			});
 			return await response;
 		} catch {
@@ -81,7 +81,7 @@ export class PropiedadesService {
 			const response = new Promise<Propiedad[]>((resolve) => {
 				setTimeout(() => {
 					resolve(propiedades);
-				}, 2000);
+				}, 1000);
 			});
 			return await response;
 		} catch {
