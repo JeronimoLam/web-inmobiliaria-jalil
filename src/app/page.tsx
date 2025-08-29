@@ -1,9 +1,10 @@
 import { Footer } from "@/components/layouts/Footer";
 import { NavBar } from "@/components/layouts/NavBar";
+import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import { HomeScreen } from "@/modules/home/screens/HomeScreen";
-import { propiedades } from "@/modules/propiedades/data/propiedades.data";
+import { Suspense } from "react";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<>
 			<NavBar transparent />
@@ -12,8 +13,12 @@ export default function Home() {
 					tiposPropiedad={tiposPropiedad}
 					localidades={localidades}
 					heroImages={heroImages}
-					propiedades={propiedades}
 				/>
+				<div className="pb-14">
+					<Suspense fallback={<div>Cargando mejores ofertas...</div>}>
+						<OurBestOfferSection />
+					</Suspense>
+				</div>
 			</main>
 			<Footer />
 		</>

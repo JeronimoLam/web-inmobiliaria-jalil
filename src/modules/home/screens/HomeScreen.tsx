@@ -4,14 +4,11 @@ import { HomeHeroSlider } from "../components/HomeHeroSlider";
 import { PropertySearchForm } from "../../../components/PropertySearchForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { OurBestOfferSection } from "../../../components/OurBestOfferSection";
-import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 
 interface HomeScreenProps {
 	tiposPropiedad: { value: string; label: string }[];
 	localidades: { value: string; label: string }[];
 	heroImages: string[];
-	propiedades: Propiedad[];
 }
 
 interface handleSearchProps {
@@ -19,12 +16,7 @@ interface handleSearchProps {
 	localidad: string | null;
 }
 
-export const HomeScreen = ({
-	tiposPropiedad,
-	localidades,
-	heroImages,
-	propiedades,
-}: HomeScreenProps) => {
+export const HomeScreen = ({ tiposPropiedad, localidades, heroImages }: HomeScreenProps) => {
 	const [operation, setOperation] = useState<"venta" | "alquiler">("venta");
 
 	const handleVentaSelect = () => setOperation("venta");
@@ -78,10 +70,6 @@ export const HomeScreen = ({
 					</PageContainer>
 				</div>
 			</section>
-			<div className="pb-14">
-				<OurBestOfferSection typeOffer="Venta" propiedades={propiedades} />
-				<OurBestOfferSection typeOffer="Alquiler" propiedades={propiedades} />
-			</div>
 		</>
 	);
 };

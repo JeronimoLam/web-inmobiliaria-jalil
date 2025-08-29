@@ -12,6 +12,7 @@ import {
 } from "./ui/carousel";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
+import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -19,6 +20,10 @@ export interface OfferPropertyCardProps {
 }
 
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
+	const title = `Calle ${propiedad.calle} ${propiedad.numero ? "N°" + propiedad.numero : ""} ${propiedad.entre_calles ? "entre " + propiedad.entre_calles : ""}`;
+
+	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+
 	return (
 		<Card className="w-full h-full flex flex-col hover:shadow-2xl transition-shadow group">
 			<Carousel
@@ -27,7 +32,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 					loop: true,
 				}}
 			>
-				<Link href={`/propiedades/${propiedad.id}`}>
+				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
 						{propiedad.imagenes.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px]">
@@ -45,7 +50,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				<CarouselNext />
 			</Carousel>
 
-			<Link href={`/propiedades/${propiedad.id}`}>
+			<Link href={propiedadDetailUrl}>
 				{/* Property Information */}
 				<div className="p-[15px] pb-0">
 					<div className="flex items-center justify-between">
@@ -57,9 +62,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 						</Badge>
 					</div>
 
-					<h3 className="text-lg font-semibold text-gray-900 mb-4">
-						{propiedad.calle} {propiedad.numero} {propiedad.entre_calles}
-					</h3>
+					<h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
 
 					{/* Property Details */}
 					<div className="space-y-2 mb-3">
