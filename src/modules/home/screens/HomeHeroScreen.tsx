@@ -16,7 +16,7 @@ interface handleSearchProps {
 	localidad: string | null;
 }
 
-export const HomeScreen = ({ tiposPropiedad, localidades, heroImages }: HomeScreenProps) => {
+export const HomeHeroScreen = ({ tiposPropiedad, localidades, heroImages }: HomeScreenProps) => {
 	const [operation, setOperation] = useState<"venta" | "alquiler">("venta");
 
 	const handleVentaSelect = () => setOperation("venta");

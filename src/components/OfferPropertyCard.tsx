@@ -25,7 +25,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
 
 	return (
-		<Card className="w-full h-full flex flex-col hover:shadow-2xl transition-shadow group">
+		<Card className="w-full h-full flex flex-col hover:shadow-xl transition-shadow duration-300 group">
 			<Carousel
 				className="min-h-[220px]"
 				opts={{

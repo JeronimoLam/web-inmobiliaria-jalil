@@ -4,7 +4,6 @@ import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadDetailScreen } from "@/modules/propiedades/screens/PropiedadDetailScreen";
 import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 interface PropiedadDetailPageProps {
 	params: Promise<{
@@ -34,9 +33,7 @@ export default async function PropiedadDetailPage({
 		<>
 			<PropiedadDetailScreen propiedad={propiedad} />
 			<div className="pb-14">
-				<Suspense fallback={<div>Cargando ofertas...</div>}>
-					<OurBestOfferSection />
-				</Suspense>
+				<OurBestOfferSection />
 			</div>
 			<Footer />
 		</>

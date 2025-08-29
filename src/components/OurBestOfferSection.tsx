@@ -1,16 +1,10 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
-import { OfferPropertyCarousel } from "./OfferPropertyCarousel";
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
+import { OfferPropertyCarouselServer } from "./server/OfferPropertyCarousel.server";
+import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
+import { Suspense } from "react";
+import { OfferPropertyCarouselSkeleton } from "./OfferPropertyCarouselSkeleton";
 
 export const OurBestOfferSection = async () => {
-	//TODO: EN LUGAR DE PASAR POR PARAMETROS LAS PROPIEDADES PODEMOS HACER
-	// QUE SE HAGA EL AWAIT AQUI MISMO TANTO PARA LAS PROPIEDADES DE VENTA
-	// COMO PARA LAS DE ALQUILER Y ASI APROVECHAS EL STREAMING DE DATOS
-	//TODO: TRATA DE HACER QUE EL SKELETON SEA DEL CAROUSEL Y NO DE TODAS LAS SECCIONESS
-
-	const propiedadesVenta = await PropiedadesService.getPropiedadesVenta();
-	const propiedadesAlquiler = await PropiedadesService.getPropiedadesAlquiler();
-
 	return (
 		<>
 			<section className="overflow-x-hidden">
@@ -22,8 +16,10 @@ export const OurBestOfferSection = async () => {
 						</h2>
 					</PageContainer>
 				</div>
-				<PageContainer className="py-8">
-					<OfferPropertyCarousel propiedades={propiedadesVenta} />
+				<PageContainer className="py-4">
+					<Suspense fallback={<OfferPropertyCarouselSkeleton />}>
+						<OfferPropertyCarouselServer operacion={OperacionesEnum.VENTA} />
+					</Suspense>
 				</PageContainer>
 			</section>
 			<section className="overflow-x-hidden">
@@ -35,8 +31,10 @@ export const OurBestOfferSection = async () => {
 						</h2>
 					</PageContainer>
 				</div>
-				<PageContainer className="py-8">
-					<OfferPropertyCarousel propiedades={propiedadesAlquiler} />
+				<PageContainer className="py-4">
+					<Suspense fallback={<OfferPropertyCarouselSkeleton />}>
+						<OfferPropertyCarouselServer operacion={OperacionesEnum.ALQUILER} />
+					</Suspense>
 				</PageContainer>
 			</section>
 		</>
