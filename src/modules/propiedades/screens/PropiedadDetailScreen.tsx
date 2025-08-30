@@ -1,11 +1,10 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
-import { Propiedad } from "../types/propiedad.type";
-import { PropiedadGalleryPreview } from "../components/propiedad-detail/PropiedadGalleryPreview";
-import { buildPropiedadTitle } from "../utils/propiedadPropertyBuilder";
-import { BathIcon, BedDoubleIcon, Grid2x2PlusIcon } from "@/components/Icons";
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
+import { PropiedadGalleryPreview } from "@/modules/propiedades/components/propiedad-detail/PropiedadGalleryPreview";
+import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
 import { Separator } from "@/components/ui/separator";
-import { PropiedadDetailsTab } from "../components/propiedad-detail/PropiedadDetailsTab";
-import { PropiedadContactForm } from "../components/propiedad-detail/PropiedadContactForm";
+import { PropiedadContactForm } from "@/modules/propiedades/components/propiedad-detail/PropiedadContactForm";
+import { PropiedadDetails } from "@/modules/propiedades/components/propiedad-detail/PropiedadDetails";
 
 interface PropiedadDetailScreenProps {
 	propiedad: Propiedad;
@@ -46,37 +45,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 				</PageContainer>
 				<PageContainer className="grid grid-cols-1 md:grid-cols-[60%_40%]">
 					<div className="pr-10">
-						<div>
-							<div className="space-y-2 mb-3">
-								<div className="flex items-center gap-2 text-gray-600">
-									<BedDoubleIcon className="h-[22px] w-h-[22px] text-orange-500" />
-									<span className="font-medium text-sm">Habitaciones</span>
-									<span className="font-semibold text-sm">{propiedad.dormitorios}</span>
-								</div>
-
-								<div className="flex items-center gap-2 text-gray-600">
-									<Grid2x2PlusIcon className="h-[22px] w-h-[22px] text-orange-500" />
-									<span className="font-medium text-sm">Superficie cubierta</span>
-									<span className="font-semibold text-sm">
-										{propiedad.superficie_cubierta?.toFixed(2)} m²
-									</span>
-								</div>
-
-								<div className="flex items-center gap-2 text-gray-600">
-									<BathIcon className="h-[22px] w-h-[22px] text-orange-500" />
-									<span className="font-medium text-sm">Baños</span>
-									<span className="font-semibold text-sm">{propiedad.cantidad_banos}</span>
-								</div>
-							</div>
-						</div>
-						<div>
-							<p>{propiedad.descripcion}</p>
-						</div>
-						<Separator className="my-6" />
-						<div className="flex flex-col gap-4">
-							<h2 className="font-semibold text-xl">Conoce más sobre esta propiedad</h2>
-							<PropiedadDetailsTab propiedad={propiedad} />
-						</div>
+						<PropiedadDetails propiedad={propiedad} />
 					</div>
 					<div>
 						<PropiedadContactForm />
