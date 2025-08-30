@@ -1,14 +1,11 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
 import { Propiedad } from "../types/propiedad.type";
 import { PropiedadGalleryPreview } from "../components/propiedad-detail/PropiedadGalleryPreview";
-import { Card } from "@/components/ui/card";
 import { buildPropiedadTitle } from "../utils/propiedadPropertyBuilder";
 import { BathIcon, BedDoubleIcon, Grid2x2PlusIcon } from "@/components/Icons";
 import { Separator } from "@/components/ui/separator";
 import { PropiedadDetailsTab } from "../components/propiedad-detail/PropiedadDetailsTab";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { PropiedadContactForm } from "../components/propiedad-detail/PropiedadContactForm";
 
 interface PropiedadDetailScreenProps {
 	propiedad: Propiedad;
@@ -45,7 +42,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 							<p>Expensas: $00000</p>
 						</div>
 					</div>
-					<Separator className="my-4" />
+					<Separator className="my-5" />
 				</PageContainer>
 				<PageContainer className="grid grid-cols-1 md:grid-cols-[60%_40%]">
 					<div className="pr-10">
@@ -75,37 +72,18 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 						<div>
 							<p>{propiedad.descripcion}</p>
 						</div>
-						<Separator className="my-4" />
+						<Separator className="my-6" />
 						<div className="flex flex-col gap-4">
 							<h2 className="font-semibold text-xl">Conoce más sobre esta propiedad</h2>
 							<PropiedadDetailsTab propiedad={propiedad} />
 						</div>
-						<Separator className="my-4" />
 					</div>
 					<div>
-						<Card className="p-7 shadow-xs">
-							<h2 className="font-semibold text-xl">Consultar por esta propiedad</h2>
-							<form action="">
-								<Input placeholder="Nombre y Apellido" className="mt-4" />
-								<Input placeholder="Email" className="mt-4" />
-								<div className="flex gap-2">
-									<Input placeholder="Consulta" className="mt-4" />
-									<Input placeholder="Teléfono" className="mt-4" />
-								</div>
-								<Textarea placeholder="Mensaje" className="mt-4" />
-								<div className="flex gap-2 mt-5">
-									<Button className="flex-1 py-6 font-semibold">Contactar</Button>
-									<Button variant="whatsapp" className="flex-1 py-6 font-semibold">
-										WhatsApp
-									</Button>
-								</div>
-								<Button variant="outline" className="mt-3 w-full py-6">
-									<span>Venta</span>
-									<span>(0221) 421-7393 | 421-5498</span>
-								</Button>
-							</form>
-						</Card>
+						<PropiedadContactForm />
 					</div>
+				</PageContainer>
+				<PageContainer>
+					<Separator className="my-8" />
 				</PageContainer>
 			</section>
 		</div>
