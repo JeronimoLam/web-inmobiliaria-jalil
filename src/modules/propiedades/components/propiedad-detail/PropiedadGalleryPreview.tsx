@@ -11,7 +11,7 @@ export const PropiedadGalleryPreview = ({ propiedad }: PropiedadGalleryPreviewPr
 	const { imagenes } = propiedad;
 
 	return (
-		<div className="flex h-[390px] 2xl:h-[550px] gap-[10px]">
+		<section className="flex h-[450px] 2xl:h-[550px] gap-[10px]">
 			{/* Imagen principal */}
 			<div className="w-1/2 h-full relative overflow-hidden">
 				{imagenes[0] && (
@@ -31,7 +31,7 @@ export const PropiedadGalleryPreview = ({ propiedad }: PropiedadGalleryPreviewPr
 					const isLastGrid = idx === 3;
 					const totalImages = imagenes.length;
 					const remaining = totalImages - 5;
-					// Border radius solo abajo para las de arriba, solo arriba para las de abajo
+
 					let borderClass = "";
 					if (idx === 0) borderClass = "rounded-b-xl"; // arriba izquierda
 					if (idx === 1) borderClass = "rounded-b-xl rounded-br-none"; // arriba derecha
@@ -63,6 +63,6 @@ export const PropiedadGalleryPreview = ({ propiedad }: PropiedadGalleryPreviewPr
 					);
 				})}
 			</div>
-		</div>
+		</section>
 	);
 };

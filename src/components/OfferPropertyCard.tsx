@@ -13,6 +13,7 @@ import {
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
 import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
+import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -20,7 +21,7 @@ export interface OfferPropertyCardProps {
 }
 
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
-	const title = `Calle ${propiedad.calle} ${propiedad.numero ? "N°" + propiedad.numero : ""} ${propiedad.entre_calles ? "entre " + propiedad.entre_calles : ""}`;
+	const title = buildPropiedadTitle(propiedad);
 
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
 

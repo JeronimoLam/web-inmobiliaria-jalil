@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock3, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Clock3, Facebook, BedDouble, Grid2x2Plus, Bath } from "lucide-react";
 
 type IconProps = {
 	className?: string;
@@ -24,4 +24,16 @@ export const Clock3Icon = ({ className, width, height, ...props }: IconProps) =>
 
 export const FacebookIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Facebook className={className} width={width} height={height} {...props} />
+);
+
+export const BedDoubleIcon = ({ className, width, height, ...props }: IconProps) => (
+	<BedDouble className={className} width={width} height={height} {...props} />
+);
+
+export const Grid2x2PlusIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Grid2x2Plus className={className} width={width} height={height} {...props} />
+);
+
+export const BathIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Bath className={className} width={width} height={height} {...props} />
 );
