@@ -25,8 +25,8 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 
 			<section className="py-6">
 				<PageContainer>
-					<div className="flex gap-4">
-						<div className="w-[60%] flex flex-col gap-2">
+					<div className="flex">
+						<div className="w-[60%] flex flex-col gap-2 pr-10">
 							<p className="flex gap-1 font-normal text-[#333333]">
 								<span className="font-bold">{propiedad.tipo_propiedad.value}</span>
 								<span>en</span>
@@ -47,8 +47,8 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 					</div>
 					<Separator className="my-4" />
 				</PageContainer>
-				<PageContainer className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-6">
-					<div>
+				<PageContainer className="grid grid-cols-1 md:grid-cols-[60%_40%]">
+					<div className="pr-10">
 						<div>
 							<div className="space-y-2 mb-3">
 								<div className="flex items-center gap-2 text-gray-600">

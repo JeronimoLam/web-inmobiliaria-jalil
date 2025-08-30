@@ -11,7 +11,7 @@ export const PropiedadGalleryPreview = ({ propiedad }: PropiedadGalleryPreviewPr
 	const { imagenes } = propiedad;
 
 	return (
-		<section className="flex h-[450px] 2xl:h-[550px] gap-[10px]">
+		<section className="flex h-[390px] 2xl:h-[550px] gap-[10px]">
 			{/* Imagen principal */}
 			<div className="w-1/2 h-full relative overflow-hidden">
 				{imagenes[0] && (
