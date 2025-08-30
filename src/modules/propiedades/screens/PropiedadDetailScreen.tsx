@@ -5,6 +5,8 @@ import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadProper
 import { Separator } from "@/components/ui/separator";
 import { PropiedadContactForm } from "@/modules/propiedades/components/propiedad-detail/PropiedadContactForm";
 import { PropiedadDetails } from "@/modules/propiedades/components/propiedad-detail/PropiedadDetails";
+import { MapPinIcon } from "@/components/Icons";
+import { PropiedadMap } from "@/modules/propiedades/components/propiedad-detail/PropiedadMap";
 
 interface PropiedadDetailScreenProps {
 	propiedad: Propiedad;
@@ -53,6 +55,15 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 				</PageContainer>
 				<PageContainer>
 					<Separator className="my-8" />
+					<div className="flex flex-col gap-4">
+						<h2 className="flex gap-2 items-center font-semibold text-xl">
+							<MapPinIcon height={26} width={26} />
+							<span>Ubicación</span>
+							<span>•</span>
+							<span className="font-normal">{title}</span>
+						</h2>
+						<PropiedadMap propiedad={propiedad} />
+					</div>
 				</PageContainer>
 			</section>
 		</div>
