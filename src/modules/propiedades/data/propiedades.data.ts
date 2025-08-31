@@ -30,7 +30,7 @@ export const propiedades: Propiedad[] = [
 		medida_profundidad: null,
 		cantidad_toilettes: 0,
 		cantidad_banos: 1,
-		map_location: { type: "Point", coordinates: [-80.1234, 25.789] },
+		map_location: { type: "Point", coordinates: [-34.91661425312198, -57.94717039148848] },
 		precios: [
 			{
 				divisa: "USD",
@@ -97,7 +97,7 @@ export const propiedades: Propiedad[] = [
 		medida_profundidad: null,
 		cantidad_toilettes: 1,
 		cantidad_banos: 2,
-		map_location: { type: "Point", coordinates: [-80.1918, 25.7617] },
+		map_location: { type: "Point", coordinates: [-58.3816, -34.6037] },
 		precios: [
 			{
 				divisa: "ARS",
