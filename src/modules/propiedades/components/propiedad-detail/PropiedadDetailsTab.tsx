@@ -117,7 +117,7 @@ export default function DetailTabAnimation({
 							animate={{
 								backgroundColor: item === selectedTab ? "var(--muted-secondary)" : "#eee0",
 							}}
-							className="rounded-md rounded-b-none w-full px-3.5 py-2.5 relative cursor-pointer flex items-center flex-1 select-none text-secondary font-medium text-[14px]"
+							className="rounded-md rounded-b-none w-full px-3.5 py-2.5 relative cursor-pointer flex items-center flex-1 select-none text-secondary font-medium text-base"
 							onClick={() => setSelectedTab(item)}
 						>
 							<span className="mr-2">{item.icon}</span>

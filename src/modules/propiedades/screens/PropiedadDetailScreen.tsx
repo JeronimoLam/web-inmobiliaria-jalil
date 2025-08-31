@@ -33,10 +33,10 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 								<span>•</span>
 								<span className="font-bold">{propiedad.localidad.nombre}</span>
 							</p>
-							<h1 className="font-semibold text-3xl">{title}</h1>
+							<h1 className="font-semibold text-2.5xl">{title}</h1>
 						</div>
 						<div className="w-[30%] flex flex-col justify-center">
-							<p className="text-3xl font-bold text-secondary">
+							<p className="text-2.5xl font-bold text-secondary">
 								{precioImporte === "Consultar"
 									? "Consultar"
 									: `${propiedad.precios[0].divisa} ${precioImporte.toLocaleString("es-AR")}`}

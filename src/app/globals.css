@@ -104,6 +104,11 @@
 
 	/* Customs */
 	--spacing-selects: 23px;
+
+	--text-sm: 0.9375rem; /* 15px */
+	--text-md: 1.0625rem; /* 17px */
+
+	--text-2.5xl: 1.75rem; /* 28px */
 }
 
 .dark {

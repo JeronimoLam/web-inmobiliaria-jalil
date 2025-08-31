@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/Icons";
 
 export const PropiedadContactForm = () => {
 	return (
@@ -16,13 +17,18 @@ export const PropiedadContactForm = () => {
 				</div>
 				<Textarea placeholder="Mensaje" className="mt-4" />
 				<div className="flex gap-2 mt-5">
-					<Button className="flex-1 py-6 font-semibold">Contactar</Button>
+					<Button className="flex-1 py-6 font-semibold">
+						<MailIcon className="size-5" />
+						Contactar
+					</Button>
 					<Button variant="whatsapp" className="flex-1 py-6 font-semibold">
+						<WhatsAppIcon className="size-6" />
 						WhatsApp
 					</Button>
 				</div>
 				<Button variant="outline" className="mt-3 w-full py-6">
-					<span>Venta</span>
+					<PhoneIcon className="size-5" />
+					<span className="font-semibold">Venta</span>
 					<span>(0221) 421-7393 | 421-5498</span>
 				</Button>
 			</form>
