@@ -17,16 +17,16 @@ export const PropiedadContactForm = () => {
 				</div>
 				<Textarea placeholder="Mensaje" className="mt-4" />
 				<div className="flex gap-2 mt-5">
-					<Button className="flex-1 py-6 font-semibold">
+					<Button className="flex-1 py-7 font-semibold">
 						<MailIcon className="size-5" />
 						Contactar
 					</Button>
-					<Button variant="whatsapp" className="flex-1 py-6 font-semibold">
+					<Button variant="whatsapp" className="flex-1 py-7 font-semibold">
 						<WhatsAppIcon className="size-6" />
 						WhatsApp
 					</Button>
 				</div>
-				<Button variant="outline" className="mt-3 w-full py-6">
+				<Button variant="outline" className="mt-3 w-full py-7">
 					<PhoneIcon className="size-5" />
 					<span className="font-semibold">Venta</span>
 					<span>(0221) 421-7393 | 421-5498</span>
