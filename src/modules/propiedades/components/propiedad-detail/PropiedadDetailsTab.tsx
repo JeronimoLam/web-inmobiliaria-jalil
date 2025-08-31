@@ -20,18 +20,17 @@ const formatWord = (str: string): string => {
 };
 
 const ShowDetailList = ({ propiedadList }: { propiedadList: [key: string, value: boolean][] }) => {
+	// Filtrar solo los items con value true
+	const filteredList = propiedadList.filter(([, value]) => value);
 	return (
 		<div>
-			<ul className="flex flex-col gap-2">
-				{propiedadList.map(
-					([key, value]) =>
-						value && (
-							<li key={key} className="flex gap-2">
-								<CircleCheckBigIcon className="text-primary" size={20} />
-								<p>{formatWord(key)}</p>
-							</li>
-						),
-				)}
+			<ul className="grid grid-flow-col grid-rows-7 gap-x-7 gap-y-2">
+				{filteredList.map(([key]) => (
+					<li key={key} className="flex gap-2">
+						<CircleCheckBigIcon className="text-primary" size={20} />
+						<p className="whitespace-nowrap">{formatWord(key)}</p>
+					</li>
+				))}
 			</ul>
 		</div>
 	);
@@ -133,7 +132,7 @@ export default function DetailTabAnimation({
 					))}
 				</ul>
 			</nav>
-			<div className="flex py-4">
+			<div className="flex pt-4">
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={selectedTab ? selectedTab.label : "empty"}
