@@ -24,8 +24,8 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 
 			<section className="py-6">
 				<PageContainer>
-					<div className="flex">
-						<div className="w-[60%] flex flex-col gap-2 pr-10">
+					<div className="flex flex-col lg:flex-row gap-3 lg:gap-0">
+						<div className="lg:w-[60%] flex flex-col gap-2 lg:pr-10">
 							<p className="flex gap-1 font-normal text-[#333333]">
 								<span className="font-bold">{propiedad.tipo_propiedad.value}</span>
 								<span>en</span>
@@ -35,7 +35,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 							</p>
 							<h1 className="font-semibold text-2.5xl">{title}</h1>
 						</div>
-						<div className="w-[30%] flex flex-col justify-center">
+						<div className="lg:w-[30%] flex flex-col justify-center">
 							<p className="text-2.5xl font-bold text-secondary">
 								{precioImporte === "Consultar"
 									? "Consultar"
@@ -46,8 +46,8 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 					</div>
 					<Separator className="my-5" />
 				</PageContainer>
-				<PageContainer className="grid grid-cols-1 md:grid-cols-[60%_40%]">
-					<div className="pr-10">
+				<PageContainer className="relative grid grid-cols-1 lg:grid-cols-[60%_40%] gap-3 lg:gap-0">
+					<div className="lg:pr-10">
 						<PropiedadDetails propiedad={propiedad} />
 					</div>
 					<div>
@@ -57,10 +57,12 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 				<PageContainer>
 					<Separator className="my-8" />
 					<div className="flex flex-col gap-4">
-						<h2 className="flex gap-2 items-center font-semibold text-xl">
-							<MapPinIcon height={26} width={26} />
-							<span>Ubicación</span>
-							<span>•</span>
+						<h2 className="flex flex-col sm:flex-row gap-2 sm:items-center font-semibold text-xl">
+							<span className="flex gap-1">
+								<MapPinIcon height={26} width={26} />
+								Ubicación
+							</span>
+							<span className="hidden sm:block">•</span>
 							<span className="font-normal">{title}</span>
 						</h2>
 						<PropiedadMap latitud={latitud} longitud={longitud} />

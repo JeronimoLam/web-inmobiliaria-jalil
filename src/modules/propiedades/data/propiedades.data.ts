@@ -17,7 +17,8 @@ export const propiedades: Propiedad[] = [
 		entre_calles: "54 y 55",
 		numero: 5401,
 		localidad: { nombre: "Miami" },
-		descripcion: "Departamento de 1 dormitorio en Miami.",
+		descripcion:
+			"Departamento de 1 dormitorio en Miami, ubicado en una zona residencial tranquila y segura, ideal para quienes buscan comodidad y cercanía a los principales puntos de interés de la ciudad. La propiedad cuenta con ambientes luminosos y bien distribuidos, un dormitorio amplio con placard, cocina equipada, living con acceso a balcón y vista panorámica, baño completo y cochera privada. El edificio ofrece servicios de seguridad, acceso a playa privada, agua caliente central y aire acondicionado individual, además de estar cerca de centros comerciales, restaurantes y transporte público. Perfecto tanto para vivienda permanente como para inversión.",
 		cant_ambientes: 2,
 		dormitorios: 1,
 		pisos: 1,
@@ -71,6 +72,7 @@ export const propiedades: Propiedad[] = [
 		created_at: new Date(),
 		updated_at: new Date(),
 	},
+	// El resto de las propiedades permanecen igual
 	{
 		id: 2,
 		codigo: 495,
