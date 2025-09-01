@@ -1,6 +1,6 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
-import { PropiedadGalleryPreview } from "@/modules/propiedades/components/propiedad-detail/PropiedadGalleryPreview";
+import { PropiedadGallery } from "@/modules/propiedades/components/propiedad-detail/PropiedadGallery";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
 import { Separator } from "@/components/ui/separator";
 import { PropiedadContactForm } from "@/modules/propiedades/components/propiedad-detail/PropiedadContactForm";
@@ -20,7 +20,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 
 	return (
 		<div>
-			<PropiedadGalleryPreview propiedad={propiedad} />
+			<PropiedadGallery propiedad={propiedad} />
 
 			<section className="py-6">
 				<PageContainer>

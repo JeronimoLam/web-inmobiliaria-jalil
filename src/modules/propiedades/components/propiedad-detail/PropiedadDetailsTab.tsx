@@ -180,7 +180,7 @@ export const PropiedadDetailsTab = ({ propiedad }: { propiedad: Propiedad }) => 
 		},
 		{
 			icon: <ClipboardIcon />,
-			label: "Caracteristicas",
+			label: "Características",
 			data: <PropiedadCaracteristicas propiedad={propiedad} />,
 		},
 	];
@@ -212,7 +212,7 @@ export default function DetailTabAnimation({
 							animate={{
 								backgroundColor: item === selectedTab ? "var(--muted-secondary)" : "#eee0",
 							}}
-							className="rounded-md rounded-b-none w-full px-3.5 py-2.5 relative cursor-pointer flex items-center flex-1 flex-wrap select-none text-secondary font-medium text-base"
+							className="rounded-md rounded-b-none w-full px-3.5 py-2.5 relative cursor-pointer flex items-center flex-1 flex-wrap xl:flex-nowrap select-none text-secondary font-medium text-base"
 							onClick={() => setSelectedTab(item)}
 						>
 							<span className="mr-2">{item.icon}</span>
