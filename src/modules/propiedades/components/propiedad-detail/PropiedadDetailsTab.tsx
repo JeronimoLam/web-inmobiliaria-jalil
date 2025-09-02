@@ -203,8 +203,8 @@ export default function DetailTabAnimation({
 
 	return (
 		<div className="w-full rounded-md overflow-hidden flex flex-col">
-			<nav className="rounded-t-md">
-				<ul className="grid grid-cols-2 grid-rows-2 md:flex border-b-[2.5px] border-secondary w-full list-none p-0 m-0 font-medium text-[14px]">
+			<nav className="rounded-t-md border-b-[2px] border-secondary">
+				<ul className="grid grid-cols-2 grid-rows-2 md:flex w-full list-none p-0 m-0 font-medium text-[14px]">
 					{tabs.map((item) => (
 						<motion.li
 							key={item.label}
@@ -219,7 +219,7 @@ export default function DetailTabAnimation({
 							<span>{item.label}</span>
 							{item === selectedTab ? (
 								<motion.div
-									className="hidden md:block absolute top-full left-0 right-0 h-[2.5px] md:h-[2px] bg-primary z-50"
+									className="hidden md:block absolute bottom-[-2px] left-0 right-0 h-[2px] md:h-[2px] bg-primary"
 									layoutId="underline"
 									id="underline"
 								/>

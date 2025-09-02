@@ -10,7 +10,7 @@ export const OurBestOfferSection = async () => {
 			<section className="overflow-x-hidden">
 				<div className="bg-muted-secondary">
 					<PageContainer className="py-10">
-						<h2 className="flex flex-col text-3xl font-light">
+						<h2 className="flex flex-col text-2.5xl font-light">
 							Nuestra mejor oferta
 							<span className="font-bold">Venta</span>
 						</h2>
@@ -25,7 +25,7 @@ export const OurBestOfferSection = async () => {
 			<section className="overflow-x-hidden">
 				<div className="bg-muted-secondary">
 					<PageContainer className="py-10">
-						<h2 className="flex flex-col text-3xl font-light">
+						<h2 className="flex flex-col text-2.5xl font-light">
 							Nuestra mejor oferta
 							<span className="font-bold">Alquiler</span>
 						</h2>
