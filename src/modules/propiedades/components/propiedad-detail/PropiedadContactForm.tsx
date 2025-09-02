@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/Icons";
+import PhoneInput from "@/components/ui/phone-input";
 
 export const PropiedadContactForm = () => {
 	return (
@@ -11,10 +12,7 @@ export const PropiedadContactForm = () => {
 			<form action="">
 				<Input placeholder="Nombre y Apellido" className="mt-4" />
 				<Input placeholder="Email" className="mt-4" />
-				<div className="flex flex-col sm:flex-row sm:gap-2">
-					<Input placeholder="Consulta" className="mt-4" />
-					<Input placeholder="Teléfono" className="mt-4" />
-				</div>
+				<PhoneInput className="mt-4" />
 				<Textarea placeholder="Mensaje" className="mt-4" />
 				<div className="flex flex-col sm:flex-row gap-2 mt-5">
 					<Button className="flex-1 py-5 sm:py-7 font-semibold">
