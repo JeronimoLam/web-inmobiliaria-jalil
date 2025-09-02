@@ -8,7 +8,12 @@ import flags from "react-phone-number-input/flags";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 
-export default function Component({ className }: { className: string }) {
+interface PhoneInputProps extends React.ComponentProps<"input"> {
+	className?: string;
+	name?: string;
+}
+
+export default function Component({ className, name = "phone" }: PhoneInputProps) {
 	const id = useId();
 	const [value, setValue] = useState("");
 
@@ -25,6 +30,7 @@ export default function Component({ className }: { className: string }) {
 				value={value}
 				onChange={(newValue) => setValue(newValue ?? "")}
 				defaultCountry="AR"
+				name={name}
 			/>
 		</div>
 	);
