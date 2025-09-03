@@ -8,9 +8,12 @@ import { sendContactForm } from "@/modules/propiedades/actions/propiedad.action"
 import { WhatsAppButton } from "@/modules/propiedades/components/propiedad-detail/WhatsappButton";
 import { EstadoPublicacionEnum, Propiedad } from "../../types/propiedad.type";
 import Link from "next/link";
+import { buildPropiedadTitle } from "../../utils/propiedadPropertyBuilder";
 
 export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) => {
 	const estadoPublicacion = propiedad.precios[0].estado_publicacion;
+
+	const title = buildPropiedadTitle(propiedad);
 
 	const phoneNumberFormat = (number: string) => {
 		const num = number.slice(3);
@@ -36,7 +39,9 @@ export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) =>
 						<MailIcon className="size-5" />
 						Contactar
 					</Button>
-					<WhatsAppButton />
+					<WhatsAppButton
+						defaultText={`Hola, quiero consultar sobre la propiedad #${propiedad.codigo} de ${title}, quisiera más información.`}
+					/>
 				</div>
 				<Button
 					type="button"
