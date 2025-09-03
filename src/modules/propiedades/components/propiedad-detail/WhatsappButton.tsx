@@ -1,6 +1,6 @@
 import { WhatsAppIcon } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
-import { getWhatsappUrl } from "@/modules/propiedades/utils/getWhatsappUrl";
+import { getWhatsappUrl } from "@/lib/getWhatsappUrl";
 
 export const WhatsAppButton = ({ defaultText }: { defaultText: string }) => {
 	const whatsappUrl = getWhatsappUrl({

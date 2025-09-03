@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layouts/Footer";
 import { NavBar } from "@/components/layouts/NavBar";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
+import WhatsappFloatingButton from "@/components/WhatsappFloatingButton";
 import { HomeHeroScreen } from "@/modules/home/screens/HomeHeroScreen";
 
 export default async function Home() {
@@ -16,6 +17,8 @@ export default async function Home() {
 				<div className="pb-14">
 					<OurBestOfferSection />
 				</div>
+
+				<WhatsappFloatingButton />
 			</main>
 			<Footer />
 		</>
