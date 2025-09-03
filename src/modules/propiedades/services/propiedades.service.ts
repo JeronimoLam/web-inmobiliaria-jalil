@@ -88,4 +88,38 @@ export class PropiedadesService {
 			return [];
 		}
 	}
+
+	static async getPropiedadesVentaDestacados(): Promise<Propiedad[]> {
+		// Simula una llamada a API
+		// const response = await fetch(`/api/propiedades?operacion=venta`);
+		// const data = await response.json();
+
+		try {
+			const response = new Promise<Propiedad[]>((resolve) => {
+				setTimeout(() => {
+					resolve(propiedades.filter((p) => p.destacado));
+				}, 1000);
+			});
+			return await response;
+		} catch {
+			return [];
+		}
+	}
+
+	static async getPropiedadesAlquilerDestacados(): Promise<Propiedad[]> {
+		// Simula una llamada a API
+		// const response = await fetch(`/api/propiedades?operacion=alquiler`);
+		// const data = await response.json();
+
+		try {
+			const response = new Promise<Propiedad[]>((resolve) => {
+				setTimeout(() => {
+					resolve(propiedades.filter((p) => p.destacado));
+				}, 1000);
+			});
+			return await response;
+		} catch {
+			return [];
+		}
+	}
 }

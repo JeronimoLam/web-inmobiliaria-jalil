@@ -11,9 +11,9 @@ export const OfferPropertyCarouselServer = async ({
 }: OfferPropertyCarouselServerProps) => {
 	let propiedades;
 	if (operacion === OperacionesEnum.VENTA) {
-		propiedades = await PropiedadesService.getPropiedadesVenta();
+		propiedades = await PropiedadesService.getPropiedadesVentaDestacados();
 	} else {
-		propiedades = await PropiedadesService.getPropiedadesAlquiler();
+		propiedades = await PropiedadesService.getPropiedadesAlquilerDestacados();
 	}
 
 	return <OfferPropertyCarousel propiedades={propiedades} />;
