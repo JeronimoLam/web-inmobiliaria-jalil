@@ -27,6 +27,7 @@ export type Propiedad = {
 	ambientes: { [key: string]: boolean };
 	created_at: Date;
 	updated_at: Date;
+	destacado: boolean;
 };
 
 export type Imagen = {

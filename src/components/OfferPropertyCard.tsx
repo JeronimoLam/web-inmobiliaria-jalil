@@ -107,13 +107,13 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 	const precio = propiedad.precios[0];
 
-	if (propiedad.precios.length === 0) {
+	if (precio.importe === 0) {
 		return <span className="font-semibold text-lg">Consultar</span>;
 	}
 
 	return (
 		<div className="flex gap-1 items-center">
-			{propiedad.precios.length === 0 && <span className="font-semibold text-lg">Consultar</span>}
+			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
 					<span className="font-semibold text-xl">{precio.importe}</span>

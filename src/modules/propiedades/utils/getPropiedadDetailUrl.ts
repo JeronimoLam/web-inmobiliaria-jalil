@@ -29,13 +29,13 @@ export const getPropiedadDetailUrl = (propiedad: Propiedad) => {
 		estadoPublicacion: `en-${estadoPublicacion.toLocaleLowerCase()}`,
 		localidad: createSlug(propiedad.localidad.nombre.toLocaleLowerCase()),
 		direccion: direccion.toLocaleLowerCase(),
-		id: propiedad.id,
+		codigo: propiedad.codigo,
 		query: {
 			operacion: operacion.toString(),
 		},
 	};
 
-	const completeURL = `/propiedades/${URL.tipoPropiedad}-${URL.estadoPublicacion}-${URL.localidad}-${URL.direccion}-${URL.id}?${new URLSearchParams(URL.query).toString()}`;
+	const completeURL = `/propiedades/${URL.tipoPropiedad}-${URL.estadoPublicacion}-${URL.localidad}-${URL.direccion}-${URL.codigo}?${new URLSearchParams(URL.query).toString()}`;
 
 	return completeURL;
 };

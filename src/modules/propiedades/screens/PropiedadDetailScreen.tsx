@@ -7,13 +7,14 @@ import { PropiedadContactForm } from "@/modules/propiedades/components/propiedad
 import { PropiedadDetails } from "@/modules/propiedades/components/propiedad-detail/PropiedadDetails";
 import { MapPinIcon } from "@/components/Icons";
 import { PropiedadMap } from "@/modules/propiedades/components/propiedad-detail/PropiedadMap";
+import { Badge } from "@/components/ui/badge";
 
 interface PropiedadDetailScreenProps {
 	propiedad: Propiedad;
 }
 
 export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps) => {
-	const precioImporte = propiedad.precios.length > 0 ? propiedad.precios[0].importe : "Consultar";
+	const precioImporte = propiedad.precios[0].importe ? propiedad.precios[0].importe : "Consultar";
 	const estadoPropiedad = propiedad.precios[0]?.estado_publicacion;
 	const title = buildPropiedadTitle(propiedad);
 	const [latitud, longitud] = propiedad.map_location.coordinates;
@@ -24,6 +25,12 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 
 			<section className="py-6">
 				<PageContainer>
+					<Badge
+						variant={"secondary"}
+						className="sm:hidden font-semibold text-[14px] mb-1 px-2 bg-muted-foreground/25 text-[#333333]"
+					>
+						#{propiedad.codigo}
+					</Badge>
 					<div className="flex flex-col lg:flex-row gap-3 lg:gap-0">
 						<div className="lg:w-[60%] flex flex-col gap-2 lg:pr-10">
 							<p className="flex gap-1 font-normal text-[#333333]">
@@ -32,9 +39,17 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 								<span className="font-bold">{estadoPropiedad}</span>
 								<span>•</span>
 								<span className="font-bold">{propiedad.localidad.nombre}</span>
+								<span className="hidden sm:block">•</span>
+								<Badge
+									variant={"secondary"}
+									className="hidden sm:block font-semibold text-[14px] mb-1 px-2 bg-muted-foreground/25 text-[#333333]"
+								>
+									#{propiedad.codigo}
+								</Badge>
 							</p>
 							<h1 className="font-semibold text-2.5xl">{title}</h1>
 						</div>
+
 						<div className="lg:w-[30%] flex flex-col justify-center">
 							<p className="text-2.5xl font-bold text-secondary">
 								{precioImporte === "Consultar"
@@ -51,7 +66,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 						<PropiedadDetails propiedad={propiedad} />
 					</div>
 					<div>
-						<PropiedadContactForm />
+						<PropiedadContactForm propiedad={propiedad} />
 					</div>
 				</PageContainer>
 				<PageContainer>

@@ -22,10 +22,10 @@ export default async function PropiedadDetailPage({
 	const { operacion } = await searchParams;
 
 	const parts = propiedadSlug.split("-");
-	const propiedadId = parts[parts.length - 1];
+	const codigoPropiedad = parts[parts.length - 1];
 	const op = operacion === "1" ? OperacionesEnum.ALQUILER : OperacionesEnum.VENTA;
 
-	const propiedad = await PropiedadesService.getPropiedad(Number(propiedadId), op);
+	const propiedad = await PropiedadesService.getPropiedad(Number(codigoPropiedad), op);
 
 	if (!propiedad) return notFound();
 

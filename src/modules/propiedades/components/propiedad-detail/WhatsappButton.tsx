@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getWhatsappUrl } from "@/modules/propiedades/utils/getWhatsappUrl";
 
 const whatsappUrl = getWhatsappUrl({
-	message:
-		"¡Hola! Quisiera consultar sobre los tratamientos disponibles. ¿Me podrían brindar más información?",
+	message: "\nmaiL@mail.com \nnombre Apellido \nkjashdkajshdkajshdakjhdkajhdakjhdask",
 });
 
 export const WhatsAppButton = () => {

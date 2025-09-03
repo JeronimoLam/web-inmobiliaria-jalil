@@ -3,7 +3,7 @@ import { OperacionesEnum } from "../enums/propiedades.enum";
 import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
 
 export class PropiedadesService {
-	static async getPropiedad(id: number, operacion: OperacionesEnum): Promise<Propiedad | null> {
+	static async getPropiedad(codigo: number, operacion: OperacionesEnum): Promise<Propiedad | null> {
 		// Simula una llamada a API
 		// const response = await fetch(`/api/propiedades/${id}?operacion=${operacion}`);
 		// const data = await response.json();
@@ -11,7 +11,7 @@ export class PropiedadesService {
 		try {
 			const response = new Promise<Propiedad | null>((resolve) => {
 				setTimeout(() => {
-					const propiedad = propiedades.find((p) => p.id === id);
+					const propiedad = propiedades.find((p) => p.codigo === codigo);
 					if (propiedad) {
 						// Filtra los precios por la operación solicitada
 						const preciosFiltrados = propiedad.precios.filter(

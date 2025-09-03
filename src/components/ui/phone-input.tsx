@@ -74,6 +74,7 @@ const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProp
 				onChange={handleSelect}
 				className="absolute inset-0 text-sm opacity-0 cursor-pointer"
 				aria-label="Selecciona un país"
+				required
 			>
 				<option key="default" value="">
 					Selecciona un país
