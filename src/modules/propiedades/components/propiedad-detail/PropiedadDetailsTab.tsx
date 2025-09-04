@@ -7,8 +7,8 @@ import {
 	LightbulbIcon,
 	DoorClosedIcon,
 	ClipboardIcon,
-	CircleCheckBigIcon,
-} from "lucide-react";
+	CheckCircleIcon,
+} from "@/components/Icons";
 import { Propiedad } from "../../types/propiedad.type";
 
 interface PropiedadTabsDataProps {
@@ -27,7 +27,7 @@ const ShowDetailList = ({ propiedadList }: { propiedadList: [key: string, value:
 			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
 				{filteredList.map(([key]) => (
 					<li key={key} className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap">{formatWord(key)}</p>
 					</li>
 				))}
@@ -42,7 +42,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
 				{!!propiedad.cant_ambientes && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Cantidad de ambientes:{" "}
 							<span className="font-semibold">{propiedad.cant_ambientes}</span>
@@ -51,7 +51,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.pisos && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Pisos: <span className="font-semibold">{propiedad.pisos}</span>
 						</p>
@@ -59,7 +59,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.cocheras && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Cocheras: <span className="font-semibold">{propiedad.cocheras}</span>
 						</p>
@@ -67,7 +67,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.antiguedad && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Antigüedad: <span className="font-semibold">{propiedad.antiguedad}</span>
 						</p>
@@ -75,7 +75,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.superficie_cubierta && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Superficie Cubierta:{" "}
 							<span className="font-semibold">{propiedad.superficie_cubierta}</span>
@@ -84,7 +84,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.superficie_terreno && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Superficie Terreno:{" "}
 							<span className="font-semibold">{propiedad.superficie_terreno}</span>
@@ -93,7 +93,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.superficie_total_construida && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Superficie Total Construida:{" "}
 							<span className="font-semibold">{propiedad.superficie_total_construida}</span>
@@ -102,7 +102,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.medida_frontal && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Medida frontal: <span className="font-semibold">{propiedad.medida_frontal}</span>
 						</p>
@@ -110,7 +110,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.medida_profundidad && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Medida profundidad:{" "}
 							<span className="font-semibold">{propiedad.medida_profundidad}</span>
@@ -119,7 +119,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.cantidad_toilettes && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Cantidad de toilettes:{" "}
 							<span className="font-semibold">{propiedad.cantidad_toilettes}</span>
@@ -128,7 +128,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.cantidad_banos && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Cantidad de baños: <span className="font-semibold">{propiedad.cantidad_banos}</span>
 						</p>
@@ -136,7 +136,7 @@ const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
 				)}
 				{!!propiedad.dormitorios && (
 					<li className="flex gap-2">
-						<CircleCheckBigIcon className="text-primary" size={20} />
+						<CheckCircleIcon className="text-primary" width={20} />
 						<p className="whitespace-nowrap flex gap-2">
 							Dormitorios: <span className="font-semibold">{propiedad.dormitorios}</span>
 						</p>

@@ -1,4 +1,18 @@
-import { MapPin, Phone, Mail, Clock3, Facebook, BedDouble, Grid2x2Plus, Bath } from "lucide-react";
+import {
+	MapPin,
+	Phone,
+	Mail,
+	Clock3,
+	Facebook,
+	BedDouble,
+	Grid2x2Plus,
+	Bath,
+	CircleCheckBig,
+	FileText,
+	Lightbulb,
+	DoorClosed,
+	Clipboard,
+} from "lucide-react";
 
 type IconProps = {
 	className?: string;
@@ -36,6 +50,26 @@ export const Grid2x2PlusIcon = ({ className, width, height, ...props }: IconProp
 
 export const BathIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Bath className={className} width={width} height={height} {...props} />
+);
+
+export const CheckCircleIcon = ({ className, width, height, ...props }: IconProps) => (
+	<CircleCheckBig className={className} width={width} height={height} {...props} />
+);
+
+export const FileTextIcon = ({ className, width, height, ...props }: IconProps) => (
+	<FileText className={className} width={width} height={height} {...props} />
+);
+
+export const LightbulbIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Lightbulb className={className} width={width} height={height} {...props} />
+);
+
+export const DoorClosedIcon = ({ className, width, height, ...props }: IconProps) => (
+	<DoorClosed className={className} width={width} height={height} {...props} />
+);
+
+export const ClipboardIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Clipboard className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (

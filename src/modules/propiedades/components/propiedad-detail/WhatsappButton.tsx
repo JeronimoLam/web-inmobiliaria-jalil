@@ -7,7 +7,7 @@ export const WhatsAppButton = ({ defaultText }: { defaultText: string }) => {
 		message: defaultText,
 	});
 	return (
-		<Button asChild variant="whatsapp" className="flex-1 py-5 sm:py-7 font-semibold">
+		<Button asChild variant="whatsapp" className="py-7 font-semibold">
 			<a href={whatsappUrl || "#"} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
 				<WhatsAppIcon className="size-6" />
 				WhatsApp
