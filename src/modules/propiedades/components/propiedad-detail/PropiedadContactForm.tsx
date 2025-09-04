@@ -31,7 +31,6 @@ export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) =>
 					<h2 className="font-semibold text-xl">Consultar por esta propiedad</h2>
 					<ContactFormFields errors={state.errors} defaultMessage={defaultMessage} />
 
-					{/* Botón de envío */}
 					<Button type="submit" className="w-full flex-1 py-7 font-semibold mt-5">
 						<MailIcon className="size-5" />
 						Contactar

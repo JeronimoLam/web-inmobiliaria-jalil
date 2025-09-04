@@ -10,7 +10,7 @@ export const SuccessMessage = () => {
 			transition={{ duration: 0.5 }}
 			className="flex flex-col items-center justify-center p-8 rounded-lg bg-green-100"
 		>
-			<motion.svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" className="w-15 h-15">
+			<motion.svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" className="w-14 h-14">
 				<motion.circle
 					cx="26"
 					cy="26"
