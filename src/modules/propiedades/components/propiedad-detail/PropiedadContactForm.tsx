@@ -17,7 +17,7 @@ const initialState = { errors: {} as Record<string, string>, success: false };
 export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) => {
 	const [state, formAction] = useActionState(sendContactForm, initialState);
 
-	const estadoPublicacion = propiedad.precios[0].estado_publicacion;
+	const estadoPublicacion = propiedad.precios[0].estado_publicacion.nombre;
 	const title = buildPropiedadTitle(propiedad);
 
 	const defaultMessage = `Hola, quiero consultar sobre la propiedad: ${propiedad.tipo_propiedad.value} en ${estadoPublicacion} #${propiedad.codigo} de ${title}, quisiera más información.`;

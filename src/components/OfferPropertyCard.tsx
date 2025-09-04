@@ -71,21 +71,21 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 						<div className="flex items-center gap-2 text-gray-600">
 							<BedDouble className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Habitaciones</span>
-							<span className="font-semibold text-sm">{propiedad.dormitorios}</span>
+							<span className="font-semibold text-sm">{propiedad.detalles.dormitorios}</span>
 						</div>
 
 						<div className="flex items-center gap-2 text-gray-600">
 							<Grid2x2Plus className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Superficie cubierta</span>
 							<span className="font-semibold text-sm">
-								{propiedad.superficie_cubierta?.toFixed(2)} m²
+								{propiedad.detalles.superficie_cubierta?.toFixed(2)} m²
 							</span>
 						</div>
 
 						<div className="flex items-center gap-2 text-gray-600">
 							<Bath className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Baños</span>
-							<span className="font-semibold text-sm">{propiedad.cantidad_banos}</span>
+							<span className="font-semibold text-sm">{propiedad.detalles.banos}</span>
 						</div>
 					</div>
 				</div>

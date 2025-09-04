@@ -2,7 +2,7 @@ import { Footer } from "@/components/layouts/Footer";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadDetailScreen } from "@/modules/propiedades/screens/PropiedadDetailScreen";
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
 import { notFound } from "next/navigation";
 
 interface PropiedadDetailPageProps {

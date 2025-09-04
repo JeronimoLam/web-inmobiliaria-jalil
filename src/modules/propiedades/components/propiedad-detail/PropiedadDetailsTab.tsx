@@ -2,172 +2,18 @@
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import { useState } from "react";
+import { FileTextIcon, LightbulbIcon, DoorClosedIcon, ClipboardIcon } from "@/components/Icons";
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import {
-	FileTextIcon,
-	LightbulbIcon,
-	DoorClosedIcon,
-	ClipboardIcon,
-	CheckCircleIcon,
-} from "@/components/Icons";
-import { Propiedad } from "../../types/propiedad.type";
-
-interface PropiedadTabsDataProps {
-	propiedad: Propiedad;
-}
-
-const formatWord = (str: string): string => {
-	return str.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-};
-
-const ShowDetailList = ({ propiedadList }: { propiedadList: [key: string, value: boolean][] }) => {
-	// Filtrar solo los items con value true
-	const filteredList = propiedadList.filter(([, value]) => value);
-	return (
-		<div>
-			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
-				{filteredList.map(([key]) => (
-					<li key={key} className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap">{formatWord(key)}</p>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
-};
-
-const PropiedadDetalle = ({ propiedad }: PropiedadTabsDataProps) => {
-	return (
-		<div>
-			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
-				{!!propiedad.cant_ambientes && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Cantidad de ambientes:{" "}
-							<span className="font-semibold">{propiedad.cant_ambientes}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.pisos && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Pisos: <span className="font-semibold">{propiedad.pisos}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.cocheras && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Cocheras: <span className="font-semibold">{propiedad.cocheras}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.antiguedad && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Antigüedad: <span className="font-semibold">{propiedad.antiguedad}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.superficie_cubierta && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Superficie Cubierta:{" "}
-							<span className="font-semibold">{propiedad.superficie_cubierta}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.superficie_terreno && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Superficie Terreno:{" "}
-							<span className="font-semibold">{propiedad.superficie_terreno}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.superficie_total_construida && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Superficie Total Construida:{" "}
-							<span className="font-semibold">{propiedad.superficie_total_construida}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.medida_frontal && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Medida frontal: <span className="font-semibold">{propiedad.medida_frontal}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.medida_profundidad && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Medida profundidad:{" "}
-							<span className="font-semibold">{propiedad.medida_profundidad}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.cantidad_toilettes && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Cantidad de toilettes:{" "}
-							<span className="font-semibold">{propiedad.cantidad_toilettes}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.cantidad_banos && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Cantidad de baños: <span className="font-semibold">{propiedad.cantidad_banos}</span>
-						</p>
-					</li>
-				)}
-				{!!propiedad.dormitorios && (
-					<li className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
-							Dormitorios: <span className="font-semibold">{propiedad.dormitorios}</span>
-						</p>
-					</li>
-				)}
-			</ul>
-		</div>
-	);
-};
-
-const PropiedadServicios = ({ propiedad }: PropiedadTabsDataProps) => {
-	const propiedadesServicios = Object.entries(propiedad.servicios);
-
-	return <ShowDetailList propiedadList={propiedadesServicios} />;
-};
-
-const PropiedadAmbientes = ({ propiedad }: PropiedadTabsDataProps) => {
-	const propiedadesAmbientes = Object.entries(propiedad.ambientes);
-
-	return <ShowDetailList propiedadList={propiedadesAmbientes} />;
-};
-
-const PropiedadCaracteristicas = ({ propiedad }: PropiedadTabsDataProps) => {
-	const propiedadesCaracteristicas = Object.entries(propiedad.caracteristicas);
-
-	return <ShowDetailList propiedadList={propiedadesCaracteristicas} />;
-};
+	PropiedadDetalles,
+	PropiedadServicios,
+	PropiedadAmbientes,
+	PropiedadCaracteristicas,
+} from "./PropiedadDetailsTabListData";
 
 export const PropiedadDetailsTab = ({ propiedad }: { propiedad: Propiedad }) => {
 	const allTabs = [
-		{ icon: <FileTextIcon />, label: "Detalle", data: <PropiedadDetalle propiedad={propiedad} /> },
+		{ icon: <FileTextIcon />, label: "Detalle", data: <PropiedadDetalles propiedad={propiedad} /> },
 		{
 			icon: <LightbulbIcon />,
 			label: "Servicios",

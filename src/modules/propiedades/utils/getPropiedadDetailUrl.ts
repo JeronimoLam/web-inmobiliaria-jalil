@@ -14,11 +14,11 @@ const createSlug = (text: string): string => {
 };
 
 export const getPropiedadDetailUrl = (propiedad: Propiedad) => {
-	const estadoPublicacion = propiedad.precios[0]?.estado_publicacion || "consulta";
-	const direccion = `calle-${createSlug(propiedad.calle).toLocaleLowerCase()}-${propiedad.numero ? "nro-" + propiedad.numero : ""}`;
+	const estadoPublicacion = propiedad.precios[0]?.estado_publicacion.nombre || "consulta";
+	const direccion = `${createSlug(propiedad.calle).toLocaleLowerCase()}-${propiedad.numero ? "nro-" + propiedad.numero : ""}`;
 	let operacion: OperacionesEnum;
 
-	if (propiedad.precios[0]?.estado_publicacion === EstadoPublicacionEnum.ALQUILER) {
+	if (propiedad.precios[0]?.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER) {
 		operacion = OperacionesEnum.ALQUILER;
 	} else {
 		operacion = OperacionesEnum.VENTA;

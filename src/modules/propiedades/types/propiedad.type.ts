@@ -1,52 +1,53 @@
 export type Propiedad = {
 	id: number;
 	codigo: number;
-	imagenes: Imagen[];
+	destacada: boolean;
 	tipo_propiedad: TipoPropiedad;
 	calle: string;
-	entre_calles: string | null;
-	numero: number | null;
-	localidad: Localidad;
+	entre_calles: string;
+	numero: number;
 	descripcion: string;
-	cant_ambientes: number | null;
-	dormitorios: number | null;
-	pisos: number | null;
-	cocheras: number | null;
-	antiguedad: string | null;
-	superficie_cubierta: number | null;
-	superficie_terreno: number | null;
-	superficie_total_construida: number | null;
-	medida_frontal: number | null;
-	medida_profundidad: number | null;
-	cantidad_toilettes: number | null;
-	cantidad_banos: number | null;
 	map_location: MapLocation;
+	localidad: Localidad;
 	precios: Precio[];
-	caracteristicas: Caracteristicas;
-	servicios: Servicios;
+	imagenes: Imagenes[];
+	detalles: Detalles;
+	servicios: { [key: string]: boolean };
 	ambientes: { [key: string]: boolean };
+	caracteristicas: { [key: string]: boolean };
 	created_at: Date;
 	updated_at: Date;
-	destacado: boolean;
 };
 
-export type Imagen = {
+export type Detalles = {
+	id: number;
+	banos: number;
+	pisos: number;
+	garage: string;
+	ambientes: number;
+	toilettes: number;
+	antiguedad: string;
+	created_at: Date;
+	updated_at: Date;
+	dormitorios: number;
+	habitaciones: number;
+	medida_frontal: number;
+	superficie_lote: number;
+	medida_profundidad: number;
+	superficie_cubierta: number;
+	superficie_total_construida: number;
+};
+
+export type Imagenes = {
+	id: number;
 	url: string;
+	principal: boolean;
+	created_at: Date;
 };
 
 export type Localidad = {
+	id: number;
 	nombre: string;
-};
-
-export type Caracteristicas = {
-	deck: boolean;
-	alarma: boolean;
-	amoblado: boolean;
-	lavadero: boolean;
-	acceso_playa: boolean;
-	agua_caliente_central: boolean;
-	calefaccion_individual: boolean;
-	aire_acondicionado_individual: boolean;
 };
 
 export type MapLocation = {
@@ -55,30 +56,23 @@ export type MapLocation = {
 };
 
 export type Precio = {
+	id: number;
 	divisa: string;
 	importe: number;
 	created_at: Date;
 	updated_at: Date;
-	estado_publicacion: EstadoPublicacionEnum;
-};
-
-export enum EstadoPublicacionEnum {
-	ALQUILER = "Alquiler",
-	VENTA = "Venta",
-}
-
-export type Servicios = {
-	cloaca: boolean;
-	internet: boolean;
-	telefono: boolean;
-	pavimento: boolean;
-	videocable: boolean;
-	gas_natural: boolean;
-	electricidad: boolean;
-	agua_corriente: boolean;
+	estado_publicacion: {
+		id: number;
+		nombre: EstadoPublicacionEnum;
+	};
 };
 
 export type TipoPropiedad = {
 	id: number;
 	value: string;
 };
+
+export enum EstadoPublicacionEnum {
+	ALQUILER = "Alquiler",
+	VENTA = "Venta",
+}

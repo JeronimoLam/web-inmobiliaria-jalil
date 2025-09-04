@@ -8,3 +8,7 @@ export const buildPropiedadTitle = (propiedad: Propiedad) => {
 	const title = `${calle} N°${numero} ${entreCalles}`;
 	return title;
 };
+
+export const buildPropiedadEstado = (propiedad: Propiedad) => {
+	const estado = propiedad.precios[0]?.estado_publicacion;
+};
