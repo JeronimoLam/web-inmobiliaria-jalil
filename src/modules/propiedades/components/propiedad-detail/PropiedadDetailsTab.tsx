@@ -13,19 +13,23 @@ import {
 
 export const PropiedadDetailsTab = ({ propiedad }: { propiedad: Propiedad }) => {
 	const allTabs = [
-		{ icon: <FileTextIcon />, label: "Detalle", data: <PropiedadDetalles propiedad={propiedad} /> },
 		{
-			icon: <LightbulbIcon />,
+			icon: <FileTextIcon width={22} height={22} />,
+			label: "Detalle",
+			data: <PropiedadDetalles propiedad={propiedad} />,
+		},
+		{
+			icon: <LightbulbIcon width={22} height={22} />,
 			label: "Servicios",
 			data: <PropiedadServicios propiedad={propiedad} />,
 		},
 		{
-			icon: <DoorClosedIcon />,
+			icon: <DoorClosedIcon width={22} height={22} />,
 			label: "Ambientes",
 			data: <PropiedadAmbientes propiedad={propiedad} />,
 		},
 		{
-			icon: <ClipboardIcon />,
+			icon: <ClipboardIcon width={22} height={22} />,
 			label: "Características",
 			data: <PropiedadCaracteristicas propiedad={propiedad} />,
 		},
