@@ -1,11 +1,7 @@
-import { PageContainer } from "@/components/layouts/PageContainer";
+import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
 
-export default function AlquilerPage() {
-	return (
-		<>
-			<PageContainer>
-				<h1>Alquiler Page</h1>
-			</PageContainer>
-		</>
-	);
+export default async function AlquilerPage() {
+	const propiedades = await PropiedadesService.getPropiedades();
+	return <PropiedadesScreen propiedades={propiedades} />;
 }
