@@ -12,6 +12,8 @@ import {
 } from "./ui/carousel";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
+import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
+import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -19,15 +21,19 @@ export interface OfferPropertyCardProps {
 }
 
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
+	const title = buildPropiedadTitle(propiedad);
+
+	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+
 	return (
-		<Card className="w-full h-full flex flex-col hover:shadow-2xl transition-shadow group">
+		<Card className="w-full h-full flex flex-col hover:shadow-lg transition-shadow duration-300 group">
 			<Carousel
 				className="min-h-[220px]"
 				opts={{
 					loop: true,
 				}}
 			>
-				<Link href={`/propiedades/${propiedad.id}`}>
+				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
 						{propiedad.imagenes.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px]">
@@ -35,6 +41,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 									src={imagen.url}
 									alt={propiedad.descripcion}
 									fill
+									sizes="(max-width: 768px) 100vw, 100vw"
 									className="h-full w-full object-cover"
 								/>
 							</CarouselItem>
@@ -45,7 +52,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				<CarouselNext />
 			</Carousel>
 
-			<Link href={`/propiedades/${propiedad.id}`}>
+			<Link href={propiedadDetailUrl}>
 				{/* Property Information */}
 				<div className="p-[15px] pb-0">
 					<div className="flex items-center justify-between">
@@ -57,30 +64,28 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 						</Badge>
 					</div>
 
-					<h3 className="text-lg font-semibold text-gray-900 mb-4">
-						{propiedad.calle} {propiedad.numero} {propiedad.entre_calles}
-					</h3>
+					<h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
 
 					{/* Property Details */}
 					<div className="space-y-2 mb-3">
 						<div className="flex items-center gap-2 text-gray-600">
 							<BedDouble className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Habitaciones</span>
-							<span className="font-semibold text-sm">{propiedad.dormitorios}</span>
+							<span className="font-semibold text-sm">{propiedad.detalles.dormitorios}</span>
 						</div>
 
 						<div className="flex items-center gap-2 text-gray-600">
 							<Grid2x2Plus className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Superficie cubierta</span>
 							<span className="font-semibold text-sm">
-								{propiedad.superficie_cubierta?.toFixed(2)} m²
+								{propiedad.detalles.superficie_cubierta?.toFixed(2)} m²
 							</span>
 						</div>
 
 						<div className="flex items-center gap-2 text-gray-600">
 							<Bath className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Baños</span>
-							<span className="font-semibold text-sm">{propiedad.cantidad_banos}</span>
+							<span className="font-semibold text-sm">{propiedad.detalles.banos}</span>
 						</div>
 					</div>
 				</div>
@@ -102,13 +107,13 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 	const precio = propiedad.precios[0];
 
-	if (propiedad.precios.length === 0) {
+	if (precio.importe === 0) {
 		return <span className="font-semibold text-lg">Consultar</span>;
 	}
 
 	return (
 		<div className="flex gap-1 items-center">
-			{propiedad.precios.length === 0 && <span className="font-semibold text-lg">Consultar</span>}
+			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
 					<span className="font-semibold text-xl">{precio.importe}</span>

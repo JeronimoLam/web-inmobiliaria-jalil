@@ -1,19 +1,24 @@
 import { Footer } from "@/components/layouts/Footer";
 import { NavBar } from "@/components/layouts/NavBar";
-import { HomeScreen } from "@/modules/home/screens/HomeScreen";
-import { propiedades } from "@/modules/propiedades/data/propiedades.data";
+import { OurBestOfferSection } from "@/components/OurBestOfferSection";
+import WhatsappFloatingButton from "@/components/WhatsappFloatingButton";
+import { HomeHeroScreen } from "@/modules/home/screens/HomeHeroScreen";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<>
 			<NavBar transparent />
 			<main className="pt-[70px]">
-				<HomeScreen
+				<HomeHeroScreen
 					tiposPropiedad={tiposPropiedad}
 					localidades={localidades}
 					heroImages={heroImages}
-					propiedades={propiedades}
 				/>
+				<div className="pb-14">
+					<OurBestOfferSection />
+				</div>
+
+				<WhatsappFloatingButton />
 			</main>
 			<Footer />
 		</>

@@ -1,0 +1,17 @@
+import { WhatsAppIcon } from "@/components/Icons";
+import { Button } from "@/components/ui/button";
+import { getWhatsappUrl } from "@/lib/getWhatsappUrl";
+
+export const WhatsAppButton = ({ defaultText }: { defaultText: string }) => {
+	const whatsappUrl = getWhatsappUrl({
+		message: defaultText,
+	});
+	return (
+		<Button asChild variant="whatsapp" className="py-7 font-semibold">
+			<a href={whatsappUrl || "#"} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+				<WhatsAppIcon className="size-6" />
+				WhatsApp
+			</a>
+		</Button>
+	);
+};

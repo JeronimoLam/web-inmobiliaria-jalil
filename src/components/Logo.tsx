@@ -17,6 +17,7 @@ export const Logo = ({ className }: LogoProps) => {
 							width={336}
 							height={206}
 							className={`w-20 object-cover ${className}`}
+							priority
 						/>
 					</picture>
 				</Link>
