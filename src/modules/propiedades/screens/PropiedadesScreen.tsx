@@ -13,7 +13,7 @@ import { usePagination } from "@/modules/propiedades/hooks/usePagination";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
-	itemsPerPage?: number; // Parámetro opcional para hacer escalable el número de items por página
+	itemsPerPage?: number;
 }
 
 export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: PropiedadesScreenProps) => {
@@ -136,7 +136,7 @@ export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: Propiedades
 					<div
 						className={`${showList && showMap ? "w-1/2" : "w-full"} transition-all duration-300`}
 					>
-						<PropiedadesMap latitud={-34.6037} longitud={-58.3816} />
+						<PropiedadesMap propiedades={propiedades} />
 					</div>
 				)}
 			</div>
