@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MailIcon } from "@/components/Icons";
-import { sendContactForm } from "@/modules/propiedades/actions/propiedad.action";
+import { sendContactForm } from "@/modules/propiedades/actions/sendContactForm.action";
 import { Propiedad } from "../../types/propiedad.type";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
 import { Separator } from "@/components/ui/separator";
