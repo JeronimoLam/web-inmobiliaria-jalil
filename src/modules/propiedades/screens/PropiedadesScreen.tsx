@@ -6,10 +6,9 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { PropiedadesMap } from "../components/PropiedadesMap";
 import { Map, List } from "lucide-react";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
-import { Button } from "@/components/ui/button";
-import { FunnelIcon } from "@/components/Icons";
 import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
 import { usePagination } from "@/modules/propiedades/hooks/usePagination";
+import FilterSideBar from "../components/FilterSideBar";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
@@ -67,9 +66,7 @@ export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: Propiedades
 								onSearch={() => {}}
 							/>
 						</div>
-						<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
-							<FunnelIcon width={24} height={24} /> Filtros ({0})
-						</Button>
+						<FilterSideBar />
 					</div>
 					<ul className="flex flex-row gap-2 relative">
 						{allTabs.map((item) => {
