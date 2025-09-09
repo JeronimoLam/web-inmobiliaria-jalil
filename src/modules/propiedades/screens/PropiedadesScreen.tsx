@@ -4,16 +4,17 @@ import { PageContainer } from "@/components/layouts/PageContainer";
 import { PropiedadCard } from "@/modules/propiedades/components/PropiedadCard";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { PropiedadesMap } from "../components/PropiedadesMap";
-import { Map, List, Layout } from "lucide-react";
-import * as motion from "motion/react-client";
+import { Map, List } from "lucide-react";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
+import { Button } from "@/components/ui/button";
+import { FunnelIcon } from "@/components/Icons";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
 }
 
 export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
-	const [showListOnly, setShowListOnly] = useState(false);
+	const [showListOnly, setShowListOnly] = useState(true);
 	const [showMapOnly, setShowMapOnly] = useState(false);
 
 	// --- toggles actualizados ---
@@ -27,17 +28,11 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 		setShowListOnly(false);
 	};
 
-	const toggleShared = () => {
-		setShowListOnly(false);
-		setShowMapOnly(false);
-	};
-
 	// Determinar qué mostrar basado en los estados
 	const showList = !showMapOnly; // Mostrar lista si no está activado solo mapa
 	const showMap = !showListOnly; // Mostrar mapa si no está activado solo lista
 
 	const allTabs = [
-		{ label: "Vista compartida", icon: <Layout className="w-4 h-4" />, action: "shared" },
 		{ label: "Ver Listado", icon: <List className="w-4 h-4" />, action: "list" },
 		{ label: "Ver Mapa", icon: <Map className="w-4 h-4" />, action: "map" },
 	];
@@ -48,13 +43,17 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 			{/* Sub Navigation Bar */}
 			<div className="bg-white border-b border-gray-200 py-4">
 				<div
-					className={`flex items-center justify-between px-4 sm:px-8 transition-transform ${showListOnly && "w-full px-4 sm:px-8 xl:max-w-[80rem] 2xl:max-w-[96rem] mx-auto"}`}
+					className={`flex gap-4 flex-col lg:flex-row lg:items-center justify-between px-4 sm:px-8 transition-transform ${showListOnly && "w-full px-4 sm:px-8 xl:max-w-[80rem] 2xl:max-w-[96rem] mx-auto"}`}
 				>
-					{/* <h1 className="text-2xl font-bold text-gray-900">Propiedades Disponibles</h1> */}
-					<div className="w-[600px]">
-						<PropertySearchForm localidades={[]} tiposPropiedad={[]} onSearch={() => {}} />
+					<div className="flex flex-col md:flex-row xl:items-center gap-4">
+						<div className="flex-1 lg:w-[600px]">
+							<PropertySearchForm localidades={[]} tiposPropiedad={[]} onSearch={() => {}} />
+						</div>
+						<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
+							<FunnelIcon width={24} height={24} /> Filtros ({0})
+						</Button>
 					</div>
-					<ul className="flex gap-2 relative">
+					<ul className="flex flex-row gap-2 relative">
 						{allTabs.map((item) => {
 							const isActive = item.label === selectedTab;
 							return (
@@ -65,16 +64,11 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 
 										if (item.action === "list") toggleListOnly();
 										if (item.action === "map") toggleMapOnly();
-										if (item.action === "shared") toggleShared();
 									}}
-									className="relative px-3 py-2 cursor-pointer flex items-center select-none text-secondary font-medium text-base"
+									className="w-full lg:w-auto hover:bg-muted-secondary/40 hover:rounded-md hover:rounded-b-none transition-colors relative px-3 py-3 cursor-pointer flex items-center select-none text-secondary font-medium text-base"
 								>
 									{isActive && (
-										<motion.div
-											layoutId="activeTab"
-											className="absolute inset-0 rounded-md rounded-b-none bg-muted-secondary"
-											transition={{ type: "tween", ease: "easeInOut", duration: 0.4 }}
-										/>
+										<div className="absolute inset-0 rounded-md rounded-b-none bg-muted-secondary" />
 									)}
 									<span className="mr-2 relative z-10">{item.icon}</span>
 									<span className="relative z-10">{item.label}</span>

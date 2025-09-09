@@ -12,6 +12,7 @@ import {
 	Lightbulb,
 	DoorClosed,
 	Clipboard,
+	Funnel,
 } from "lucide-react";
 
 type IconProps = {
@@ -70,6 +71,10 @@ export const DoorClosedIcon = ({ className, width, height, ...props }: IconProps
 
 export const ClipboardIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Clipboard className={className} width={width} height={height} {...props} />
+);
+
+export const FunnelIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Funnel className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (
