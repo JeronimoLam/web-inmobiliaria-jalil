@@ -26,7 +26,7 @@ export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) 
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
 
 	return (
-		<Card className="w-full md:h-[250px] flex md:flex-row hover:shadow-lg transition-shadow duration-300 group">
+		<Card className="w-full md:h-[280px] flex md:flex-row hover:shadow-lg transition-shadow duration-300 group">
 			<Carousel
 				className="min-h-[220px] md:min-w-[380px] md:h-full"
 				opts={{
@@ -36,7 +36,7 @@ export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) 
 				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
 						{propiedad.imagenes.map((imagen, index) => (
-							<CarouselItem key={index} className="relative w-full h-[220px] md:h-[250px]">
+							<CarouselItem key={index} className="relative w-full h-[220px] md:h-[280px]">
 								<Image
 									src={imagen.url}
 									alt={propiedad.descripcion}

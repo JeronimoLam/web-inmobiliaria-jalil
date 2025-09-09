@@ -8,16 +8,31 @@ import { Map, List } from "lucide-react";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { Button } from "@/components/ui/button";
 import { FunnelIcon } from "@/components/Icons";
+import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
+import { usePagination } from "@/modules/propiedades/hooks/usePagination";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
+	itemsPerPage?: number; // Parámetro opcional para hacer escalable el número de items por página
 }
 
-export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
+export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: PropiedadesScreenProps) => {
 	const [showListOnly, setShowListOnly] = useState(true);
 	const [showMapOnly, setShowMapOnly] = useState(false);
 
-	// --- toggles actualizados ---
+	const {
+		currentItems,
+		currentPage,
+		totalPages,
+		totalItems,
+		startIndex,
+		endIndex,
+		handlePageChange,
+	} = usePagination({
+		items: propiedades,
+		itemsPerPage,
+	});
+
 	const toggleListOnly = () => {
 		setShowListOnly(true);
 		setShowMapOnly(false);
@@ -28,7 +43,6 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 		setShowListOnly(false);
 	};
 
-	// Determinar qué mostrar basado en los estados
 	const showList = !showMapOnly; // Mostrar lista si no está activado solo mapa
 	const showMap = !showListOnly; // Mostrar mapa si no está activado solo lista
 
@@ -40,14 +54,18 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 
 	return (
 		<div className={`flex flex-col ${showListOnly ? "" : "h-[calc(100vh-70px)]"}`}>
-			{/* Sub Navigation Bar */}
-			<div className="bg-white border-b border-gray-200 py-4">
+			<div className="py-4">
 				<div
 					className={`flex gap-4 flex-col lg:flex-row lg:items-center justify-between px-4 sm:px-8 transition-transform ${showListOnly && "w-full px-4 sm:px-8 xl:max-w-[80rem] 2xl:max-w-[96rem] mx-auto"}`}
 				>
 					<div className="flex flex-col md:flex-row xl:items-center gap-4">
 						<div className="flex-1 lg:w-[600px]">
-							<PropertySearchForm localidades={[]} tiposPropiedad={[]} onSearch={() => {}} />
+							<PropertySearchForm
+								withBorder
+								localidades={[]}
+								tiposPropiedad={[]}
+								onSearch={() => {}}
+							/>
 						</div>
 						<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
 							<FunnelIcon width={24} height={24} /> Filtros ({0})
@@ -79,26 +97,41 @@ export const PropiedadesScreen = ({ propiedades }: PropiedadesScreenProps) => {
 				</div>
 			</div>
 
-			{/* Content Area */}
 			<div className={`flex ${showListOnly ? "" : "flex-1 overflow-hidden"}`}>
-				{/* Properties List */}
 				{showList && (
 					<div
 						className={`${showList && showMap ? "w-1/2" : "w-full"} transition-all duration-300`}
 					>
 						<PageContainer
-							className={`w-full py-8 px-4 lg:px-8 ${showListOnly ? "" : "overflow-y-auto h-full"}`}
+							className={`w-full pb-8 pt-6 px-4 lg:px-8 ${showListOnly ? "" : "overflow-y-auto h-full"}`}
 						>
-							<div className="flex flex-col gap-8">
-								{propiedades.map((propiedad) => (
+							<div className="flex flex-col gap-6">
+								{showListOnly && totalItems > 0 && (
+									<div className="text-sm text-gray-600 font-medium">
+										Mostrando{" "}
+										<span className="font-bold">
+											{startIndex + 1}-{Math.min(endIndex, totalItems)}
+										</span>{" "}
+										de <span className="font-bold">{totalItems}</span> propiedades
+									</div>
+								)}
+
+								{currentItems.map((propiedad) => (
 									<PropiedadCard key={propiedad.id} propiedad={propiedad} />
 								))}
+
+								{showListOnly && (
+									<PropiedadesPagination
+										currentPage={currentPage}
+										totalPages={totalPages}
+										onPageChange={handlePageChange}
+									/>
+								)}
 							</div>
 						</PageContainer>
 					</div>
 				)}
 
-				{/* Map */}
 				{showMap && (
 					<div
 						className={`${showList && showMap ? "w-1/2" : "w-full"} transition-all duration-300`}
