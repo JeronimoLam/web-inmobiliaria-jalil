@@ -8,7 +8,7 @@ import { Map, List } from "lucide-react";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
 import { usePagination } from "@/modules/propiedades/hooks/usePagination";
-import FilterSideBar from "../components/FilterSideBar";
+import { FilterSideBar } from "../components/FilterSideBar";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];

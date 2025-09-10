@@ -161,8 +161,20 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground overflow-y-scroll;
+		@apply bg-background text-foreground;
 	}
+}
+
+/* Evita el salto de contenido cuando desaparece el scrollbar */
+html {
+	overflow-y: scroll;
+}
+
+/* Evita el salto de contenido al abrir el componente Sheet */
+body:has([data-state="open"][data-slot*="sheet"]),
+body:has([data-state="closed"][data-slot*="sheet"]) {
+	margin-right: 0 !important;
+	padding-right: 0 !important;
 }
 
 @keyframes cycle {

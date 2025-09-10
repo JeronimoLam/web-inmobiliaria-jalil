@@ -27,14 +27,14 @@ function SheetOverlay({
 	...props
 }: React.ComponentProps<typeof SheetPrimitive.Overlay>) {
 	return (
-		<div
+		<SheetPrimitive.Overlay
 			data-slot="sheet-overlay"
 			className={cn(
-				"fixed inset-0 z-50 bg-black/30 [backdrop-filter:blur(0.8px)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+				"fixed inset-0 z-50 bg-black/40 [backdrop-filter:blur(0.8px)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
 				className,
 			)}
 			{...props}
-		></div>
+		/>
 	);
 }
 

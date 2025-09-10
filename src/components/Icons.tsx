@@ -13,6 +13,7 @@ import {
 	DoorClosed,
 	Clipboard,
 	Funnel,
+	ChevronDown,
 } from "lucide-react";
 
 type IconProps = {
@@ -73,8 +74,12 @@ export const ClipboardIcon = ({ className, width, height, ...props }: IconProps)
 	<Clipboard className={className} width={width} height={height} {...props} />
 );
 
-export const FunnelIcon = ({ className, width, height, ...props }: IconProps) => (
+export const FilterIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Funnel className={className} width={width} height={height} {...props} />
+);
+
+export const ChevronDownIcon = ({ className, width, height, ...props }: IconProps) => (
+	<ChevronDown className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (
