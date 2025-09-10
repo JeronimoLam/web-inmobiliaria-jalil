@@ -23,14 +23,12 @@ export default function DemoSheet() {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<Sheet modal={false} open={open} onOpenChange={setOpen}>
+		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
 				<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
 					<FunnelIcon width={24} height={24} /> Filtros ({0})
 				</Button>
 			</SheetTrigger>
-
-			{open && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setOpen(false)} />}
 
 			<SheetContent dir={direction} side="left" className="z-50">
 				<SheetHeader>
