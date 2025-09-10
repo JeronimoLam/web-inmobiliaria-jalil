@@ -1,3 +1,4 @@
+"use client";
 import { FunnelIcon } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,18 +16,23 @@ import {
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { useDirection } from "@radix-ui/react-direction";
+import { useState } from "react";
 
 export default function DemoSheet() {
 	const direction = useDirection();
+	const [open, setOpen] = useState(false);
 
 	return (
-		<Sheet>
+		<Sheet modal={false} open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
 				<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
 					<FunnelIcon width={24} height={24} /> Filtros ({0})
 				</Button>
 			</SheetTrigger>
-			<SheetContent dir={direction} side="left">
+
+			{open && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setOpen(false)} />}
+
+			<SheetContent dir={direction} side="left" className="z-50">
 				<SheetHeader>
 					<SheetTitle>Quick Feedback</SheetTitle>
 					<SheetDescription>Share your feedback to help us improve.</SheetDescription>
