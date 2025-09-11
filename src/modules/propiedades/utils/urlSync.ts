@@ -1,6 +1,6 @@
-import { FilterProps } from "@/modules/propiedades/types/filters.type";
+import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
 import { LIMITS } from "@/modules/propiedades/constants/filters.constants";
-// Helpers para leer parámetros de la URL
+
 export const getStringParam = (searchParams: URLSearchParams, key: string): string | undefined => {
 	const value = searchParams.get(key);
 	return value || undefined;
@@ -16,9 +16,8 @@ export const getArrayParam = (searchParams: URLSearchParams, key: string): strin
 	return value ? value.split(",") : undefined;
 };
 
-// Función para leer todos los filtros de la URL
-export const parseFiltersFromURL = (searchParams: URLSearchParams): Partial<FilterProps> => {
-	const urlFilters: Partial<FilterProps> = {};
+export const parseFiltersFromURL = (searchParams: URLSearchParams): Partial<PropiedadFilters> => {
+	const urlFilters: Partial<PropiedadFilters> = {};
 
 	// Parámetros simples
 	const tipoPropiedad = getStringParam(searchParams, "tipoPropiedad");
@@ -67,7 +66,6 @@ export const parseFiltersFromURL = (searchParams: URLSearchParams): Partial<Filt
 	return urlFilters;
 };
 
-// Helpers para construir parámetros de URL
 const addParam = (
 	params: URLSearchParams,
 	key: string,
@@ -84,7 +82,7 @@ const addArrayParam = (params: URLSearchParams, key: string, array: string[]) =>
 	}
 };
 
-const addPriceRange = (params: URLSearchParams, min: number, max: number) => {
+const addPriceRangeParam = (params: URLSearchParams, min: number, max: number) => {
 	if (min > LIMITS.MIN_PRECIO || max < LIMITS.MAX_PRECIO) {
 		params.set("precioMin", min.toString());
 		params.set("precioMax", max.toString());
@@ -92,7 +90,7 @@ const addPriceRange = (params: URLSearchParams, min: number, max: number) => {
 };
 
 // Función principal para construir URL con filtros
-export const buildFilterURL = (filters: FilterProps, pathname: string): string => {
+export const buildFilterURL = (filters: PropiedadFilters, pathname: string): string => {
 	const params = new URLSearchParams();
 
 	addParam(params, "tipoPropiedad", filters.tipoPropiedad);
@@ -104,7 +102,7 @@ export const buildFilterURL = (filters: FilterProps, pathname: string): string =
 	addParam(params, "superficieMin", filters.superficieMin);
 	addParam(params, "superficieMax", filters.superficieMax);
 
-	addPriceRange(params, filters.precio[0], filters.precio[1]);
+	addPriceRangeParam(params, filters.precio[0], filters.precio[1]);
 
 	addArrayParam(params, "caracteristicas", filters.caracteristicas);
 	addArrayParam(params, "ambientes", filters.ambientes);

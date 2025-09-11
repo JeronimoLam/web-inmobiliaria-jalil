@@ -9,15 +9,23 @@ import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
 import { usePagination } from "@/modules/propiedades/hooks/usePagination";
 import { FilterSideBar } from "@/modules/propiedades/components/FilterSideBar";
+import { FiltersProvider } from "../context/FiltersContext";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
 	itemsPerPage?: number;
+	operacion: "venta" | "alquiler";
 }
 
-export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: PropiedadesScreenProps) => {
+export const PropiedadesScreen = ({
+	propiedades,
+	itemsPerPage = 5,
+	operacion,
+}: PropiedadesScreenProps) => {
 	const [showListOnly, setShowListOnly] = useState(true);
 	const [showMapOnly, setShowMapOnly] = useState(false);
+
+	console.log(operacion);
 
 	const {
 		currentItems,
@@ -66,7 +74,9 @@ export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: Propiedades
 								onSearch={() => {}}
 							/>
 						</div>
-						<FilterSideBar />
+						<FiltersProvider>
+							<FilterSideBar />
+						</FiltersProvider>
 					</div>
 					<ul className="flex flex-row gap-2 relative">
 						{allTabs.map((item) => {

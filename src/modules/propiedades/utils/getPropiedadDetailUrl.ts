@@ -35,7 +35,7 @@ export const getPropiedadDetailUrl = (propiedad: Propiedad) => {
 		},
 	};
 
-	const completeURL = `/propiedades/${URL.tipoPropiedad}-${URL.estadoPublicacion}-${URL.localidad}-${URL.direccion}-${URL.codigo}?${new URLSearchParams(URL.query).toString()}`;
+	const completeURL = `/propiedades/detalle/${URL.tipoPropiedad}-${URL.estadoPublicacion}-${URL.localidad}-${URL.direccion}-${URL.codigo}?${new URLSearchParams(URL.query).toString()}`;
 
 	return completeURL;
 };

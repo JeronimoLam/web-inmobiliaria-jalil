@@ -1,14 +1,18 @@
 "use client";
 
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
-import { CheckboxField, CounterField, FilterProps } from "@/modules/propiedades/types/filters.type";
+import {
+	CheckboxField,
+	CounterField,
+	PropiedadFilters,
+} from "@/modules/propiedades/types/filters.type";
 import { useRouter } from "next/navigation";
 import { usePathname, useSearchParams } from "next/navigation";
 import { parseFiltersFromURL, buildFilterURL } from "@/modules/propiedades/utils/urlSync";
 import { LIMITS, DEFAULT_FILTERS } from "@/modules/propiedades/constants/filters.constants";
 
 interface FiltersContextType {
-	filters: FilterProps;
+	filters: PropiedadFilters;
 	resetFilters: () => void;
 	handleFilters: () => void;
 	getActiveFiltersCount: () => number;
@@ -37,12 +41,13 @@ interface FiltersProviderProps {
 }
 
 export const FiltersProvider = ({ children }: FiltersProviderProps) => {
-	const [filters, setFilters] = useState<FilterProps>(DEFAULT_FILTERS);
+	const [filters, setFilters] = useState<PropiedadFilters>(DEFAULT_FILTERS);
 	const [sheetOpen, setSheetOpen] = useState(false);
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
+	// Sincronizar Filtros UI con URL
 	useEffect(() => {
 		const urlFilters = parseFiltersFromURL(searchParams);
 
@@ -51,10 +56,15 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		}
 	}, [searchParams]);
 
-	// Sincronizar filtros con URL
-	const syncFiltersWithURL = (newFilters: FilterProps) => {
+	// Sincronizar URL con Filtros UI
+	const syncFiltersWithURL = (newFilters: PropiedadFilters) => {
 		const newUrl = buildFilterURL(newFilters, pathname);
 		router.replace(newUrl, { scroll: false });
+	};
+
+	const handleFilters = () => {
+		syncFiltersWithURL(filters);
+		setSheetOpen(false);
 	};
 
 	const resetFilters = () => {
@@ -131,12 +141,6 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 	const updateSuperficie = (field: "superficieMin" | "superficieMax", value: string) => {
 		setFilters((prev) => ({ ...prev, [field]: value }));
-	};
-
-	const handleFilters = () => {
-		syncFiltersWithURL(filters);
-		console.log("Filtros aplicados:", filters);
-		setSheetOpen(false);
 	};
 
 	const value: FiltersContextType = {

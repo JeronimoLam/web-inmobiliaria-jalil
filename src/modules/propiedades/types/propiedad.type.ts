@@ -73,6 +73,6 @@ export type TipoPropiedad = {
 };
 
 export enum EstadoPublicacionEnum {
-	ALQUILER = "Alquiler",
-	VENTA = "Venta",
+	ALQUILER = "alquiler",
+	VENTA = "venta",
 }

@@ -1,4 +1,4 @@
-export interface FilterProps {
+export interface PropiedadFilters {
 	tipoPropiedad: string;
 	ubicacion: string;
 	dormitorios: number;

@@ -1,4 +1,4 @@
-import { FilterProps } from "@/modules/propiedades/types/filters.type";
+import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
 
 export const LIMITS = {
 	MAX_DORMITORIOS: 10,
@@ -7,7 +7,7 @@ export const LIMITS = {
 	MIN_COUNTER_VALUE: 0,
 } as const;
 
-export const DEFAULT_FILTERS: FilterProps = {
+export const DEFAULT_FILTERS: PropiedadFilters = {
 	tipoPropiedad: "",
 	ubicacion: "",
 	dormitorios: 0,
