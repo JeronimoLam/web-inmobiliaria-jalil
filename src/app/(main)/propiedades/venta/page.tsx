@@ -1,11 +1,7 @@
-import { PageContainer } from "@/components/layouts/PageContainer";
+import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
 
-export default function VentaPage() {
-	return (
-		<>
-			<PageContainer>
-				<h1>Propiedades Page</h1>
-			</PageContainer>
-		</>
-	);
+export default async function VentaPage() {
+	const propiedades = await PropiedadesService.getPropiedades();
+	return <PropiedadesScreen propiedades={propiedades} />;
 }

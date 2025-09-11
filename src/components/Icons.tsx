@@ -14,6 +14,10 @@ import {
 	Clipboard,
 	Funnel,
 	ChevronDown,
+	Map,
+	List,
+	Plus,
+	Minus,
 } from "lucide-react";
 
 type IconProps = {
@@ -80,6 +84,22 @@ export const FilterIcon = ({ className, width, height, ...props }: IconProps) =>
 
 export const ChevronDownIcon = ({ className, width, height, ...props }: IconProps) => (
 	<ChevronDown className={className} width={width} height={height} {...props} />
+);
+
+export const MapIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Map className={className} width={width} height={height} {...props} />
+);
+
+export const ListIcon = ({ className, width, height, ...props }: IconProps) => (
+	<List className={className} width={width} height={height} {...props} />
+);
+
+export const PlusIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Plus className={className} width={width} height={height} {...props} />
+);
+
+export const MinusIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Minus className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (

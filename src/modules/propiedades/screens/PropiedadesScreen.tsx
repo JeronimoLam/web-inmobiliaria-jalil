@@ -4,11 +4,11 @@ import { PageContainer } from "@/components/layouts/PageContainer";
 import { PropiedadCard } from "@/modules/propiedades/components/PropiedadCard";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { PropiedadesMap } from "../components/PropiedadesMap";
-import { Map, List } from "lucide-react";
+import { ListIcon, MapIcon } from "@/components/Icons";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
 import { usePagination } from "@/modules/propiedades/hooks/usePagination";
-import { FilterSideBar } from "../components/FilterSideBar";
+import { FilterSideBar } from "@/modules/propiedades/components/FilterSideBar";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
@@ -46,8 +46,8 @@ export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: Propiedades
 	const showMap = !showListOnly; // Mostrar mapa si no está activado solo lista
 
 	const allTabs = [
-		{ label: "Ver Listado", icon: <List className="w-4 h-4" />, action: "list" },
-		{ label: "Ver Mapa", icon: <Map className="w-4 h-4" />, action: "map" },
+		{ label: "Ver Listado", icon: <ListIcon width={20} height={20} />, action: "list" },
+		{ label: "Ver Mapa", icon: <MapIcon width={20} height={20} />, action: "map" },
 	];
 	const [selectedTab, setSelectedTab] = useState(allTabs[0].label);
 
@@ -80,7 +80,7 @@ export const PropiedadesScreen = ({ propiedades, itemsPerPage = 5 }: Propiedades
 										if (item.action === "list") toggleListOnly();
 										if (item.action === "map") toggleMapOnly();
 									}}
-									className="w-full lg:w-auto hover:bg-muted-secondary/40 hover:rounded-md hover:rounded-b-none transition-colors relative px-3 py-3 cursor-pointer flex items-center select-none text-secondary font-medium text-base"
+									className="w-full lg:w-auto hover:bg-muted-secondary/40 hover:rounded-md hover:rounded-b-none transition-colors relative px-3 py-3 cursor-pointer flex items-center select-none text-secondary font-medium"
 								>
 									{isActive && (
 										<div className="absolute inset-0 rounded-md rounded-b-none bg-muted-secondary" />
