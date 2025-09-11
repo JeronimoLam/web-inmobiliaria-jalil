@@ -11,4 +11,6 @@ export const buildPropiedadTitle = (propiedad: Propiedad) => {
 
 export const buildPropiedadEstado = (propiedad: Propiedad) => {
 	const estado = propiedad.precios[0]?.estado_publicacion;
+
+	return estado;
 };
