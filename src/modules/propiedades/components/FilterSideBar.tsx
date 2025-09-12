@@ -26,14 +26,16 @@ import {
 	ambientesOpciones,
 	servicios,
 } from "@/modules/propiedades/data/filtros.data";
+import { useState } from "react";
 
 export const FilterSideBar = () => {
 	const direction = useDirection();
-	const { resetFilters, handleFilters, getActiveFiltersCount, sheetOpen, setSheetOpen } =
-		useFiltersContext();
+	const [sheetOpen, setSheetOpen] = useState(false);
+	const { resetFilters, handleFilters, getActiveFiltersCount } = useFiltersContext();
 
 	const applyFilters = () => {
 		handleFilters();
+		setSheetOpen(false);
 	};
 
 	return (
@@ -98,7 +100,7 @@ export const FilterSideBar = () => {
 						>
 							Borrar Filtros
 						</Button>
-						<Button variant="default" className="flex-1 h-11 font-medium" onClick={applyFilters}>
+						<Button variant="secondary" className="flex-1 h-11 font-medium" onClick={applyFilters}>
 							Aplicar Filtros
 						</Button>
 					</div>

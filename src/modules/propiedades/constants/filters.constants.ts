@@ -8,6 +8,7 @@ export const LIMITS = {
 } as const;
 
 export const DEFAULT_FILTERS: PropiedadFilters = {
+	operacion: "alquiler",
 	tipoPropiedad: "",
 	ubicacion: "",
 	dormitorios: 0,

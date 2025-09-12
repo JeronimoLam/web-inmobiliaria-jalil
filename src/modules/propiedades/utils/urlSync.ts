@@ -1,112 +1,57 @@
 import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
 import { LIMITS } from "@/modules/propiedades/constants/filters.constants";
 
-export const getStringParam = (searchParams: URLSearchParams, key: string): string | undefined => {
-	const value = searchParams.get(key);
-	return value || undefined;
+export const parseFiltersFromURL = (
+	searchParams: URLSearchParams,
+	pathname?: string,
+): PropiedadFilters => {
+	const operacionFromPath = pathname?.includes("/alquiler") ? "alquiler" : "venta";
+
+	return {
+		operacion: (searchParams.get("operacion") as "venta" | "alquiler") || operacionFromPath,
+		tipoPropiedad: searchParams.get("tipoPropiedad") || "",
+		ubicacion: searchParams.get("ubicacion") || "",
+		dormitorios: parseInt(searchParams.get("dormitorios") || "0"),
+		banos: parseInt(searchParams.get("banos") || "0"),
+		ambientesContador: parseInt(searchParams.get("ambientesContador") || "0"),
+		niveles: parseInt(searchParams.get("niveles") || "0"),
+		precio: [
+			parseInt(searchParams.get("precioMin") || "0") || LIMITS.MIN_PRECIO,
+			parseInt(searchParams.get("precioMax") || "0") || LIMITS.MAX_PRECIO,
+		],
+		caracteristicas: searchParams.get("caracteristicas")?.split(",") || [],
+		ambientes: searchParams.get("ambientes")?.split(",") || [],
+		servicios: searchParams.get("servicios")?.split(",") || [],
+		superficieMin: searchParams.get("superficieMin") || "",
+		superficieMax: searchParams.get("superficieMax") || "",
+	};
 };
 
-export const getNumberParam = (searchParams: URLSearchParams, key: string): number | undefined => {
-	const value = searchParams.get(key);
-	return value ? parseInt(value) : undefined;
-};
-
-export const getArrayParam = (searchParams: URLSearchParams, key: string): string[] | undefined => {
-	const value = searchParams.get(key);
-	return value ? value.split(",") : undefined;
-};
-
-export const parseFiltersFromURL = (searchParams: URLSearchParams): Partial<PropiedadFilters> => {
-	const urlFilters: Partial<PropiedadFilters> = {};
-
-	// Parámetros simples
-	const tipoPropiedad = getStringParam(searchParams, "tipoPropiedad");
-	if (tipoPropiedad) urlFilters.tipoPropiedad = tipoPropiedad;
-
-	const ubicacion = getStringParam(searchParams, "ubicacion");
-	if (ubicacion) urlFilters.ubicacion = ubicacion;
-
-	// Parámetros numéricos
-	const dormitorios = getNumberParam(searchParams, "dormitorios");
-	if (dormitorios) urlFilters.dormitorios = dormitorios;
-
-	const banos = getNumberParam(searchParams, "banos");
-	if (banos) urlFilters.banos = banos;
-
-	const ambientesContador = getNumberParam(searchParams, "ambientesContador");
-	if (ambientesContador) urlFilters.ambientesContador = ambientesContador;
-
-	const niveles = getNumberParam(searchParams, "niveles");
-	if (niveles) urlFilters.niveles = niveles;
-
-	// Rango de precios
-	const precioMin = getNumberParam(searchParams, "precioMin");
-	const precioMax = getNumberParam(searchParams, "precioMax");
-	if (precioMin !== undefined || precioMax !== undefined) {
-		urlFilters.precio = [precioMin ?? LIMITS.MIN_PRECIO, precioMax ?? LIMITS.MAX_PRECIO];
-	}
-
-	// Arrays
-	const caracteristicas = getArrayParam(searchParams, "caracteristicas");
-	if (caracteristicas) urlFilters.caracteristicas = caracteristicas;
-
-	const ambientes = getArrayParam(searchParams, "ambientes");
-	if (ambientes) urlFilters.ambientes = ambientes;
-
-	const servicios = getArrayParam(searchParams, "servicios");
-	if (servicios) urlFilters.servicios = servicios;
-
-	// Superficie
-	const superficieMin = getStringParam(searchParams, "superficieMin");
-	if (superficieMin) urlFilters.superficieMin = superficieMin;
-
-	const superficieMax = getStringParam(searchParams, "superficieMax");
-	if (superficieMax) urlFilters.superficieMax = superficieMax;
-
-	return urlFilters;
-};
-
-const addParam = (
-	params: URLSearchParams,
-	key: string,
-	value: string | number | undefined | null,
-) => {
-	if (value !== undefined && value !== null && value !== "" && value !== 0) {
-		params.set(key, value.toString());
-	}
-};
-
-const addArrayParam = (params: URLSearchParams, key: string, array: string[]) => {
-	if (array.length > 0) {
-		params.set(key, array.join(","));
-	}
-};
-
-const addPriceRangeParam = (params: URLSearchParams, min: number, max: number) => {
-	if (min > LIMITS.MIN_PRECIO || max < LIMITS.MAX_PRECIO) {
-		params.set("precioMin", min.toString());
-		params.set("precioMax", max.toString());
-	}
-};
-
-// Función principal para construir URL con filtros
 export const buildFilterURL = (filters: PropiedadFilters, pathname: string): string => {
 	const params = new URLSearchParams();
 
-	addParam(params, "tipoPropiedad", filters.tipoPropiedad);
-	addParam(params, "ubicacion", filters.ubicacion);
-	addParam(params, "dormitorios", filters.dormitorios);
-	addParam(params, "banos", filters.banos);
-	addParam(params, "ambientesContador", filters.ambientesContador);
-	addParam(params, "niveles", filters.niveles);
-	addParam(params, "superficieMin", filters.superficieMin);
-	addParam(params, "superficieMax", filters.superficieMax);
+	// Campos simples
+	if (filters.tipoPropiedad) params.set("tipoPropiedad", filters.tipoPropiedad);
+	if (filters.ubicacion) params.set("ubicacion", filters.ubicacion);
+	if (filters.dormitorios > 0) params.set("dormitorios", filters.dormitorios.toString());
+	if (filters.banos > 0) params.set("banos", filters.banos.toString());
+	if (filters.ambientesContador > 0)
+		params.set("ambientesContador", filters.ambientesContador.toString());
+	if (filters.niveles > 0) params.set("niveles", filters.niveles.toString());
+	if (filters.superficieMin) params.set("superficieMin", filters.superficieMin);
+	if (filters.superficieMax) params.set("superficieMax", filters.superficieMax);
 
-	addPriceRangeParam(params, filters.precio[0], filters.precio[1]);
+	// Rango de Precio
+	if (filters.precio[0] > LIMITS.MIN_PRECIO || filters.precio[1] < LIMITS.MAX_PRECIO) {
+		params.set("precioMin", filters.precio[0].toString());
+		params.set("precioMax", filters.precio[1].toString());
+	}
 
-	addArrayParam(params, "caracteristicas", filters.caracteristicas);
-	addArrayParam(params, "ambientes", filters.ambientes);
-	addArrayParam(params, "servicios", filters.servicios);
+	// Arrays
+	if (filters.caracteristicas.length > 0)
+		params.set("caracteristicas", filters.caracteristicas.join(","));
+	if (filters.ambientes.length > 0) params.set("ambientes", filters.ambientes.join(","));
+	if (filters.servicios.length > 0) params.set("servicios", filters.servicios.join(","));
 
 	return params.toString() ? `${pathname}?${params.toString()}` : pathname;
 };

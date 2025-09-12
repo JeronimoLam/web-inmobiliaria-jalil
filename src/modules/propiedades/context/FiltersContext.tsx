@@ -1,15 +1,13 @@
 "use client";
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
 import {
 	CheckboxField,
 	CounterField,
 	PropiedadFilters,
 } from "@/modules/propiedades/types/filters.type";
-import { useRouter } from "next/navigation";
-import { usePathname, useSearchParams } from "next/navigation";
-import { parseFiltersFromURL, buildFilterURL } from "@/modules/propiedades/utils/urlSync";
 import { LIMITS, DEFAULT_FILTERS } from "@/modules/propiedades/constants/filters.constants";
+import { useURLSync } from "@/modules/propiedades/hooks/useURLSync";
 
 interface FiltersContextType {
 	filters: PropiedadFilters;
@@ -23,11 +21,11 @@ interface FiltersContextType {
 	updateUbicacion: (value: string) => void;
 	updatePrecio: (value: [number, number]) => void;
 	updateSuperficie: (field: "superficieMin" | "superficieMax", value: string) => void;
-	sheetOpen: boolean;
-	setSheetOpen: (open: boolean) => void;
+	updateOperacion: (value: "venta" | "alquiler") => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
+
 export const useFiltersContext = () => {
 	const context = useContext(FiltersContext);
 	if (!context) {
@@ -42,33 +40,17 @@ interface FiltersProviderProps {
 
 export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 	const [filters, setFilters] = useState<PropiedadFilters>(DEFAULT_FILTERS);
-	const [sheetOpen, setSheetOpen] = useState(false);
-	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
-	// Sincronizar Filtros UI con URL
-	useEffect(() => {
-		const urlFilters = parseFiltersFromURL(searchParams);
-
-		if (Object.keys(urlFilters).length > 0) {
-			setFilters((prev) => ({ ...prev, ...urlFilters }));
-		}
-	}, [searchParams]);
-
-	// Sincronizar URL con Filtros UI
-	const syncFiltersWithURL = (newFilters: PropiedadFilters) => {
-		const newUrl = buildFilterURL(newFilters, pathname);
-		router.replace(newUrl, { scroll: false });
-	};
+	const { syncFiltersWithURL } = useURLSync({ setFilters });
 
 	const handleFilters = () => {
 		syncFiltersWithURL(filters);
-		setSheetOpen(false);
 	};
 
 	const resetFilters = () => {
-		const newFilters = DEFAULT_FILTERS;
+		const newFilters = {
+			...DEFAULT_FILTERS,
+			operacion: filters.operacion,
+		};
 		setFilters(newFilters);
 		syncFiltersWithURL(newFilters);
 	};
@@ -143,6 +125,10 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		setFilters((prev) => ({ ...prev, [field]: value }));
 	};
 
+	const updateOperacion = (value: "venta" | "alquiler") => {
+		setFilters((prev) => ({ ...prev, operacion: value }));
+	};
+
 	const value: FiltersContextType = {
 		filters,
 		resetFilters,
@@ -155,8 +141,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		updateUbicacion,
 		updatePrecio,
 		updateSuperficie,
-		sheetOpen,
-		setSheetOpen,
+		updateOperacion,
 	};
 
 	return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;

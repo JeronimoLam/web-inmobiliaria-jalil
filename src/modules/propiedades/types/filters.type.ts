@@ -1,4 +1,5 @@
 export interface PropiedadFilters {
+	operacion: "venta" | "alquiler";
 	tipoPropiedad: string;
 	ubicacion: string;
 	dormitorios: number;
