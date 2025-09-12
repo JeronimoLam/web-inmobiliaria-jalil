@@ -6,6 +6,7 @@ import {
 	Sheet,
 	SheetBody,
 	SheetContent,
+	SheetDescription,
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
@@ -53,6 +54,9 @@ export const FilterSideBar = () => {
 						<FilterIcon className="h-5 w-5" />
 						Filtros ({getActiveFiltersCount()})
 					</SheetTitle>
+					<SheetDescription className="sr-only">
+						Filtros para consulta y selección de propiedades inmobiliarias
+					</SheetDescription>
 				</SheetHeader>
 
 				<SheetBody className="flex-1 overflow-y-auto pr-4">
