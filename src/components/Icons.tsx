@@ -18,6 +18,9 @@ import {
 	List,
 	Plus,
 	Minus,
+	Edit3,
+	X,
+	Trash2,
 } from "lucide-react";
 
 type IconProps = {
@@ -100,6 +103,18 @@ export const PlusIcon = ({ className, width, height, ...props }: IconProps) => (
 
 export const MinusIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Minus className={className} width={width} height={height} {...props} />
+);
+
+export const EditIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Edit3 className={className} width={width} height={height} {...props} />
+);
+
+export const XIcon = ({ className, width, height, ...props }: IconProps) => (
+	<X className={className} width={width} height={height} {...props} />
+);
+
+export const TrashIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Trash2 className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (
