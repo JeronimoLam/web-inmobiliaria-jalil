@@ -20,7 +20,11 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 	if (operacion !== "venta" && operacion !== "alquiler") {
 		return notFound();
 	}
-	// Hacemos el fetch pansandole que operacion queremos filtrar (venta o alquiler)
+
+	// const propiedades = await PropiedadesService.getPropiedades({
+	// 	...query,
+	// 	operacion,
+	// });
 	const propiedades = await PropiedadesService.getPropiedades();
 
 	return <PropiedadesScreen propiedades={propiedades} operacion={operacion} />;

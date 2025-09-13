@@ -1,5 +1,7 @@
 import { OperacionesEnum } from "../enums/propiedades.enum";
 import { Propiedad } from "../types/propiedad.type";
+import { PropiedadFilters } from "../types/filters.type";
+import { supabase } from "@/lib/supabaseClient";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
@@ -13,16 +15,19 @@ export class PropiedadesService {
 	}
 
 	static getPropiedades = async (): Promise<Propiedad[]> => {
-		try {
-			const response = await fetch(`${SUPABASE_URL}/propiedades_full`, {
-				headers: this.getHeaders(),
-				next: { revalidate: 300 },
-			});
-			const data = await response.json();
-			return data;
-		} catch {
+		const { data, error } = await supabase
+			.from("propiedades_full") // reemplaza por el nombre real de tu tabla
+			.select();
+		// .select("*,precios(*)");
+		// .eq("tipo_propiedad.value", "Casa"); // filtro simple de prueba
+
+		if (error) {
+			console.error("Supabase error:", error);
 			return [];
 		}
+
+		console.log("Datos obtenidos:", data);
+		return data ?? [];
 	};
 
 	static getPropiedadesVenta = async (): Promise<Propiedad[]> => {
