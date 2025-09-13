@@ -1,5 +1,6 @@
 import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
 import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
+import { notFound } from "next/navigation";
 
 type Operacion = "venta" | "alquiler";
 interface PropiedadesPageProps {
@@ -16,6 +17,9 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 
 	console.log(operacion, query);
 
+	if (operacion !== "venta" && operacion !== "alquiler") {
+		return notFound();
+	}
 	// Hacemos el fetch pansandole que operacion queremos filtrar (venta o alquiler)
 	const propiedades = await PropiedadesService.getPropiedades();
 
