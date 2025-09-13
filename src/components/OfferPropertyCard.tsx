@@ -98,6 +98,15 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				>
 					<div className="flex flex-col text-start">
 						<PropiedadPrecios propiedad={propiedad} />
+
+						{propiedad.precios[0].importe !== 0 &&
+							propiedad.expensas_value &&
+							propiedad.expensas_divisa && (
+								<span className="font-light">
+									Expensas: ${propiedad.expensas_value.toLocaleString("es-AR")}{" "}
+									{propiedad.expensas_divisa}
+								</span>
+							)}
 					</div>
 				</Button>
 			</Link>
@@ -117,7 +126,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">{precio.importe}</span>
+					<span className="font-semibold text-xl">${precio.importe}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}

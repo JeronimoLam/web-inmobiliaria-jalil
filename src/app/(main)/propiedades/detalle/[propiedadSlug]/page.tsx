@@ -2,7 +2,7 @@ import { Footer } from "@/components/layouts/Footer";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadDetailScreen } from "@/modules/propiedades/screens/PropiedadDetailScreen";
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
 import { notFound } from "next/navigation";
 
 interface PropiedadDetailPageProps {
@@ -27,7 +27,9 @@ export default async function PropiedadDetailPage({
 
 	const propiedad = await PropiedadesService.getPropiedad(Number(codigoPropiedad), op);
 
-	if (!propiedad) return notFound();
+	if (!propiedad || !propiedad.precios || propiedad.precios.length === 0) {
+		return notFound();
+	}
 
 	return (
 		<>

@@ -5,97 +5,93 @@ const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
 
 export class PropiedadesService {
-	static async getPropiedades(): Promise<Propiedad[]> {
+	private static getHeaders() {
+		return {
+			Authorization: `Bearer ${SUPABASE_KEY}`,
+			apikey: SUPABASE_KEY,
+		};
+	}
+
+	static getPropiedades = async (): Promise<Propiedad[]> => {
 		try {
 			const response = await fetch(`${SUPABASE_URL}/propiedades_full`, {
-				headers: {
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					apikey: SUPABASE_KEY,
-				},
+				headers: this.getHeaders(),
+				next: { revalidate: 300 },
 			});
 			const data = await response.json();
 			return data;
 		} catch {
 			return [];
 		}
-	}
+	};
 
-	static async getPropiedadesVenta(): Promise<Propiedad[]> {
+	static getPropiedadesVenta = async (): Promise<Propiedad[]> => {
 		try {
 			const response = await fetch(`${SUPABASE_URL}/propiedades_venta`, {
-				headers: {
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					apikey: SUPABASE_KEY,
-				},
+				headers: this.getHeaders(),
+				next: { revalidate: 300 },
 			});
 			const data = await response.json();
 			return data;
 		} catch {
 			return [];
 		}
-	}
+	};
 
-	static async getPropiedadesAlquiler(): Promise<Propiedad[]> {
+	static getPropiedadesAlquiler = async (): Promise<Propiedad[]> => {
 		try {
 			const response = await fetch(`${SUPABASE_URL}/propiedades_alquiler`, {
-				headers: {
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					apikey: SUPABASE_KEY,
-				},
+				headers: this.getHeaders(),
+				next: { revalidate: 300 },
 			});
 			const data = await response.json();
 			return data;
 		} catch {
 			return [];
 		}
-	}
+	};
 
-	static async getPropiedadesVentaDestacados(): Promise<Propiedad[]> {
+	static getPropiedadesVentaDestacados = async (): Promise<Propiedad[]> => {
 		try {
 			const response = await fetch(`${SUPABASE_URL}/propiedades_venta?destacada=eq.true`, {
-				headers: {
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					apikey: SUPABASE_KEY,
-				},
+				headers: this.getHeaders(),
+				next: { revalidate: 300 },
 			});
 			const data = await response.json();
 			return data;
 		} catch {
 			return [];
 		}
-	}
+	};
 
-	static async getPropiedadesAlquilerDestacados(): Promise<Propiedad[]> {
+	static getPropiedadesAlquilerDestacados = async (): Promise<Propiedad[]> => {
 		try {
 			const response = await fetch(`${SUPABASE_URL}/propiedades_alquiler?destacada=eq.true`, {
-				headers: {
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					apikey: SUPABASE_KEY,
-				},
+				headers: this.getHeaders(),
+				next: { revalidate: 300 },
 			});
 			const data = await response.json();
 			return data;
 		} catch {
 			return [];
 		}
-	}
+	};
 
-	static async getPropiedad(codigo: number, operacion: OperacionesEnum): Promise<Propiedad | null> {
+	static getPropiedad = async (
+		codigo: number,
+		operacion: OperacionesEnum,
+	): Promise<Propiedad | null> => {
 		try {
 			let response;
 			if (operacion === OperacionesEnum.ALQUILER) {
 				response = await fetch(`${SUPABASE_URL}/propiedades_alquiler?id=eq.${codigo}`, {
-					headers: {
-						Authorization: `Bearer ${SUPABASE_KEY}`,
-						apikey: SUPABASE_KEY,
-					},
+					headers: this.getHeaders(),
+					cache: "no-store",
 				});
 			} else {
 				response = await fetch(`${SUPABASE_URL}/propiedades_venta?id=eq.${codigo}`, {
-					headers: {
-						Authorization: `Bearer ${SUPABASE_KEY}`,
-						apikey: SUPABASE_KEY,
-					},
+					headers: this.getHeaders(),
+					cache: "no-store",
 				});
 			}
 
@@ -103,12 +99,14 @@ export class PropiedadesService {
 				throw new Error("Error fetching propiedad");
 			}
 
-			const propiedad = await response.json();
+			const data = await response.json();
 
-			return propiedad;
+			const propiedad = Array.isArray(data) ? data[0] : data;
+
+			return propiedad || null;
 		} catch (error) {
 			console.log(error);
 			return null;
 		}
-	}
+	};
 }

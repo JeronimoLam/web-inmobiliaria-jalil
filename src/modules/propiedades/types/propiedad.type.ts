@@ -7,6 +7,8 @@ export type Propiedad = {
 	entre_calles: string;
 	numero: number;
 	descripcion: string;
+	expensas_value: number | null;
+	expensas_divisa: string | null;
 	map_location: MapLocation;
 	localidad: Localidad;
 	precios: Precio[];

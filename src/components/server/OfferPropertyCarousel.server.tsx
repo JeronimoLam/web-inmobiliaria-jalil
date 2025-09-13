@@ -1,4 +1,4 @@
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
 import { OfferPropertyCarousel } from "../OfferPropertyCarousel";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 

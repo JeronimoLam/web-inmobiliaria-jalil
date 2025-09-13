@@ -19,7 +19,7 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 	const precioImporte = propiedad.precios[0].importe ? propiedad.precios[0].importe : "Consultar";
 	const estadoPropiedad = propiedad.precios[0]?.estado_publicacion.nombre;
 	const title = buildPropiedadTitle(propiedad);
-	const [latitud, longitud] = propiedad.map_location.coordinates;
+	const [latitud, longitud] = propiedad.map_location.coordinates || [0, 0];
 
 	return (
 		<div>
@@ -55,10 +55,16 @@ export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps)
 						<div className="lg:w-[30%] flex flex-col justify-center">
 							<p className="text-2.5xl font-bold text-secondary">
 								{precioImporte === "Consultar"
-									? "Consultar"
-									: `${propiedad.precios[0].divisa} ${precioImporte.toLocaleString("es-AR")}`}
+									? "Consultar precio"
+									: `$${precioImporte.toLocaleString("es-AR")}`}{" "}
+								{propiedad.precios[0].divisa}
 							</p>
-							<p className="text-md font-medium">Expensas: $00000</p>
+							{precioImporte !== "Consultar" && propiedad.expensas_value && (
+								<p className="text-md font-medium">
+									Expensas: ${propiedad.expensas_value.toLocaleString("es-AR")}{" "}
+									{propiedad.expensas_divisa}
+								</p>
+							)}
 						</div>
 					</div>
 					<Separator className="my-5" />

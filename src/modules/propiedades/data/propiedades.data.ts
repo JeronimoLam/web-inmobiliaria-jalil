@@ -15,6 +15,8 @@ export const propiedades: Propiedad[] = [
 		numero: 5401,
 		localidad: { id: 1, nombre: "Centro" },
 		descripcion: "Departamento de 1 dormitorio en el Centro de La Plata, ideal para inversión.",
+		expensas_value: 15000,
+		expensas_divisa: "ARS",
 		map_location: { type: "Point", coordinates: [-34.9214, -57.9544] },
 		precios: [
 			{
@@ -97,6 +99,8 @@ export const propiedades: Propiedad[] = [
 		numero: 1200,
 		localidad: { id: 2, nombre: "Casco Urbano - Zona Norte" },
 		descripcion: "Amplio departamento de 2 dormitorios en zona norte del casco urbano.",
+		expensas_value: 22000,
+		expensas_divisa: "ARS",
 		map_location: { type: "Point", coordinates: [-34.9085, -57.9456] },
 		precios: [
 			{
@@ -179,6 +183,8 @@ export const propiedades: Propiedad[] = [
 		numero: 850,
 		localidad: { id: 3, nombre: "Casco Urbano - Zona Este" },
 		descripcion: "Casa en zona este del casco urbano con 3 dormitorios y amplio jardín.",
+		expensas_value: null,
+		expensas_divisa: null,
 		map_location: { type: "Point", coordinates: [-34.9156, -57.9345] },
 		precios: [
 			{
@@ -261,6 +267,8 @@ export const propiedades: Propiedad[] = [
 		numero: 1100,
 		localidad: { id: 4, nombre: "Casco Urbano - Zona Oeste" },
 		descripcion: "Casa moderna con pileta y deck en zona oeste del casco urbano.",
+		expensas_value: null,
+		expensas_divisa: null,
 		map_location: { type: "Point", coordinates: [-34.9298, -57.9675] },
 		precios: [
 			{
@@ -343,6 +351,8 @@ export const propiedades: Propiedad[] = [
 		numero: 5401,
 		localidad: { id: 5, nombre: "Casco Urbano - Plaza San Martín" },
 		descripcion: "Departamento de 1 dormitorio cerca de Plaza San Martín.",
+		expensas_value: 18000,
+		expensas_divisa: "ARS",
 		map_location: { type: "Point", coordinates: [-34.9187, -57.9567] },
 		precios: [
 			{
@@ -425,6 +435,8 @@ export const propiedades: Propiedad[] = [
 		numero: 1200,
 		localidad: { id: 6, nombre: "Casco Urbano - Zona Sur" },
 		descripcion: "Amplio departamento de 2 dormitorios en zona sur del casco urbano.",
+		expensas_value: 25000,
+		expensas_divisa: "ARS",
 		map_location: { type: "Point", coordinates: [-34.9378, -57.9489] },
 		precios: [
 			{
@@ -507,6 +519,8 @@ export const propiedades: Propiedad[] = [
 		numero: 850,
 		localidad: { id: 7, nombre: "Casco Urbano - Plaza Moreno" },
 		descripcion: "Casa cerca de Plaza Moreno con 3 dormitorios y patio amplio.",
+		expensas_value: null,
+		expensas_divisa: null,
 		map_location: { type: "Point", coordinates: [-34.9203, -57.9534] },
 		precios: [
 			{
@@ -589,6 +603,8 @@ export const propiedades: Propiedad[] = [
 		numero: 1100,
 		localidad: { id: 8, nombre: "Casco Urbano - Zona Universidad" },
 		descripcion: "Casa moderna con pileta y deck cerca de la Universidad.",
+		expensas_value: null,
+		expensas_divisa: null,
 		map_location: { type: "Point", coordinates: [-34.9125, -57.9623] },
 		precios: [
 			{
