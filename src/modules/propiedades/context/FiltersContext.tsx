@@ -18,8 +18,8 @@ interface FiltersContextType {
 	decrementCounter: (field: CounterField) => void;
 	toggleCheckbox: (value: string, field: CheckboxField) => void;
 	updateTipoPropiedad: (value: string) => void;
-	updateUbicacion: (value: string) => void;
-	updatePrecio: (value: [number, number]) => void;
+	updateLocalidad: (value: string) => void;
+	updatePrecio: (min: number, max: number) => void;
 	updateSuperficie: (field: "superficieMin" | "superficieMax", value: string) => void;
 	updateOperacion: (value: "venta" | "alquiler") => void;
 }
@@ -59,12 +59,12 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		let count = 0;
 
 		if (filters.tipoPropiedad) count++;
-		if (filters.ubicacion) count++;
+		if (filters.localidad) count++;
 		if (filters.dormitorios > 0) count++;
 		if (filters.banos > 0) count++;
 		if (filters.ambientesContador > 0) count++;
 		if (filters.niveles > 0) count++;
-		if (filters.precio[0] > LIMITS.MIN_PRECIO || filters.precio[1] < LIMITS.MAX_PRECIO) count++;
+		if (filters.precioMin > LIMITS.MIN_PRECIO || filters.precioMax < LIMITS.MAX_PRECIO) count++;
 		if (filters.caracteristicas.length > 0) count++;
 		if (filters.ambientes.length > 0) count++;
 		if (filters.servicios.length > 0) count++;
@@ -113,12 +113,12 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		setFilters((prev) => ({ ...prev, tipoPropiedad: value }));
 	};
 
-	const updateUbicacion = (value: string) => {
-		setFilters((prev) => ({ ...prev, ubicacion: value }));
+	const updateLocalidad = (value: string) => {
+		setFilters((prev) => ({ ...prev, localidad: value }));
 	};
 
-	const updatePrecio = (value: [number, number]) => {
-		setFilters((prev) => ({ ...prev, precio: value }));
+	const updatePrecio = (min: number, max: number) => {
+		setFilters((prev) => ({ ...prev, precioMin: min, precioMax: max }));
 	};
 
 	const updateSuperficie = (field: "superficieMin" | "superficieMax", value: string) => {
@@ -138,7 +138,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		decrementCounter,
 		toggleCheckbox,
 		updateTipoPropiedad,
-		updateUbicacion,
+		updateLocalidad,
 		updatePrecio,
 		updateSuperficie,
 		updateOperacion,

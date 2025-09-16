@@ -1,4 +1,5 @@
 export const tiposPropiedad = [
+	{ value: "Campo", label: "Campo" },
 	{ value: "casa", label: "Casa" },
 	{ value: "departamento", label: "Departamento" },
 	{ value: "oficina", label: "Oficina" },
@@ -8,7 +9,8 @@ export const tiposPropiedad = [
 ];
 
 export const ubicaciones = [
-	{ value: "palermo", label: "Palermo" },
+	{ value: "La Plata, Buenos Aires", label: "La Plata, Buenos Aires" },
+	{ value: "Buenos Aires", label: "Buenos Aires" },
 	{ value: "belgrano", label: "Belgrano" },
 	{ value: "recoleta", label: "Recoleta" },
 	{ value: "puerto-madero", label: "Puerto Madero" },

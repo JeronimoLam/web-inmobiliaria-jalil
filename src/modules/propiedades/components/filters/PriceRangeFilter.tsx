@@ -12,8 +12,8 @@ export const PriceRangeFilter = () => {
 			<Label className="block text-sm font-semibold">Rango de precio</Label>
 			<div>
 				<Slider
-					value={filters.precio}
-					onValueChange={(value) => updatePrecio([value[0], value[1]])}
+					value={[filters.precioMin, filters.precioMax]}
+					onValueChange={(value) => updatePrecio(value[0], value[1])}
 					max={1000000}
 					min={0}
 					step={10000}
@@ -21,8 +21,8 @@ export const PriceRangeFilter = () => {
 				/>
 			</div>
 			<div className="flex justify-between text-sm text-gray-500 px-2">
-				<span>${filters.precio[0].toLocaleString()}</span>
-				<span>${filters.precio[1].toLocaleString()}</span>
+				<span>${filters.precioMin.toLocaleString()}</span>
+				<span>${filters.precioMax.toLocaleString()}</span>
 			</div>
 		</div>
 	);

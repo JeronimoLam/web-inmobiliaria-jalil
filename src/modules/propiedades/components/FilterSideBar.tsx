@@ -16,7 +16,7 @@ import { useDirection } from "@radix-ui/react-direction";
 import { useFiltersContext } from "../context/FiltersContext";
 import { TabOperationSelector } from "./filters/TabOperationSelector";
 import { TipoPropiedadFilter } from "./filters/TipoPropiedadFilter";
-import { UbicacionFilter } from "./filters/UbicacionFilter";
+import { LocalidadFilter } from "./filters/LocalidadFilter";
 import { CounterFilter } from "./filters/CounterFilter";
 import { PriceRangeFilter } from "./filters/PriceRangeFilter";
 import { CheckboxGroupFilter } from "./filters/CheckboxGroupFilter";
@@ -67,7 +67,7 @@ export const FilterSideBar = () => {
 					{/* Filter Components */}
 					<div className="space-y-6">
 						<TipoPropiedadFilter />
-						<UbicacionFilter />
+						<LocalidadFilter />
 						<div className="space-y-3">
 							<CounterFilter
 								label="Dormitorios"

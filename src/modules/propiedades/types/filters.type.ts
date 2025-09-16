@@ -1,9 +1,10 @@
 export interface PropiedadFilters {
 	operacion: "venta" | "alquiler";
 	tipoPropiedad: string;
-	ubicacion: string;
+	localidad: string;
 	dormitorios: number;
-	precio: [number, number];
+	precioMin: number;
+	precioMax: number;
 	caracteristicas: string[];
 	ambientes: string[];
 	servicios: string[];

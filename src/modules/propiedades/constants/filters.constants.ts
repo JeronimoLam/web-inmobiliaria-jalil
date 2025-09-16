@@ -10,9 +10,10 @@ export const LIMITS = {
 export const DEFAULT_FILTERS: PropiedadFilters = {
 	operacion: "alquiler",
 	tipoPropiedad: "",
-	ubicacion: "",
+	localidad: "",
 	dormitorios: 0,
-	precio: [LIMITS.MIN_PRECIO, LIMITS.MAX_PRECIO],
+	precioMin: LIMITS.MIN_PRECIO,
+	precioMax: LIMITS.MAX_PRECIO,
 	caracteristicas: [],
 	ambientes: [],
 	servicios: [],

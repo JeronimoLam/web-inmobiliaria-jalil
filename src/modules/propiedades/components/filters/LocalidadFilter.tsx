@@ -17,13 +17,13 @@ import { cn } from "@/lib/utils";
 import { ubicaciones } from "@/modules/propiedades/data/filtros.data";
 import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
 
-export const UbicacionFilter = () => {
-	const { filters, updateUbicacion } = useFiltersContext();
+export const LocalidadFilter = () => {
+	const { filters, updateLocalidad } = useFiltersContext();
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<div className="space-y-3">
-			<Label className="block text-sm font-semibold">Ubicación</Label>
+			<Label className="block text-sm font-semibold">Localidad</Label>
 			<Popover open={isOpen} onOpenChange={setIsOpen}>
 				<PopoverTrigger asChild>
 					<Button
@@ -32,9 +32,9 @@ export const UbicacionFilter = () => {
 						aria-expanded={isOpen}
 						className="w-full justify-between h-11 px-4 font-normal border-gray-200 hover:border-gray-300"
 					>
-						{filters.ubicacion
-							? ubicaciones.find((ub) => ub.value === filters.ubicacion)?.label
-							: "Seleccionar ubicación"}
+						{filters.localidad
+							? ubicaciones.find((ub) => ub.value === filters.localidad)?.label
+							: "Seleccionar localidad"}
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 					</Button>
 				</PopoverTrigger>
@@ -49,14 +49,14 @@ export const UbicacionFilter = () => {
 										key={ub.value}
 										value={ub.value}
 										onSelect={(currentValue) => {
-											updateUbicacion(currentValue === filters.ubicacion ? "" : currentValue);
+											updateLocalidad(currentValue === filters.localidad ? "" : currentValue);
 											setIsOpen(false);
 										}}
 									>
 										<Check
 											className={cn(
 												"mr-2 h-4 w-4",
-												filters.ubicacion === ub.value ? "opacity-100" : "opacity-0",
+												filters.localidad === ub.value ? "opacity-100" : "opacity-0",
 											)}
 										/>
 										{ub.label}

@@ -2,6 +2,7 @@ import { OperacionesEnum } from "../enums/propiedades.enum";
 import { Propiedad } from "../types/propiedad.type";
 import { PropiedadFilters } from "../types/filters.type";
 import { supabase } from "@/lib/supabaseClient";
+import { LIMITS } from "../constants/filters.constants";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
@@ -14,19 +15,35 @@ export class PropiedadesService {
 		};
 	}
 
-	static getPropiedades = async (): Promise<Propiedad[]> => {
-		const { data, error } = await supabase
-			.from("propiedades_full") // reemplaza por el nombre real de tu tabla
-			.select();
-		// .select("*,precios(*)");
-		// .eq("tipo_propiedad.value", "Casa"); // filtro simple de prueba
+	static getPropiedades = async (filtros: PropiedadFilters) => {
+		// Usar la vista específica según la operación
+		// const tableName = filtros.operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
+		// const filterBuilder = supabase.from(tableName).select("*");
+		const filterBuilder = supabase.from("propiedades_full").select("*");
 
-		if (error) {
-			console.error("Supabase error:", error);
-			return [];
+		console.log(filtros);
+
+		if (filtros.tipoPropiedad) {
+			filterBuilder.eq("tipo_propiedad->>value", filtros.tipoPropiedad);
+		}
+		if (filtros.localidad) {
+			filterBuilder.eq("localidad->>nombre", filtros.localidad);
+		}
+		if (filtros.dormitorios && filtros.dormitorios > 0) {
+			filterBuilder.eq("detalles->>dormitorios", filtros.dormitorios);
 		}
 
-		console.log("Datos obtenidos:", data);
+		// Filtrar por rango de precios - buscar en el primer elemento del array de precios
+		if (filtros.precioMin > LIMITS.MIN_PRECIO) {
+			filterBuilder.gte("precios->0->>importe", filtros.precioMin);
+		}
+		if (filtros.precioMax < LIMITS.MAX_PRECIO) {
+			filterBuilder.lte("precios->0->>importe", filtros.precioMax);
+		}
+
+		const { data, error } = await filterBuilder;
+
+		if (error) console.error("Error Supabase:", error);
 		return data ?? [];
 	};
 

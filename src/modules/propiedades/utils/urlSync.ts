@@ -10,15 +10,13 @@ export const parseFiltersFromURL = (
 	return {
 		operacion: (searchParams.get("operacion") as "venta" | "alquiler") || operacionFromPath,
 		tipoPropiedad: searchParams.get("tipoPropiedad") || "",
-		ubicacion: searchParams.get("ubicacion") || "",
+		localidad: searchParams.get("localidad") || "",
 		dormitorios: parseInt(searchParams.get("dormitorios") || "0"),
 		banos: parseInt(searchParams.get("banos") || "0"),
 		ambientesContador: parseInt(searchParams.get("ambientesContador") || "0"),
 		niveles: parseInt(searchParams.get("niveles") || "0"),
-		precio: [
-			parseInt(searchParams.get("precioMin") || "0") || LIMITS.MIN_PRECIO,
-			parseInt(searchParams.get("precioMax") || "0") || LIMITS.MAX_PRECIO,
-		],
+		precioMin: parseInt(searchParams.get("precioMin") || "0") || LIMITS.MIN_PRECIO,
+		precioMax: parseInt(searchParams.get("precioMax") || "0") || LIMITS.MAX_PRECIO,
 		caracteristicas: searchParams.get("caracteristicas")?.split(",") || [],
 		ambientes: searchParams.get("ambientes")?.split(",") || [],
 		servicios: searchParams.get("servicios")?.split(",") || [],
@@ -32,7 +30,7 @@ export const buildFilterURL = (filters: PropiedadFilters, pathname: string): str
 
 	// Campos simples
 	if (filters.tipoPropiedad) params.set("tipoPropiedad", filters.tipoPropiedad);
-	if (filters.ubicacion) params.set("ubicacion", filters.ubicacion);
+	if (filters.localidad) params.set("localidad", filters.localidad);
 	if (filters.dormitorios > 0) params.set("dormitorios", filters.dormitorios.toString());
 	if (filters.banos > 0) params.set("banos", filters.banos.toString());
 	if (filters.ambientesContador > 0)
@@ -42,9 +40,9 @@ export const buildFilterURL = (filters: PropiedadFilters, pathname: string): str
 	if (filters.superficieMax) params.set("superficieMax", filters.superficieMax);
 
 	// Rango de Precio
-	if (filters.precio[0] > LIMITS.MIN_PRECIO || filters.precio[1] < LIMITS.MAX_PRECIO) {
-		params.set("precioMin", filters.precio[0].toString());
-		params.set("precioMax", filters.precio[1].toString());
+	if (filters.precioMin > LIMITS.MIN_PRECIO || filters.precioMax < LIMITS.MAX_PRECIO) {
+		params.set("precioMin", filters.precioMin.toString());
+		params.set("precioMax", filters.precioMax.toString());
 	}
 
 	// Arrays
