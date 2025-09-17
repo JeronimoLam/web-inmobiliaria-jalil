@@ -7,6 +7,11 @@ import { LIMITS } from "../constants/filters.constants";
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
 
+interface getPropiedadesParams {
+	operacion?: "venta" | "alquiler";
+	filters?: PropiedadFilters;
+}
+
 export class PropiedadesService {
 	private static getHeaders() {
 		return {
@@ -15,41 +20,47 @@ export class PropiedadesService {
 		};
 	}
 
-	static getPropiedades = async (filtros: PropiedadFilters) => {
-		const tableName = filtros.operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
+	private static getPropiedadesFiltred = async (
+		tableName: string,
+		filters: PropiedadFilters,
+	): Promise<Propiedad[]> => {
 		const filterBuilder = supabase.from(tableName).select("*");
 
-		if (filtros.tipoPropiedad) {
-			filterBuilder.eq("tipo_propiedad->>value", filtros.tipoPropiedad);
-		}
-		if (filtros.localidad) {
-			filterBuilder.eq("localidad->>nombre", filtros.localidad);
-		}
-		if (filtros.dormitorios && filtros.dormitorios > 0) {
-			filterBuilder.eq("detalles->>dormitorios", filtros.dormitorios);
-		}
-		if (filtros.banos && filtros.banos > 0) {
-			filterBuilder.eq("detalles->>banos", filtros.banos);
-		}
-		if (filtros.ambientesContador > 0) {
-			filterBuilder.eq("detalles->>ambientes", filtros.ambientesContador);
-		}
-		if (filtros.pisos > 0) {
-			filterBuilder.eq("detalles->>pisos", filtros.pisos);
+		if (filters.destacadas) {
+			filterBuilder.eq("destacada", true);
 		}
 
-		if (filtros.precioMin > LIMITS.MIN_PRECIO) {
-			filterBuilder.gte("precios->0->>importe", filtros.precioMin);
+		if (filters.tipoPropiedad) {
+			filterBuilder.eq("tipo_propiedad->>value", filters.tipoPropiedad);
 		}
-		if (filtros.precioMax < LIMITS.MAX_PRECIO) {
-			filterBuilder.lte("precios->0->>importe", filtros.precioMax);
+		if (filters.localidad) {
+			filterBuilder.eq("localidad->>nombre", filters.localidad);
+		}
+		if (filters.dormitorios && filters.dormitorios > 0) {
+			filterBuilder.eq("detalles->>dormitorios", filters.dormitorios);
+		}
+		if (filters.banos && filters.banos > 0) {
+			filterBuilder.eq("detalles->>banos", filters.banos);
+		}
+		if (filters.ambientesContador && filters.ambientesContador > 0) {
+			filterBuilder.eq("detalles->>ambientes", filters.ambientesContador);
+		}
+		if (filters.pisos && filters.pisos > 0) {
+			filterBuilder.eq("detalles->>pisos", filters.pisos);
 		}
 
-		if (filtros.superficieMin) {
-			filterBuilder.gte("detalles->>superficie_lote", filtros.superficieMin);
+		if (filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) {
+			filterBuilder.gte("precios->0->>importe", filters.precioMin);
 		}
-		if (filtros.superficieMax) {
-			filterBuilder.lte("detalles->>superficie_lote", filtros.superficieMax);
+		if (filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO) {
+			filterBuilder.lte("precios->0->>importe", filters.precioMax);
+		}
+
+		if (filters.superficieMin) {
+			filterBuilder.gte("detalles->>superficie_lote", filters.superficieMin);
+		}
+		if (filters.superficieMax) {
+			filterBuilder.lte("detalles->>superficie_lote", filters.superficieMax);
 		}
 
 		const { data, error } = await filterBuilder;
@@ -63,26 +74,26 @@ export class PropiedadesService {
 
 		// Se filtra en memoria, ya que supabase no soporta filtros dinámicos en campos JSON
 		// Filtros de características, ambientes y servicios (checkboxes)
-		if (filtros.caracteristicas.length > 0) {
+		if (filters.caracteristicas && filters.caracteristicas.length > 0) {
 			filteredData = filteredData.filter((propiedad: Propiedad) => {
-				return filtros.caracteristicas.every(
+				return filters.caracteristicas!.every(
 					(caracteristica) =>
 						propiedad.caracteristicas && propiedad.caracteristicas[caracteristica] === true,
 				);
 			});
 		}
 
-		if (filtros.ambientes.length > 0) {
+		if (filters.ambientes && filters.ambientes.length > 0) {
 			filteredData = filteredData.filter((propiedad: Propiedad) => {
-				return filtros.ambientes.every(
+				return filters.ambientes!.every(
 					(ambiente) => propiedad.ambientes && propiedad.ambientes[ambiente] === true,
 				);
 			});
 		}
 
-		if (filtros.servicios.length > 0) {
+		if (filters.servicios && filters.servicios.length > 0) {
 			filteredData = filteredData.filter((propiedad: Propiedad) => {
-				return filtros.servicios.every(
+				return filters.servicios!.every(
 					(servicio) => propiedad.servicios && propiedad.servicios[servicio] === true,
 				);
 			});
@@ -91,54 +102,39 @@ export class PropiedadesService {
 		return filteredData;
 	};
 
-	static getPropiedadesVenta = async (): Promise<Propiedad[]> => {
-		try {
-			const response = await fetch(`${SUPABASE_URL}/propiedades_venta`, {
-				headers: this.getHeaders(),
-				next: { revalidate: 300 },
-			});
-			const data = await response.json();
-			return data;
-		} catch {
-			return [];
+	/**
+	 * Obtiene una lista de propiedades, permitiendo filtrar por tipo de operación y otros criterios.
+	 * @param operacion Tipo de operación: "venta" o "alquiler". Si no se especifica, devuelve todas.
+	 * @param filters Filtros opcionales para refinar la búsqueda (tipo, localidad, precio, etc).
+	 * @returns Un array de propiedades que cumplen con los filtros, o vacío si ocurre un error.
+	 */
+	static getAllPropiedades = async ({
+		operacion,
+		filters,
+	}: getPropiedadesParams): Promise<Propiedad[]> => {
+		let tableName;
+		if (!operacion) {
+			tableName = "propiedades_full";
+		} else {
+			tableName = operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
 		}
-	};
 
-	static getPropiedadesAlquiler = async (): Promise<Propiedad[]> => {
-		try {
-			const response = await fetch(`${SUPABASE_URL}/propiedades_alquiler`, {
-				headers: this.getHeaders(),
-				next: { revalidate: 300 },
-			});
-			const data = await response.json();
-			return data;
-		} catch {
-			return [];
+		if (filters) {
+			return await this.getPropiedadesFiltred(tableName, filters);
 		}
-	};
 
-	static getPropiedadesVentaDestacados = async (): Promise<Propiedad[]> => {
 		try {
-			const response = await fetch(`${SUPABASE_URL}/propiedades_venta?destacada=eq.true`, {
+			const response = await fetch(`${SUPABASE_URL}/${tableName}`, {
 				headers: this.getHeaders(),
 				next: { revalidate: 300 },
 			});
+			if (!response.ok) {
+				throw new Error("Error fetching propiedades");
+			}
 			const data = await response.json();
-			return data;
-		} catch {
-			return [];
-		}
-	};
-
-	static getPropiedadesAlquilerDestacados = async (): Promise<Propiedad[]> => {
-		try {
-			const response = await fetch(`${SUPABASE_URL}/propiedades_alquiler?destacada=eq.true`, {
-				headers: this.getHeaders(),
-				next: { revalidate: 300 },
-			});
-			const data = await response.json();
-			return data;
-		} catch {
+			return data || [];
+		} catch (error) {
+			console.error(error);
 			return [];
 		}
 	};

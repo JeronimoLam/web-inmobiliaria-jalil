@@ -18,20 +18,21 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 	const queryParams = searchParams ? await searchParams : {};
 
 	const filters: PropiedadFilters = {
-		operacion,
-		tipoPropiedad: queryParams.tipoPropiedad || "",
-		localidad: queryParams.localidad || "",
-		dormitorios: parseInt(queryParams.dormitorios || "0"),
-		precioMin: parseInt(queryParams.precioMin || "0") || LIMITS.MIN_PRECIO,
-		precioMax: parseInt(queryParams.precioMax || "0") || LIMITS.MAX_PRECIO,
-		caracteristicas: queryParams.caracteristicas?.split(",") || [],
-		ambientes: queryParams.ambientes?.split(",") || [],
-		servicios: queryParams.servicios?.split(",") || [],
-		superficieMin: queryParams.superficieMin || "",
-		superficieMax: queryParams.superficieMax || "",
-		banos: parseInt(queryParams.banos || "0"),
-		ambientesContador: parseInt(queryParams.ambientesContador || "0"),
-		pisos: parseInt(queryParams.pisos || "0"),
+		tipoPropiedad: queryParams.tipoPropiedad || undefined,
+		localidad: queryParams.localidad || undefined,
+		dormitorios: queryParams.dormitorios ? parseInt(queryParams.dormitorios) : undefined,
+		precioMin: queryParams.precioMin ? parseInt(queryParams.precioMin) : undefined,
+		precioMax: queryParams.precioMax ? parseInt(queryParams.precioMax) : undefined,
+		caracteristicas: queryParams.caracteristicas?.split(",").filter(Boolean) || undefined,
+		ambientes: queryParams.ambientes?.split(",").filter(Boolean) || undefined,
+		servicios: queryParams.servicios?.split(",").filter(Boolean) || undefined,
+		superficieMin: queryParams.superficieMin ? parseInt(queryParams.superficieMin) : undefined,
+		superficieMax: queryParams.superficieMax ? parseInt(queryParams.superficieMax) : undefined,
+		banos: queryParams.banos ? parseInt(queryParams.banos) : undefined,
+		ambientesContador: queryParams.ambientesContador
+			? parseInt(queryParams.ambientesContador)
+			: undefined,
+		pisos: queryParams.pisos ? parseInt(queryParams.pisos) : undefined,
 	};
 
 	console.log(operacion, queryParams);
@@ -40,11 +41,10 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		return notFound();
 	}
 
-	// const propiedades = await PropiedadesService.getPropiedades({
-	// 	...query,
-	// 	operacion,
-	// });
-	const propiedades = await PropiedadesService.getPropiedades(filters);
+	const propiedades = await PropiedadesService.getAllPropiedades({
+		operacion,
+		filters: filters,
+	});
 
 	return <PropiedadesScreen propiedades={propiedades} operacion={operacion} />;
 }

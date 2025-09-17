@@ -10,6 +10,9 @@ import {
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 
 export const OfferPropertyCarousel = ({ propiedades }: { propiedades: Propiedad[] }) => {
+	if (propiedades.length === 0) {
+		return <p className="text-center">No hay propiedades disponibles.</p>;
+	}
 	return (
 		<Carousel
 			className="w-full relative"
