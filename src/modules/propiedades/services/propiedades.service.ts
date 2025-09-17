@@ -16,10 +16,8 @@ export class PropiedadesService {
 	}
 
 	static getPropiedades = async (filtros: PropiedadFilters) => {
-		// Usar la vista específica según la operación
-		// const tableName = filtros.operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
-		// const filterBuilder = supabase.from(tableName).select("*");
-		const filterBuilder = supabase.from("propiedades_full").select("*");
+		const tableName = filtros.operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
+		const filterBuilder = supabase.from(tableName).select("*");
 
 		if (filtros.tipoPropiedad) {
 			filterBuilder.eq("tipo_propiedad->>value", filtros.tipoPropiedad);
@@ -40,7 +38,6 @@ export class PropiedadesService {
 			filterBuilder.eq("detalles->>pisos", filtros.pisos);
 		}
 
-		// Filtrar por rango de precios - buscar en el primer elemento del array de precios
 		if (filtros.precioMin > LIMITS.MIN_PRECIO) {
 			filterBuilder.gte("precios->0->>importe", filtros.precioMin);
 		}
@@ -48,10 +45,50 @@ export class PropiedadesService {
 			filterBuilder.lte("precios->0->>importe", filtros.precioMax);
 		}
 
+		if (filtros.superficieMin) {
+			filterBuilder.gte("detalles->>superficie_lote", filtros.superficieMin);
+		}
+		if (filtros.superficieMax) {
+			filterBuilder.lte("detalles->>superficie_lote", filtros.superficieMax);
+		}
+
 		const { data, error } = await filterBuilder;
 
-		if (error) console.error("Error Supabase:", error);
-		return data ?? [];
+		if (error) {
+			console.error("Error Supabase:", error);
+			return [];
+		}
+
+		let filteredData = data ?? [];
+
+		// Se filtra en memoria, ya que supabase no soporta filtros dinámicos en campos JSON
+		// Filtros de características, ambientes y servicios (checkboxes)
+		if (filtros.caracteristicas.length > 0) {
+			filteredData = filteredData.filter((propiedad: Propiedad) => {
+				return filtros.caracteristicas.every(
+					(caracteristica) =>
+						propiedad.caracteristicas && propiedad.caracteristicas[caracteristica] === true,
+				);
+			});
+		}
+
+		if (filtros.ambientes.length > 0) {
+			filteredData = filteredData.filter((propiedad: Propiedad) => {
+				return filtros.ambientes.every(
+					(ambiente) => propiedad.ambientes && propiedad.ambientes[ambiente] === true,
+				);
+			});
+		}
+
+		if (filtros.servicios.length > 0) {
+			filteredData = filteredData.filter((propiedad: Propiedad) => {
+				return filtros.servicios.every(
+					(servicio) => propiedad.servicios && propiedad.servicios[servicio] === true,
+				);
+			});
+		}
+
+		return filteredData;
 	};
 
 	static getPropiedadesVenta = async (): Promise<Propiedad[]> => {

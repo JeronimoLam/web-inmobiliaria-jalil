@@ -20,6 +20,7 @@ export const ubicaciones = [
 ];
 
 export const caracteristicas = [
+	{ id: "sum", label: "Sum" },
 	{ id: "balcon", label: "Balcón" },
 	{ id: "terraza", label: "Terraza" },
 	{ id: "jardin", label: "Jardín" },
