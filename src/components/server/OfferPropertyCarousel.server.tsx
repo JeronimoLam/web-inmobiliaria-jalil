@@ -12,12 +12,12 @@ export const OfferPropertyCarouselServer = async ({
 	let propiedades;
 	if (operacion === OperacionesEnum.VENTA) {
 		propiedades = await PropiedadesService.getAllPropiedades({
-			operacion: "venta",
+			operacion: OperacionesEnum.VENTA,
 			filters: { destacadas: true },
 		});
 	} else {
 		propiedades = await PropiedadesService.getAllPropiedades({
-			operacion: "alquiler",
+			operacion: OperacionesEnum.ALQUILER,
 			filters: { destacadas: true },
 		});
 	}

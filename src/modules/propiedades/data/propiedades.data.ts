@@ -1,4 +1,5 @@
-import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
+import { OperacionesEnum } from "../enums/propiedades.enum";
 
 export const propiedades: Propiedad[] = [
 	{
@@ -26,8 +27,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					id: OperacionesEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -37,8 +38,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					id: OperacionesEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -110,8 +111,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					id: OperacionesEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -121,8 +122,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					id: OperacionesEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -195,7 +196,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -206,7 +207,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -279,7 +280,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -290,7 +291,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -363,7 +364,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -374,7 +375,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -447,7 +448,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -458,7 +459,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -531,7 +532,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -542,7 +543,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -615,7 +616,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -626,7 +627,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],

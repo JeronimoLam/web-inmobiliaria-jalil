@@ -1,6 +1,6 @@
 import { propiedades } from "../data/propiedades.data";
 import { OperacionesEnum } from "../enums/propiedades.enum";
-import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
 
 export class PropiedadesService {
 	static async getPropiedades(): Promise<Propiedad[]> {
@@ -78,9 +78,9 @@ export class PropiedadesService {
 						const preciosFiltrados = propiedad.precios.filter(
 							(precio) =>
 								(operacion === OperacionesEnum.ALQUILER &&
-									precio.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER) ||
+									precio.estado_publicacion.id === OperacionesEnum.ALQUILER) ||
 								(operacion === OperacionesEnum.VENTA &&
-									precio.estado_publicacion.nombre === EstadoPublicacionEnum.VENTA),
+									precio.estado_publicacion.id === OperacionesEnum.VENTA),
 						);
 						// Devuelve la propiedad con solo los precios filtrados
 						resolve({ ...propiedad, precios: preciosFiltrados });

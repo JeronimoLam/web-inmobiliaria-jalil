@@ -1,5 +1,5 @@
 import { OperacionesEnum } from "../enums/propiedades.enum";
-import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
 
 const createSlug = (text: string): string => {
 	return text
@@ -18,7 +18,7 @@ export const getPropiedadDetailUrl = (propiedad: Propiedad) => {
 	const direccion = `${createSlug(propiedad.calle).toLocaleLowerCase()}-${propiedad.numero ? "nro-" + propiedad.numero : ""}`;
 	let operacion: OperacionesEnum;
 
-	if (propiedad.precios[0]?.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER) {
+	if (propiedad.precios[0]?.estado_publicacion.id === OperacionesEnum.ALQUILER) {
 		operacion = OperacionesEnum.ALQUILER;
 	} else {
 		operacion = OperacionesEnum.VENTA;

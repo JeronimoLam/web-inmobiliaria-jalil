@@ -1,5 +1,6 @@
 import { polygon, booleanPointInPolygon, point } from "@turf/turf";
-import { Propiedad, EstadoPublicacionEnum } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
+import { OperacionesEnum } from "../enums/propiedades.enum";
 import { buildPropiedadTitle } from "./propiedadPropertyBuilder";
 
 export interface PropiedadMapInfo {
@@ -34,14 +35,14 @@ export const getPropiedadMapInfo = (propiedad: Propiedad): PropiedadMapInfo => {
 
 	const precio = propiedad.precios.find(
 		(p) =>
-			(p.estado_publicacion.nombre === EstadoPublicacionEnum.VENTA ||
-				p.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER) &&
+			(p.estado_publicacion.id === OperacionesEnum.VENTA ||
+				p.estado_publicacion.id === OperacionesEnum.ALQUILER) &&
 			p.importe > 0,
 	);
 
 	const precioDisplay = precio
 		? `${precio.divisa} ${precio.importe.toLocaleString()}${
-				precio.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER ? "/mes" : ""
+				precio.estado_publicacion.id === OperacionesEnum.ALQUILER ? "/mes" : ""
 			}`
 		: "Consultar";
 

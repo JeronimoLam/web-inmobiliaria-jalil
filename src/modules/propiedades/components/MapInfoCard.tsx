@@ -4,9 +4,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BathIcon, BedDoubleIcon, Grid2x2PlusIcon } from "@/components/Icons";
 
-import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
 import { getPropiedadDetailUrl } from "../utils/getPropiedadDetailUrl";
 import { buildPropiedadTitle } from "../utils/propiedadPropertyBuilder";
+import { OperacionesEnum } from "../enums/propiedades.enum";
 
 export const MapInfoCard = ({ propiedad }: { propiedad: Propiedad }) => {
 	return (
@@ -28,11 +29,10 @@ export const MapInfoCard = ({ propiedad }: { propiedad: Propiedad }) => {
 				<div className="mb-3">
 					{(() => {
 						const precioVenta = propiedad.precios.find(
-							(p) => p.estado_publicacion.nombre === EstadoPublicacionEnum.VENTA && p.importe > 0,
+							(p) => p.estado_publicacion.id === OperacionesEnum.VENTA && p.importe > 0,
 						);
 						const precioAlquiler = propiedad.precios.find(
-							(p) =>
-								p.estado_publicacion.nombre === EstadoPublicacionEnum.ALQUILER && p.importe > 0,
+							(p) => p.estado_publicacion.id === OperacionesEnum.ALQUILER && p.importe > 0,
 						);
 
 						if (precioVenta) {

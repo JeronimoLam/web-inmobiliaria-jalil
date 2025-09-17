@@ -1,3 +1,5 @@
+import { OperacionesEnum } from "../enums/propiedades.enum";
+
 export type Propiedad = {
 	id: number;
 	codigo: number;
@@ -64,8 +66,8 @@ export type Precio = {
 	created_at: Date;
 	updated_at: Date;
 	estado_publicacion: {
-		id: number;
-		nombre: EstadoPublicacionEnum;
+		id: OperacionesEnum;
+		nombre: "Alquiler" | "Venta";
 	};
 };
 
@@ -74,7 +76,5 @@ export type TipoPropiedad = {
 	value: string;
 };
 
-export enum EstadoPublicacionEnum {
-	ALQUILER = "alquiler",
-	VENTA = "venta",
-}
+// Usamos OperacionesEnum para todas las comparaciones por id en lugar de por el nombre
+// Asi evitamos problemas si en el futuro se cambia el nombre de alguna operacion

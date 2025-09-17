@@ -8,7 +8,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
 
 interface getPropiedadesParams {
-	operacion?: "venta" | "alquiler";
+	operacion?: OperacionesEnum;
 	filters?: PropiedadFilters;
 }
 
@@ -116,7 +116,8 @@ export class PropiedadesService {
 		if (!operacion) {
 			tableName = "propiedades_full";
 		} else {
-			tableName = operacion === "venta" ? "propiedades_venta" : "propiedades_alquiler";
+			tableName =
+				operacion === OperacionesEnum.VENTA ? "propiedades_venta" : "propiedades_alquiler";
 		}
 
 		if (filters) {
