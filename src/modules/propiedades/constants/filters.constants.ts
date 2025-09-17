@@ -21,5 +21,5 @@ export const DEFAULT_FILTERS: PropiedadFilters = {
 	superficieMax: "",
 	banos: 0,
 	ambientesContador: 0,
-	niveles: 0,
+	pisos: 0,
 };

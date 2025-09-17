@@ -21,8 +21,6 @@ export class PropiedadesService {
 		// const filterBuilder = supabase.from(tableName).select("*");
 		const filterBuilder = supabase.from("propiedades_full").select("*");
 
-		console.log(filtros);
-
 		if (filtros.tipoPropiedad) {
 			filterBuilder.eq("tipo_propiedad->>value", filtros.tipoPropiedad);
 		}
@@ -31,6 +29,15 @@ export class PropiedadesService {
 		}
 		if (filtros.dormitorios && filtros.dormitorios > 0) {
 			filterBuilder.eq("detalles->>dormitorios", filtros.dormitorios);
+		}
+		if (filtros.banos && filtros.banos > 0) {
+			filterBuilder.eq("detalles->>banos", filtros.banos);
+		}
+		if (filtros.ambientesContador > 0) {
+			filterBuilder.eq("detalles->>ambientes", filtros.ambientesContador);
+		}
+		if (filtros.pisos > 0) {
+			filterBuilder.eq("detalles->>pisos", filtros.pisos);
 		}
 
 		// Filtrar por rango de precios - buscar en el primer elemento del array de precios

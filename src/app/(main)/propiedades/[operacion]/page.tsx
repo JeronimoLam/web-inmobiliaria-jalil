@@ -31,7 +31,7 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		superficieMax: queryParams.superficieMax || "",
 		banos: parseInt(queryParams.banos || "0"),
 		ambientesContador: parseInt(queryParams.ambientesContador || "0"),
-		niveles: parseInt(queryParams.niveles || "0"),
+		pisos: parseInt(queryParams.pisos || "0"),
 	};
 
 	console.log(operacion, queryParams);

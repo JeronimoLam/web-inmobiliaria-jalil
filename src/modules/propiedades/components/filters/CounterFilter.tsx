@@ -7,7 +7,7 @@ import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext"
 
 interface CounterFilterProps {
 	label: string;
-	field: "dormitorios" | "banos" | "ambientesContador" | "niveles";
+	field: "dormitorios" | "banos" | "ambientesContador" | "pisos";
 	className?: string;
 }
 

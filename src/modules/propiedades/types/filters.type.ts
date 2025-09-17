@@ -12,8 +12,8 @@ export interface PropiedadFilters {
 	superficieMax: string;
 	banos: number;
 	ambientesContador: number;
-	niveles: number;
+	pisos: number;
 }
 
-export type CounterField = "dormitorios" | "banos" | "ambientesContador" | "niveles";
+export type CounterField = "dormitorios" | "banos" | "ambientesContador" | "pisos";
 export type CheckboxField = "caracteristicas" | "ambientes" | "servicios";

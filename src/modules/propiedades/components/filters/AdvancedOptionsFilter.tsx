@@ -53,7 +53,7 @@ export const AdvancedOptionsFilter = () => {
 
 						<CounterFilter label="Baños" field="banos" />
 						<CounterFilter label="Ambientes" field="ambientesContador" />
-						<CounterFilter label="Niveles" field="niveles" />
+						<CounterFilter label="Pisos" field="pisos" />
 					</div>
 				</CollapsibleContent>
 			</Collapsible>

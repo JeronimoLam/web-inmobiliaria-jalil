@@ -63,7 +63,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		if (filters.dormitorios > 0) count++;
 		if (filters.banos > 0) count++;
 		if (filters.ambientesContador > 0) count++;
-		if (filters.niveles > 0) count++;
+		if (filters.pisos > 0) count++;
 		if (filters.precioMin > LIMITS.MIN_PRECIO || filters.precioMax < LIMITS.MAX_PRECIO) count++;
 		if (filters.caracteristicas.length > 0) count++;
 		if (filters.ambientes.length > 0) count++;

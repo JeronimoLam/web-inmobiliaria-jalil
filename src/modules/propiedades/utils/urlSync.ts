@@ -14,7 +14,7 @@ export const parseFiltersFromURL = (
 		dormitorios: parseInt(searchParams.get("dormitorios") || "0"),
 		banos: parseInt(searchParams.get("banos") || "0"),
 		ambientesContador: parseInt(searchParams.get("ambientesContador") || "0"),
-		niveles: parseInt(searchParams.get("niveles") || "0"),
+		pisos: parseInt(searchParams.get("pisos") || "0"),
 		precioMin: parseInt(searchParams.get("precioMin") || "0") || LIMITS.MIN_PRECIO,
 		precioMax: parseInt(searchParams.get("precioMax") || "0") || LIMITS.MAX_PRECIO,
 		caracteristicas: searchParams.get("caracteristicas")?.split(",") || [],
@@ -35,7 +35,7 @@ export const buildFilterURL = (filters: PropiedadFilters, pathname: string): str
 	if (filters.banos > 0) params.set("banos", filters.banos.toString());
 	if (filters.ambientesContador > 0)
 		params.set("ambientesContador", filters.ambientesContador.toString());
-	if (filters.niveles > 0) params.set("niveles", filters.niveles.toString());
+	if (filters.pisos > 0) params.set("pisos", filters.pisos.toString());
 	if (filters.superficieMin) params.set("superficieMin", filters.superficieMin);
 	if (filters.superficieMax) params.set("superficieMax", filters.superficieMax);
 
