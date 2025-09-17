@@ -46,6 +46,7 @@ export const PropiedadesScreen = ({
 				showListOnly={showListOnly}
 				setShowListOnly={setShowListOnly}
 				setShowMapOnly={setShowMapOnly}
+				hasPropiedades={propiedades.length > 0}
 			/>
 			<div className={`flex ${showListOnly ? "" : "flex-1 overflow-hidden"}`}>
 				{showList && (
@@ -66,9 +67,15 @@ export const PropiedadesScreen = ({
 									</div>
 								)}
 
-								{currentItems.map((propiedad) => (
-									<PropiedadCard key={propiedad.id} propiedad={propiedad} />
-								))}
+								{currentItems.length === 0 ? (
+									<div className="text-center text-gray-500 py-12">
+										No se han encontrado propiedades que coincidan con tu búsqueda.
+									</div>
+								) : (
+									currentItems.map((propiedad) => (
+										<PropiedadCard key={propiedad.id} propiedad={propiedad} />
+									))
+								)}
 
 								{showListOnly && (
 									<PropiedadesPagination
