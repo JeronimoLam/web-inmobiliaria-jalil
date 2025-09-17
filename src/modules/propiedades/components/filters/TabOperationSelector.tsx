@@ -2,28 +2,29 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useFiltersContext } from "../../context/FiltersContext";
+import { OperacionesEnum } from "../../enums/propiedades.enum";
 
 export const TabOperationSelector = () => {
-	const { filters, updateOperacion } = useFiltersContext();
+	const { operacion, updateOperacion } = useFiltersContext();
 
 	return (
 		<div className="flex gap-3 mb-8">
 			<Button
-				onClick={() => updateOperacion("venta")}
-				variant={filters.operacion === "venta" ? "default" : "outline"}
+				onClick={() => updateOperacion(OperacionesEnum.VENTA)}
+				variant={operacion === OperacionesEnum.VENTA ? "default" : "outline"}
 				className={cn(
 					"flex-1 h-11 rounded-lg font-medium transition-all",
-					filters.operacion === "venta" && "border border-primary shadow-sm",
+					operacion === OperacionesEnum.VENTA && "border border-primary shadow-sm",
 				)}
 			>
 				Venta
 			</Button>
 			<Button
-				onClick={() => updateOperacion("alquiler")}
-				variant={filters.operacion === "alquiler" ? "default" : "outline"}
+				onClick={() => updateOperacion(OperacionesEnum.ALQUILER)}
+				variant={operacion === OperacionesEnum.ALQUILER ? "default" : "outline"}
 				className={cn(
 					"flex-1 h-11 rounded-lg font-medium transition-all",
-					filters.operacion === "alquiler" && "border border-primary shadow-sm",
+					operacion === OperacionesEnum.ALQUILER && "border border-primary shadow-sm",
 				)}
 			>
 				Alquiler

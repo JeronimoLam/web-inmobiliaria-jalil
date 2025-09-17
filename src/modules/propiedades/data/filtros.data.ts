@@ -20,6 +20,8 @@ export const ubicaciones = [
 ];
 
 export const caracteristicas = [
+	{ id: "aire_acondicionado_individual", label: "Aire Acondicionado Individual" },
+	{ id: "calefaccion", label: "Calefacción" },
 	{ id: "sum", label: "Sum" },
 	{ id: "balcon", label: "Balcón" },
 	{ id: "terraza", label: "Terraza" },

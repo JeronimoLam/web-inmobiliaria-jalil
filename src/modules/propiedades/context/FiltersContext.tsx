@@ -8,9 +8,11 @@ import {
 } from "@/modules/propiedades/types/filters.type";
 import { LIMITS, DEFAULT_FILTERS } from "@/modules/propiedades/constants/filters.constants";
 import { useURLSync } from "@/modules/propiedades/hooks/useURLSync";
+import { OperacionesEnum } from "../enums/propiedades.enum";
 
 interface FiltersContextType {
 	filters: PropiedadFilters;
+	operacion: OperacionesEnum;
 	resetFilters: () => void;
 	handleFilters: () => void;
 	getActiveFiltersCount: () => number;
@@ -21,7 +23,7 @@ interface FiltersContextType {
 	updateLocalidad: (value: string) => void;
 	updatePrecio: (min: number, max: number) => void;
 	updateSuperficie: (field: "superficieMin" | "superficieMax", value: string) => void;
-	updateOperacion: (value: "venta" | "alquiler") => void;
+	updateOperacion: (value: OperacionesEnum) => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
@@ -40,19 +42,19 @@ interface FiltersProviderProps {
 
 export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 	const [filters, setFilters] = useState<PropiedadFilters>(DEFAULT_FILTERS);
-	const { syncFiltersWithURL } = useURLSync({ setFilters });
+	const [operacion, setOperacion] = useState<OperacionesEnum>(OperacionesEnum.ALQUILER);
+	const { syncFiltersWithURL } = useURLSync({ setFilters, setOperacion });
 
 	const handleFilters = () => {
-		syncFiltersWithURL(filters);
+		syncFiltersWithURL(filters, operacion);
 	};
 
 	const resetFilters = () => {
 		const newFilters = {
 			...DEFAULT_FILTERS,
-			operacion: filters.operacion,
 		};
 		setFilters(newFilters);
-		syncFiltersWithURL(newFilters);
+		syncFiltersWithURL(newFilters, operacion);
 	};
 
 	const getActiveFiltersCount = () => {
@@ -60,23 +62,27 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 		if (filters.tipoPropiedad) count++;
 		if (filters.localidad) count++;
-		if (filters.dormitorios > 0) count++;
-		if (filters.banos > 0) count++;
-		if (filters.ambientesContador > 0) count++;
-		if (filters.pisos > 0) count++;
-		if (filters.precioMin > LIMITS.MIN_PRECIO || filters.precioMax < LIMITS.MAX_PRECIO) count++;
-		if (filters.caracteristicas.length > 0) count++;
-		if (filters.ambientes.length > 0) count++;
-		if (filters.servicios.length > 0) count++;
-		if (filters.superficieMin) count++;
-		if (filters.superficieMax) count++;
+		if (filters.dormitorios && filters.dormitorios > 0) count++;
+		if (filters.banos && filters.banos > 0) count++;
+		if (filters.ambientesContador && filters.ambientesContador > 0) count++;
+		if (filters.pisos && filters.pisos > 0) count++;
+		if (
+			(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
+			(filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO)
+		)
+			count++;
+		if (filters.caracteristicas && filters.caracteristicas.length > 0) count++;
+		if (filters.ambientes && filters.ambientes.length > 0) count++;
+		if (filters.servicios && filters.servicios.length > 0) count++;
+		if (filters.superficieMin && filters.superficieMin > 0) count++;
+		if (filters.superficieMax && filters.superficieMax > 0) count++;
 
 		return count;
 	};
 
 	const updateCounter = (field: CounterField, operation: "increment" | "decrement") => {
 		setFilters((prev) => {
-			const currentValue = prev[field];
+			const currentValue = prev[field] ?? 0;
 			let newValue: number;
 
 			if (operation === "increment") {
@@ -97,7 +103,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 	const toggleCheckbox = (value: string, field: CheckboxField) => {
 		setFilters((prev) => {
-			const currentItems = prev[field];
+			const currentItems = prev[field] ?? [];
 			const newItems = currentItems.includes(value)
 				? currentItems.filter((item) => item !== value)
 				: [...currentItems, value];
@@ -125,12 +131,13 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		setFilters((prev) => ({ ...prev, [field]: value }));
 	};
 
-	const updateOperacion = (value: "venta" | "alquiler") => {
-		setFilters((prev) => ({ ...prev, operacion: value }));
+	const updateOperacion = (value: OperacionesEnum) => {
+		setOperacion(value);
 	};
 
 	const value: FiltersContextType = {
 		filters,
+		operacion,
 		resetFilters,
 		handleFilters,
 		getActiveFiltersCount,

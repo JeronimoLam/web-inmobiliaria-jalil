@@ -23,6 +23,8 @@ export const CheckboxGroupFilter = ({ placeholder, options, field }: CheckboxGro
 	const { filters, toggleCheckbox } = useFiltersContext();
 	const [isOpen, setIsOpen] = useState(false);
 
+	const selectedItems = filters[field] ?? [];
+
 	return (
 		<div className="space-y-3">
 			<Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -43,7 +45,7 @@ export const CheckboxGroupFilter = ({ placeholder, options, field }: CheckboxGro
 							<div key={option.id} className="flex items-center space-x-3">
 								<Checkbox
 									id={option.id}
-									checked={filters[field].includes(option.id)}
+									checked={selectedItems.includes(option.id)}
 									onCheckedChange={() => toggleCheckbox(option.id, field)}
 								/>
 								<label
