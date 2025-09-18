@@ -12,6 +12,15 @@ import {
 	Lightbulb,
 	DoorClosed,
 	Clipboard,
+	Funnel,
+	ChevronDown,
+	Map,
+	List,
+	Plus,
+	Minus,
+	Edit3,
+	X,
+	Trash2,
 } from "lucide-react";
 
 type IconProps = {
@@ -70,6 +79,42 @@ export const DoorClosedIcon = ({ className, width, height, ...props }: IconProps
 
 export const ClipboardIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Clipboard className={className} width={width} height={height} {...props} />
+);
+
+export const FilterIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Funnel className={className} width={width} height={height} {...props} />
+);
+
+export const ChevronDownIcon = ({ className, width, height, ...props }: IconProps) => (
+	<ChevronDown className={className} width={width} height={height} {...props} />
+);
+
+export const MapIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Map className={className} width={width} height={height} {...props} />
+);
+
+export const ListIcon = ({ className, width, height, ...props }: IconProps) => (
+	<List className={className} width={width} height={height} {...props} />
+);
+
+export const PlusIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Plus className={className} width={width} height={height} {...props} />
+);
+
+export const MinusIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Minus className={className} width={width} height={height} {...props} />
+);
+
+export const EditIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Edit3 className={className} width={width} height={height} {...props} />
+);
+
+export const XIcon = ({ className, width, height, ...props }: IconProps) => (
+	<X className={className} width={width} height={height} {...props} />
+);
+
+export const TrashIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Trash2 className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (

@@ -27,13 +27,13 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 
 	return (
 		<Card className="w-full h-full flex flex-col hover:shadow-lg transition-shadow duration-300 group">
-			<Carousel
-				className="min-h-[220px]"
-				opts={{
-					loop: true,
-				}}
-			>
-				<Link href={propiedadDetailUrl}>
+			<Link href={propiedadDetailUrl} className="flex flex-col h-full">
+				<Carousel
+					className="min-h-[220px] flex-shrink-0"
+					opts={{
+						loop: true,
+					}}
+				>
 					<CarouselContent>
 						{propiedad.imagenes.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px]">
@@ -47,14 +47,12 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 							</CarouselItem>
 						))}
 					</CarouselContent>
-				</Link>
-				<CarouselPrevious />
-				<CarouselNext />
-			</Carousel>
+					<CarouselPrevious />
+					<CarouselNext />
+				</Carousel>
 
-			<Link href={propiedadDetailUrl}>
 				{/* Property Information */}
-				<div className="p-[15px] pb-0">
+				<div className="p-[15px] pb-0 flex-grow flex flex-col">
 					<div className="flex items-center justify-between">
 						<p className="font-medium text-sm text-muted-foreground">
 							{propiedad.tipo_propiedad.value} • {propiedad.localidad.nombre}
@@ -67,7 +65,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 					<h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
 
 					{/* Property Details */}
-					<div className="space-y-2 mb-3">
+					<div className="space-y-2 mb-3 flex-grow">
 						<div className="flex items-center gap-2 text-gray-600">
 							<BedDouble className="h-[22px] w-h-[22px] text-orange-500" />
 							<span className="font-medium text-sm">Habitaciones</span>
@@ -91,12 +89,24 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				</div>
 
 				<Button
-					onClick={onConsult}
+					onClick={(e) => {
+						e.preventDefault();
+						onConsult?.();
+					}}
 					variant="secondary"
-					className="w-full text-white px-4 py-9 rounded-none mt-auto justify-start transition group-hover:bg-secondary-dark"
+					className="w-full text-white px-4 py-9 rounded-none justify-start transition group-hover:bg-secondary-dark flex-shrink-0"
 				>
 					<div className="flex flex-col text-start">
 						<PropiedadPrecios propiedad={propiedad} />
+
+						{propiedad.precios[0].importe !== 0 &&
+							propiedad.expensas_value &&
+							propiedad.expensas_divisa && (
+								<span className="font-light">
+									Expensas: ${propiedad.expensas_value.toLocaleString("es-AR")}{" "}
+									{propiedad.expensas_divisa}
+								</span>
+							)}
 					</div>
 				</Button>
 			</Link>
@@ -116,7 +126,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">{precio.importe}</span>
+					<span className="font-semibold text-xl">${precio.importe}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}

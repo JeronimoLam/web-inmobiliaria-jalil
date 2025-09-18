@@ -68,7 +68,7 @@ export const PropiedadDetalles = ({ propiedad }: PropiedadTabsDataProps) => {
 	);
 
 	// Función para formatear el valor según su tipo
-	const formatValue = (key: string, value: any): string => {
+	const formatValue = (key: string, value: unknown): string => {
 		if (value instanceof Date) {
 			return value.toLocaleDateString();
 		}

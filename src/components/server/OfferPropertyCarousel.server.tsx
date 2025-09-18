@@ -1,4 +1,4 @@
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades-mock.service";
+import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
 import { OfferPropertyCarousel } from "../OfferPropertyCarousel";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
@@ -11,9 +11,15 @@ export const OfferPropertyCarouselServer = async ({
 }: OfferPropertyCarouselServerProps) => {
 	let propiedades;
 	if (operacion === OperacionesEnum.VENTA) {
-		propiedades = await PropiedadesService.getPropiedadesVenta();
+		propiedades = await PropiedadesService.getAll({
+			operacion: OperacionesEnum.VENTA,
+			filters: { destacadas: true },
+		});
 	} else {
-		propiedades = await PropiedadesService.getPropiedadesAlquiler();
+		propiedades = await PropiedadesService.getAll({
+			operacion: OperacionesEnum.ALQUILER,
+			filters: { destacadas: true },
+		});
 	}
 
 	return <OfferPropertyCarousel propiedades={propiedades} />;

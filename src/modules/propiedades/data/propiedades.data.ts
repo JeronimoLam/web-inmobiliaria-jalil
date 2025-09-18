@@ -1,4 +1,5 @@
-import { EstadoPublicacionEnum, Propiedad } from "../types/propiedad.type";
+import { Propiedad } from "../types/propiedad.type";
+import { OperacionesEnum } from "../enums/propiedades.enum";
 
 export const propiedades: Propiedad[] = [
 	{
@@ -13,9 +14,11 @@ export const propiedades: Propiedad[] = [
 		calle: "7",
 		entre_calles: "54 y 55",
 		numero: 5401,
-		localidad: { id: 1, nombre: "Miami" },
-		descripcion: "Departamento de 1 dormitorio en Miami, ideal para inversión.",
-		map_location: { type: "Point", coordinates: [-34.91661425312198, -57.94717039148848] },
+		localidad: { id: 1, nombre: "Centro" },
+		descripcion: "Departamento de 1 dormitorio en el Centro de La Plata, ideal para inversión.",
+		expensas_value: 15000,
+		expensas_divisa: "ARS",
+		map_location: { type: "Point", coordinates: [-34.9214, -57.9544] },
 		precios: [
 			{
 				id: 1,
@@ -24,8 +27,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					id: OperacionesEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -35,8 +38,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					id: OperacionesEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -95,9 +98,11 @@ export const propiedades: Propiedad[] = [
 		calle: "19",
 		entre_calles: "",
 		numero: 1200,
-		localidad: { id: 2, nombre: "Miami" },
-		descripcion: "Amplio departamento de 2 dormitorios con vista al mar.",
-		map_location: { type: "Point", coordinates: [-58.3816, -34.6037] },
+		localidad: { id: 2, nombre: "Casco Urbano - Zona Norte" },
+		descripcion: "Amplio departamento de 2 dormitorios en zona norte del casco urbano.",
+		expensas_value: 22000,
+		expensas_divisa: "ARS",
+		map_location: { type: "Point", coordinates: [-34.9085, -57.9456] },
 		precios: [
 			{
 				id: 3,
@@ -106,8 +111,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					id: OperacionesEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -117,8 +122,8 @@ export const propiedades: Propiedad[] = [
 				created_at: new Date(),
 				updated_at: new Date(),
 				estado_publicacion: {
-					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					id: OperacionesEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -177,9 +182,11 @@ export const propiedades: Propiedad[] = [
 		calle: "56",
 		entre_calles: "8 y 9",
 		numero: 850,
-		localidad: { id: 3, nombre: "South Beach" },
-		descripcion: "Casa en South Beach con 3 dormitorios.",
-		map_location: { type: "Point", coordinates: [-80.128, 25.781] },
+		localidad: { id: 3, nombre: "Casco Urbano - Zona Este" },
+		descripcion: "Casa en zona este del casco urbano con 3 dormitorios y amplio jardín.",
+		expensas_value: null,
+		expensas_divisa: null,
+		map_location: { type: "Point", coordinates: [-34.9156, -57.9345] },
 		precios: [
 			{
 				id: 5,
@@ -189,7 +196,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -200,7 +207,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -259,9 +266,11 @@ export const propiedades: Propiedad[] = [
 		calle: "64",
 		entre_calles: "10 y 11",
 		numero: 1100,
-		localidad: { id: 4, nombre: "South Beach" },
-		descripcion: "Casa moderna con pileta y deck en South Beach.",
-		map_location: { type: "Point", coordinates: [-80.135, 25.775] },
+		localidad: { id: 4, nombre: "Casco Urbano - Zona Oeste" },
+		descripcion: "Casa moderna con pileta y deck en zona oeste del casco urbano.",
+		expensas_value: null,
+		expensas_divisa: null,
+		map_location: { type: "Point", coordinates: [-34.9298, -57.9675] },
 		precios: [
 			{
 				id: 7,
@@ -271,7 +280,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -282,7 +291,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -341,9 +350,11 @@ export const propiedades: Propiedad[] = [
 		calle: "7",
 		entre_calles: "54 y 55",
 		numero: 5401,
-		localidad: { id: 5, nombre: "Miami" },
-		descripcion: "Departamento de 1 dormitorio en Miami.",
-		map_location: { type: "Point", coordinates: [-80.1234, 25.789] },
+		localidad: { id: 5, nombre: "Casco Urbano - Plaza San Martín" },
+		descripcion: "Departamento de 1 dormitorio cerca de Plaza San Martín.",
+		expensas_value: 18000,
+		expensas_divisa: "ARS",
+		map_location: { type: "Point", coordinates: [-34.9187, -57.9567] },
 		precios: [
 			{
 				id: 9,
@@ -353,7 +364,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -364,7 +375,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -423,9 +434,11 @@ export const propiedades: Propiedad[] = [
 		calle: "19",
 		entre_calles: "",
 		numero: 1200,
-		localidad: { id: 6, nombre: "Miami" },
-		descripcion: "Amplio departamento de 2 dormitorios con vista al mar.",
-		map_location: { type: "Point", coordinates: [-80.1918, 25.7617] },
+		localidad: { id: 6, nombre: "Casco Urbano - Zona Sur" },
+		descripcion: "Amplio departamento de 2 dormitorios en zona sur del casco urbano.",
+		expensas_value: 25000,
+		expensas_divisa: "ARS",
+		map_location: { type: "Point", coordinates: [-34.9378, -57.9489] },
 		precios: [
 			{
 				id: 11,
@@ -435,7 +448,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -446,7 +459,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -505,9 +518,11 @@ export const propiedades: Propiedad[] = [
 		calle: "56",
 		entre_calles: "8 y 9",
 		numero: 850,
-		localidad: { id: 7, nombre: "South Beach" },
-		descripcion: "Casa en South Beach con 3 dormitorios.",
-		map_location: { type: "Point", coordinates: [-80.128, 25.781] },
+		localidad: { id: 7, nombre: "Casco Urbano - Plaza Moreno" },
+		descripcion: "Casa cerca de Plaza Moreno con 3 dormitorios y patio amplio.",
+		expensas_value: null,
+		expensas_divisa: null,
+		map_location: { type: "Point", coordinates: [-34.9203, -57.9534] },
 		precios: [
 			{
 				id: 13,
@@ -517,7 +532,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -528,7 +543,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],
@@ -587,9 +602,11 @@ export const propiedades: Propiedad[] = [
 		calle: "64",
 		entre_calles: "10 y 11",
 		numero: 1100,
-		localidad: { id: 8, nombre: "South Beach" },
-		descripcion: "Casa moderna con pileta y deck en South Beach.",
-		map_location: { type: "Point", coordinates: [-80.135, 25.775] },
+		localidad: { id: 8, nombre: "Casco Urbano - Zona Universidad" },
+		descripcion: "Casa moderna con pileta y deck cerca de la Universidad.",
+		expensas_value: null,
+		expensas_divisa: null,
+		map_location: { type: "Point", coordinates: [-34.9125, -57.9623] },
 		precios: [
 			{
 				id: 15,
@@ -599,7 +616,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 1,
-					nombre: EstadoPublicacionEnum.VENTA,
+					nombre: "Venta",
 				},
 			},
 			{
@@ -610,7 +627,7 @@ export const propiedades: Propiedad[] = [
 				updated_at: new Date(),
 				estado_publicacion: {
 					id: 2,
-					nombre: EstadoPublicacionEnum.ALQUILER,
+					nombre: "Alquiler",
 				},
 			},
 		],

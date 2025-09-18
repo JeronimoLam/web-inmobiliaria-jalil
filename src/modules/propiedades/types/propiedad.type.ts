@@ -1,3 +1,5 @@
+import { OperacionesEnum } from "../enums/propiedades.enum";
+
 export type Propiedad = {
 	id: number;
 	codigo: number;
@@ -7,6 +9,8 @@ export type Propiedad = {
 	entre_calles: string;
 	numero: number;
 	descripcion: string;
+	expensas_value: number | null;
+	expensas_divisa: string | null;
 	map_location: MapLocation;
 	localidad: Localidad;
 	precios: Precio[];
@@ -19,7 +23,7 @@ export type Propiedad = {
 	updated_at: Date;
 };
 
-export type Detalles = {
+type Detalles = {
 	id: number;
 	banos: number;
 	pisos: number;
@@ -38,41 +42,39 @@ export type Detalles = {
 	superficie_total_construida: number;
 };
 
-export type Imagenes = {
+type Imagenes = {
 	id: number;
 	url: string;
 	principal: boolean;
 	created_at: Date;
 };
 
-export type Localidad = {
+type Localidad = {
 	id: number;
 	nombre: string;
 };
 
-export type MapLocation = {
+type MapLocation = {
 	type: string;
 	coordinates: number[];
 };
 
-export type Precio = {
+type Precio = {
 	id: number;
 	divisa: string;
 	importe: number;
 	created_at: Date;
 	updated_at: Date;
 	estado_publicacion: {
-		id: number;
-		nombre: EstadoPublicacionEnum;
+		id: OperacionesEnum;
+		nombre: "Alquiler" | "Venta";
 	};
 };
 
-export type TipoPropiedad = {
+type TipoPropiedad = {
 	id: number;
 	value: string;
 };
 
-export enum EstadoPublicacionEnum {
-	ALQUILER = "Alquiler",
-	VENTA = "Venta",
-}
+// Usamos OperacionesEnum para todas las comparaciones por id en lugar de por el nombre
+// Asi evitamos problemas si en el futuro se cambia el nombre de alguna operacion

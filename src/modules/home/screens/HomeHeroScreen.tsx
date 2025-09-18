@@ -4,6 +4,7 @@ import { HomeHeroSlider } from "../components/HomeHeroSlider";
 import { PropertySearchForm } from "../../../components/PropertySearchForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface HomeScreenProps {
 	tiposPropiedad: { value: string; label: string }[];
@@ -18,16 +19,16 @@ interface handleSearchProps {
 
 export const HomeHeroScreen = ({ tiposPropiedad, localidades, heroImages }: HomeScreenProps) => {
 	const [operation, setOperation] = useState<"venta" | "alquiler">("venta");
+	const router = useRouter();
 
 	const handleVentaSelect = () => setOperation("venta");
 	const handleAlquilerSelect = () => setOperation("alquiler");
 
 	const handleSearch = ({ tipoPropiedad, localidad }: handleSearchProps) => {
-		console.log({
-			tipo_propiedad: tipoPropiedad || null,
-			localidad: localidad || null,
-			estado_publicacion: operation,
-		});
+		const params = new URLSearchParams();
+		if (tipoPropiedad) params.append("tipoPropiedad", tipoPropiedad);
+		if (localidad) params.append("localidad", localidad);
+		router.push(`/propiedades/${operation}?${params.toString()}`);
 	};
 
 	return (
