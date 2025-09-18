@@ -14,10 +14,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ubicaciones } from "@/modules/propiedades/data/filtros.data";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
+import { FilterOption } from "@/modules/filters/types/filters.type";
 
-export const LocalidadFilter = () => {
+interface LocalidadFilterProps {
+	options: FilterOption[];
+}
+
+export const LocalidadFilter = ({ options }: LocalidadFilterProps) => {
 	const { filters, updateLocalidad } = useFiltersContext();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +37,7 @@ export const LocalidadFilter = () => {
 						className="w-full justify-between h-11 px-4 font-normal border-gray-200 hover:border-gray-300"
 					>
 						{filters.localidad
-							? ubicaciones.find((ub) => ub.value === filters.localidad)?.label
+							? options.find((ub) => ub.value === filters.localidad)?.label
 							: "Seleccionar localidad"}
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 					</Button>
@@ -44,7 +48,7 @@ export const LocalidadFilter = () => {
 						<CommandList>
 							<CommandEmpty>No se encontró ninguna ubicación.</CommandEmpty>
 							<CommandGroup>
-								{ubicaciones.map((ub) => (
+								{options.map((ub) => (
 									<CommandItem
 										key={ub.value}
 										value={ub.value}

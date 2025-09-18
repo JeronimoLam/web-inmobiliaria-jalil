@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useFiltersContext } from "../../context/FiltersContext";
+import { useFiltersContext } from "../../../filters/context/FiltersContext";
 import { OperacionesEnum } from "../../enums/propiedades.enum";
 
 export const TabOperationSelector = () => {

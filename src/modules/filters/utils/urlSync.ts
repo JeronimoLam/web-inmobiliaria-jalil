@@ -1,6 +1,6 @@
-import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
-import { LIMITS } from "@/modules/propiedades/constants/filters.constants";
-import { OperacionesEnum } from "../enums/propiedades.enum";
+import { PropiedadFilters } from "@/modules/filters/types/filters.type";
+import { LIMITS } from "@/modules/filters/constants/filters.constants";
+import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
 export const parseOperacionFromURL = (pathname: string): OperacionesEnum => {
 	if (pathname.includes("/venta")) {

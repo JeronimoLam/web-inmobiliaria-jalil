@@ -1,12 +1,12 @@
 import { useEffect, Dispatch, SetStateAction } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
+import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 import {
 	parseFiltersFromURL,
 	buildFilterURL,
 	parseOperacionFromURL,
-} from "@/modules/propiedades/utils/urlSync";
-import { OperacionesEnum } from "../enums/propiedades.enum";
+} from "@/modules/filters/utils/urlSync";
+import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
 interface UseURLSyncProps {
 	setFilters: Dispatch<SetStateAction<PropiedadFilters>>;

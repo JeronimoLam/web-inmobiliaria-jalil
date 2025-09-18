@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { ListIcon, MapIcon } from "@/components/Icons";
 import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { FilterSideBar } from "@/modules/propiedades/components/FilterSideBar";
-import { FiltersProvider } from "../context/FiltersContext";
+import { FiltersProvider } from "../../filters/context/FiltersContext";
+import { FilterData } from "@/modules/filters/types/filters.type";
 
 interface SubNavbarProps {
 	showListOnly: boolean;
 	hasPropiedades: boolean;
 	setShowListOnly: (value: boolean) => void;
 	setShowMapOnly: (value: boolean) => void;
+	filterData: FilterData;
 }
 
 export default function SubNavbar({
@@ -17,6 +19,7 @@ export default function SubNavbar({
 	hasPropiedades,
 	setShowListOnly,
 	setShowMapOnly,
+	filterData,
 }: SubNavbarProps) {
 	const allTabs = [
 		{ label: "Ver Listado", icon: <ListIcon width={20} height={20} />, action: "list" },
@@ -43,13 +46,13 @@ export default function SubNavbar({
 					<div className="flex-1 lg:w-[600px]">
 						<PropertySearchForm
 							withBorder
-							localidades={[]}
-							tiposPropiedad={[]}
+							localidades={filterData.localidades}
+							tiposPropiedad={filterData.tiposPropiedad}
 							onSearch={() => {}}
 						/>
 					</div>
 					<FiltersProvider>
-						<FilterSideBar />
+						<FilterSideBar filterData={filterData} />
 					</FiltersProvider>
 				</div>
 				<ul className="flex flex-row gap-2 relative">

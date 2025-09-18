@@ -2,8 +2,8 @@
 
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
-import { LIMITS } from "@/modules/propiedades/constants/filters.constants";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
+import { LIMITS } from "@/modules/filters/constants/filters.constants";
 
 export const PriceRangeFilter = () => {
 	const { filters, updatePrecio } = useFiltersContext();

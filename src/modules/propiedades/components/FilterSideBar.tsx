@@ -13,7 +13,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { useDirection } from "@radix-ui/react-direction";
-import { useFiltersContext } from "../context/FiltersContext";
+import { useFiltersContext } from "../../filters/context/FiltersContext";
 import { TabOperationSelector } from "./filters/TabOperationSelector";
 import { TipoPropiedadFilter } from "./filters/TipoPropiedadFilter";
 import { LocalidadFilter } from "./filters/LocalidadFilter";
@@ -21,14 +21,14 @@ import { CounterFilter } from "./filters/CounterFilter";
 import { PriceRangeFilter } from "./filters/PriceRangeFilter";
 import { CheckboxGroupFilter } from "./filters/CheckboxGroupFilter";
 import { AdvancedOptionsFilter } from "./filters/AdvancedOptionsFilter";
-import {
-	caracteristicas,
-	ambientesOpciones,
-	servicios,
-} from "@/modules/propiedades/data/filtros.data";
 import { useState } from "react";
+import { FilterData } from "@/modules/filters/types/filters.type";
 
-export const FilterSideBar = () => {
+interface FilterSideBarProps {
+	filterData: FilterData;
+}
+
+export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 	const direction = useDirection();
 	const [sheetOpen, setSheetOpen] = useState(false);
 	const { resetFilters, handleFilters, getActiveFiltersCount } = useFiltersContext();
@@ -66,8 +66,8 @@ export const FilterSideBar = () => {
 
 					{/* Filter Components */}
 					<div className="space-y-6">
-						<TipoPropiedadFilter />
-						<LocalidadFilter />
+						<TipoPropiedadFilter options={filterData.tiposPropiedad} />
+						<LocalidadFilter options={filterData.localidades} />
 						<div className="space-y-3">
 							<CounterFilter
 								label="Dormitorios"
@@ -78,15 +78,19 @@ export const FilterSideBar = () => {
 						<PriceRangeFilter />
 						<CheckboxGroupFilter
 							placeholder="Características"
-							options={caracteristicas}
+							options={filterData.caracteristicas}
 							field="caracteristicas"
 						/>
 						<CheckboxGroupFilter
 							placeholder="Ambientes"
-							options={ambientesOpciones}
+							options={filterData.ambientes}
 							field="ambientes"
 						/>
-						<CheckboxGroupFilter placeholder="Servicios" options={servicios} field="servicios" />
+						<CheckboxGroupFilter
+							placeholder="Servicios"
+							options={filterData.servicios}
+							field="servicios"
+						/>
 						<AdvancedOptionsFilter />
 					</div>
 				</SheetBody>

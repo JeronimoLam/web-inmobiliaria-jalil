@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ChevronDownIcon } from "@/components/Icons";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
 import { CounterFilter } from "@/modules/propiedades/components/filters/CounterFilter";
 
 export const AdvancedOptionsFilter = () => {

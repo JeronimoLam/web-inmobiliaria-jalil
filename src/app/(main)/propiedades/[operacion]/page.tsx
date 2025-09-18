@@ -1,14 +1,12 @@
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
 import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
-import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
+import { FiltersService } from "@/modules/filters/services/filters.service";
+import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 import { notFound } from "next/navigation";
 
 interface PropiedadesPageProps {
-	params: Promise<{
-		operacion: string;
-	}>;
-
+	params: Promise<{ operacion: string }>;
 	searchParams?: Promise<Record<string, string | undefined>>;
 }
 
@@ -40,10 +38,15 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 
 	console.log(operacion, queryParams);
 
-	const propiedades = await PropiedadesService.getAllPropiedades({
-		operacion: operacion === "venta" ? OperacionesEnum.VENTA : OperacionesEnum.ALQUILER,
-		filters,
-	});
+	const [propiedades, filterData] = await Promise.all([
+		PropiedadesService.getAll({
+			operacion: operacion === "venta" ? OperacionesEnum.VENTA : OperacionesEnum.ALQUILER,
+			filters,
+		}),
+		FiltersService.getAll(),
+	]);
 
-	return <PropiedadesScreen propiedades={propiedades} operacion={operacion} />;
+	return (
+		<PropiedadesScreen propiedades={propiedades} filterData={filterData} operacion={operacion} />
+	);
 }

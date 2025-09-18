@@ -1,4 +1,4 @@
-import { PropiedadFilters } from "@/modules/propiedades/types/filters.type";
+import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 
 export const LIMITS = {
 	MAX_DORMITORIOS: 10,

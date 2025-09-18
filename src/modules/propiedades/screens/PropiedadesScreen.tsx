@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PageContainer } from "@/components/layouts/PageContainer";
 import { PropiedadCard } from "@/modules/propiedades/components/PropiedadCard";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
+import { FilterData } from "@/modules/filters/types/filters.type";
 import { PropiedadesMap } from "../components/PropiedadesMap";
 import { PropiedadesPagination } from "@/modules/propiedades/components/PropiedadesPagination";
 import { usePagination } from "@/modules/propiedades/hooks/usePagination";
@@ -10,12 +11,14 @@ import SubNavbar from "../components/SubNavbar";
 
 interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
+	filterData: FilterData;
 	itemsPerPage?: number;
 	operacion: "venta" | "alquiler";
 }
 
 export const PropiedadesScreen = ({
 	propiedades,
+	filterData,
 	itemsPerPage = 5,
 	operacion,
 }: PropiedadesScreenProps) => {
@@ -47,6 +50,7 @@ export const PropiedadesScreen = ({
 				setShowListOnly={setShowListOnly}
 				setShowMapOnly={setShowMapOnly}
 				hasPropiedades={propiedades.length > 0}
+				filterData={filterData}
 			/>
 			<div className={`flex ${showListOnly ? "" : "flex-1 overflow-hidden"}`}>
 				{showList && (

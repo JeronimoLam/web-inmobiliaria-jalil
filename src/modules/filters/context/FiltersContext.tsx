@@ -5,10 +5,10 @@ import {
 	CheckboxField,
 	CounterField,
 	PropiedadFilters,
-} from "@/modules/propiedades/types/filters.type";
-import { LIMITS, DEFAULT_FILTERS } from "@/modules/propiedades/constants/filters.constants";
-import { useURLSync } from "@/modules/propiedades/hooks/useURLSync";
-import { OperacionesEnum } from "../enums/propiedades.enum";
+} from "@/modules/filters/types/filters.type";
+import { LIMITS, DEFAULT_FILTERS } from "@/modules/filters/constants/filters.constants";
+import { useURLSync } from "@/modules/filters/hooks/useURLSync";
+import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
 interface FiltersContextType {
 	filters: PropiedadFilters;

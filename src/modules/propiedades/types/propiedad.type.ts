@@ -23,7 +23,7 @@ export type Propiedad = {
 	updated_at: Date;
 };
 
-export type Detalles = {
+type Detalles = {
 	id: number;
 	banos: number;
 	pisos: number;
@@ -42,24 +42,24 @@ export type Detalles = {
 	superficie_total_construida: number;
 };
 
-export type Imagenes = {
+type Imagenes = {
 	id: number;
 	url: string;
 	principal: boolean;
 	created_at: Date;
 };
 
-export type Localidad = {
+type Localidad = {
 	id: number;
 	nombre: string;
 };
 
-export type MapLocation = {
+type MapLocation = {
 	type: string;
 	coordinates: number[];
 };
 
-export type Precio = {
+type Precio = {
 	id: number;
 	divisa: string;
 	importe: number;
@@ -71,7 +71,7 @@ export type Precio = {
 	};
 };
 
-export type TipoPropiedad = {
+type TipoPropiedad = {
 	id: number;
 	value: string;
 };

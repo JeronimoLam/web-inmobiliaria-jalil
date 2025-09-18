@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "@/components/Icons";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
 
 interface CheckboxOption {
-	id: string;
+	value: string;
 	label: string;
 }
 
@@ -42,14 +42,14 @@ export const CheckboxGroupFilter = ({ placeholder, options, field }: CheckboxGro
 				<CollapsibleContent className="mt-3">
 					<div className="bg-gray-50 rounded-lg p-4 space-y-3">
 						{options.map((option) => (
-							<div key={option.id} className="flex items-center space-x-3">
+							<div key={option.value} className="flex items-center space-x-3">
 								<Checkbox
-									id={option.id}
-									checked={selectedItems.includes(option.id)}
-									onCheckedChange={() => toggleCheckbox(option.id, field)}
+									id={option.value}
+									checked={selectedItems.includes(option.value)}
+									onCheckedChange={() => toggleCheckbox(option.value, field)}
 								/>
 								<label
-									htmlFor={option.id}
+									htmlFor={option.value}
 									className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
 								>
 									{option.label}

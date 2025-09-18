@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { PlusIcon, MinusIcon } from "@/components/Icons";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
 
 interface CounterFilterProps {
 	label: string;

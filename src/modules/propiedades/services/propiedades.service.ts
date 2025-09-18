@@ -1,8 +1,8 @@
 import { OperacionesEnum } from "../enums/propiedades.enum";
 import { Propiedad } from "../types/propiedad.type";
-import { PropiedadFilters } from "../types/filters.type";
+import { PropiedadFilters } from "../../filters/types/filters.type";
 import { supabase } from "@/lib/supabaseClient";
-import { LIMITS } from "../constants/filters.constants";
+import { LIMITS } from "../../filters/constants/filters.constants";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
@@ -108,10 +108,7 @@ export class PropiedadesService {
 	 * @param filters Filtros opcionales para refinar la búsqueda (tipo, localidad, precio, etc).
 	 * @returns Un array de propiedades que cumplen con los filtros, o vacío si ocurre un error.
 	 */
-	static getAllPropiedades = async ({
-		operacion,
-		filters,
-	}: getPropiedadesParams): Promise<Propiedad[]> => {
+	static getAll = async ({ operacion, filters }: getPropiedadesParams): Promise<Propiedad[]> => {
 		let tableName;
 		if (!operacion) {
 			tableName = "propiedades_full";

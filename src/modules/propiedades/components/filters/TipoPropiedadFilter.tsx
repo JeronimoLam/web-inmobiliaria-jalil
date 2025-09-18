@@ -14,10 +14,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { tiposPropiedad } from "@/modules/propiedades/data/filtros.data";
-import { useFiltersContext } from "@/modules/propiedades/context/FiltersContext";
+import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
+import { FilterOption } from "@/modules/filters/types/filters.type";
 
-export const TipoPropiedadFilter = () => {
+interface TipoPropiedadFilterProps {
+	options: FilterOption[];
+}
+
+export const TipoPropiedadFilter = ({ options }: TipoPropiedadFilterProps) => {
 	const { filters, updateTipoPropiedad } = useFiltersContext();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +37,7 @@ export const TipoPropiedadFilter = () => {
 						className="w-full justify-between h-11 px-4 font-normal border-gray-200 hover:border-gray-300"
 					>
 						{filters.tipoPropiedad
-							? tiposPropiedad.find((tipo) => tipo.value === filters.tipoPropiedad)?.label
+							? options.find((tipo) => tipo.value === filters.tipoPropiedad)?.label
 							: "Seleccionar tipo"}
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 					</Button>
@@ -44,7 +48,7 @@ export const TipoPropiedadFilter = () => {
 						<CommandList>
 							<CommandEmpty>No se encontró ningún tipo.</CommandEmpty>
 							<CommandGroup>
-								{tiposPropiedad.map((tipo) => (
+								{options.map((tipo) => (
 									<CommandItem
 										key={tipo.value}
 										value={tipo.value}
