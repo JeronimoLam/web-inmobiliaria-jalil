@@ -13,22 +13,18 @@ interface PropiedadesScreenProps {
 	propiedades: Propiedad[];
 	filterData: FilterData;
 	itemsPerPage?: number;
-	operacion: "venta" | "alquiler";
 }
 
 export const PropiedadesScreen = ({
 	propiedades,
 	filterData,
 	itemsPerPage = 5,
-	operacion,
 }: PropiedadesScreenProps) => {
 	const [showListOnly, setShowListOnly] = useState(true);
 	const [showMapOnly, setShowMapOnly] = useState(false);
 
 	const showList = !showMapOnly; // Mostrar lista si no está activado solo mapa
 	const showMap = !showListOnly; // Mostrar mapa si no está activado solo lista
-
-	console.log(operacion);
 
 	const {
 		currentItems,

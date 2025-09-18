@@ -1,7 +1,7 @@
+import { useState } from "react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SelectWithSearch from "@/components/ui/SelectWithSearch";
-import { Search } from "lucide-react";
-import React from "react";
 
 interface PropertySearchFormProps {
 	tiposPropiedad: { value: string; label: string }[];
@@ -10,14 +10,14 @@ interface PropertySearchFormProps {
 	onSearch: (params: { tipoPropiedad: string; localidad: string }) => void;
 }
 
-export const PropertySearchForm: React.FC<PropertySearchFormProps> = ({
+export const PropertySearchForm = ({
 	tiposPropiedad,
 	localidades,
 	onSearch,
 	withBorder = false,
-}) => {
-	const [tipoPropiedad, setTipoPropiedad] = React.useState("");
-	const [localidad, setLocalidad] = React.useState("");
+}: PropertySearchFormProps) => {
+	const [tipoPropiedad, setTipoPropiedad] = useState("");
+	const [localidad, setLocalidad] = useState("");
 
 	const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

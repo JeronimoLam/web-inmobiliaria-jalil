@@ -4,11 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PhoneIcon } from "@/components/Icons";
 import { WhatsAppButton } from "./WhatsappButton";
-import { EstadoPublicacionEnum } from "../../types/propiedad.type";
+import { OperacionesEnum } from "../../enums/propiedades.enum";
 
 interface ContactButtonsProps {
 	defaultMessage: string;
-	estadoPublicacion: EstadoPublicacionEnum;
+	estadoPublicacion: OperacionesEnum;
 }
 
 export const ContactButtons = ({ defaultMessage, estadoPublicacion }: ContactButtonsProps) => {
@@ -26,7 +26,7 @@ export const ContactButtons = ({ defaultMessage, estadoPublicacion }: ContactBut
 				className="sm:py-7 flex flex-col sm:flex-row py-9"
 				asChild
 			>
-				{estadoPublicacion === EstadoPublicacionEnum.VENTA ? (
+				{estadoPublicacion === OperacionesEnum.VENTA ? (
 					<Link
 						href={`tel:${process.env.NEXT_PUBLIC_TELEFONO_VENTA || ""}`}
 						aria-label="telefono-venta"

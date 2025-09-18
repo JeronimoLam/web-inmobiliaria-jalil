@@ -144,17 +144,17 @@ export class PropiedadesService {
 		try {
 			let response;
 			if (operacion === OperacionesEnum.ALQUILER) {
-				response = await fetch(`${SUPABASE_URL}/propiedades_alquiler?id=eq.${codigo}`, {
+				response = await fetch(`${SUPABASE_URL}/rest/v1/propiedades_alquiler?codigo=eq.${codigo}`, {
 					headers: this.getHeaders(),
 					cache: "no-store",
 				});
 			} else {
-				response = await fetch(`${SUPABASE_URL}/propiedades_venta?id=eq.${codigo}`, {
+				response = await fetch(`${SUPABASE_URL}/rest/v1/propiedades_venta?codigo=eq.${codigo}`, {
 					headers: this.getHeaders(),
 					cache: "no-store",
 				});
 			}
-
+			console.log(response);
 			if (!response.ok) {
 				throw new Error("Error fetching propiedad");
 			}

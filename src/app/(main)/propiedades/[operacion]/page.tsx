@@ -36,8 +36,6 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		pisos: queryParams.pisos ? parseInt(queryParams.pisos) : undefined,
 	};
 
-	console.log(operacion, queryParams);
-
 	const [propiedades, filterData] = await Promise.all([
 		PropiedadesService.getAll({
 			operacion: operacion === "venta" ? OperacionesEnum.VENTA : OperacionesEnum.ALQUILER,
@@ -46,7 +44,5 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		FiltersService.getAll(),
 	]);
 
-	return (
-		<PropiedadesScreen propiedades={propiedades} filterData={filterData} operacion={operacion} />
-	);
+	return <PropiedadesScreen propiedades={propiedades} filterData={filterData} />;
 }
