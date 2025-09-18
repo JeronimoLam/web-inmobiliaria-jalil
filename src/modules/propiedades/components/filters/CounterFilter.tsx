@@ -26,7 +26,7 @@ export const CounterFilter = ({ label, field, className }: CounterFilterProps) =
 				>
 					<MinusIcon width={12} height={12} />
 				</Button>
-				<span className="w-8 text-center text-sm font-medium">{filters[field]}</span>
+				<span className="w-8 text-center text-sm font-medium">{filters[field] || 0}</span>
 				<Button
 					variant="outline"
 					size="sm"
