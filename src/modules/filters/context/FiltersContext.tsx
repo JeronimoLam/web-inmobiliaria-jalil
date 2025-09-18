@@ -128,7 +128,11 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 	};
 
 	const updateSuperficie = (field: "superficieMin" | "superficieMax", value: string) => {
-		setFilters((prev) => ({ ...prev, [field]: value }));
+		const numericValue = value === "" ? undefined : parseInt(value, 10);
+		setFilters((prev) => ({
+			...prev,
+			[field]: isNaN(numericValue as number) ? undefined : numericValue,
+		}));
 	};
 
 	const updateOperacion = (value: OperacionesEnum) => {

@@ -8,17 +8,17 @@ export const LIMITS = {
 } as const;
 
 export const DEFAULT_FILTERS: PropiedadFilters = {
-	tipoPropiedad: "",
-	localidad: "",
-	dormitorios: 0,
+	tipoPropiedad: undefined,
+	localidad: undefined,
+	dormitorios: undefined,
 	precioMin: LIMITS.MIN_PRECIO,
 	precioMax: LIMITS.MAX_PRECIO,
 	caracteristicas: [],
 	ambientes: [],
 	servicios: [],
-	superficieMin: 0,
-	superficieMax: 0,
-	banos: 0,
-	ambientesContador: 0,
-	pisos: 0,
+	superficieMin: undefined,
+	superficieMax: undefined,
+	banos: undefined,
+	ambientesContador: undefined,
+	pisos: undefined,
 };

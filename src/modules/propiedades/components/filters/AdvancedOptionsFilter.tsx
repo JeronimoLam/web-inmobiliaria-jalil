@@ -36,7 +36,7 @@ export const AdvancedOptionsFilter = () => {
 								<Input
 									type="number"
 									placeholder="Mín m²"
-									value={filters.superficieMin}
+									value={filters.superficieMin ? filters.superficieMin.toString() : ""}
 									onChange={(e) => updateSuperficie("superficieMin", e.target.value)}
 									className="flex-1 h-10"
 								/>
@@ -44,7 +44,7 @@ export const AdvancedOptionsFilter = () => {
 								<Input
 									type="number"
 									placeholder="Máx m²"
-									value={filters.superficieMax}
+									value={filters.superficieMax ? filters.superficieMax.toString() : ""}
 									onChange={(e) => updateSuperficie("superficieMax", e.target.value)}
 									className="flex-1 h-10"
 								/>
