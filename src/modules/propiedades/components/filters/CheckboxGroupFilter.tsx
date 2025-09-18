@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "@/components/Icons";
@@ -24,6 +24,17 @@ export const CheckboxGroupFilter = ({ placeholder, options, field }: CheckboxGro
 	const [isOpen, setIsOpen] = useState(false);
 
 	const selectedItems = filters[field] ?? [];
+
+	const hasValuesActive = (): boolean => {
+		return selectedItems.length > 0;
+	};
+
+	useEffect(() => {
+		if (hasValuesActive()) {
+			setIsOpen(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className="space-y-3">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -13,6 +13,23 @@ import { CounterFilter } from "@/modules/propiedades/components/filters/CounterF
 export const AdvancedOptionsFilter = () => {
 	const { filters, updateSuperficie } = useFiltersContext();
 	const [isOpen, setIsOpen] = useState(false);
+
+	const hasValuesActive = (): boolean => {
+		return !!(
+			filters.superficieMin ||
+			filters.superficieMax ||
+			filters.banos ||
+			filters.ambientesContador ||
+			filters.pisos
+		);
+	};
+
+	useEffect(() => {
+		if (hasValuesActive()) {
+			setIsOpen(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className="space-y-3">
