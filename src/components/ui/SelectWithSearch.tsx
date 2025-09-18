@@ -1,5 +1,5 @@
 "use client";
-import { useId, useState } from "react";
+import { useId, useState, useEffect } from "react";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ interface SelectWithSearchProps {
 	labelEmpty: string;
 	labelSearch: string;
 	className?: string;
+	initialValue?: string;
 	onSelect: (value: string) => void;
 }
 
@@ -29,11 +30,16 @@ export default function SelectWithSearch({
 	labelEmpty,
 	labelSearch,
 	className,
+	initialValue = "",
 	onSelect,
 }: SelectWithSearchProps) {
 	const id = useId();
 	const [open, setOpen] = useState<boolean>(false);
-	const [value, setValue] = useState<string>("");
+	const [value, setValue] = useState<string>(initialValue);
+
+	useEffect(() => {
+		setValue(initialValue);
+	}, [initialValue]);
 
 	return (
 		<div className="*:not-first:mt-2 flex-1">

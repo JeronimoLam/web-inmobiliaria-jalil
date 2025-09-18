@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SelectWithSearch from "@/components/ui/SelectWithSearch";
@@ -7,6 +8,8 @@ interface PropertySearchFormProps {
 	tiposPropiedad: { value: string; label: string }[];
 	localidades: { value: string; label: string }[];
 	withBorder?: boolean;
+	initialTipoPropiedad?: string;
+	initialLocalidad?: string;
 	onSearch: (params: { tipoPropiedad: string; localidad: string }) => void;
 }
 
@@ -15,9 +18,16 @@ export const PropertySearchForm = ({
 	localidades,
 	onSearch,
 	withBorder = false,
+	initialTipoPropiedad = "",
+	initialLocalidad = "",
 }: PropertySearchFormProps) => {
-	const [tipoPropiedad, setTipoPropiedad] = useState("");
-	const [localidad, setLocalidad] = useState("");
+	const [tipoPropiedad, setTipoPropiedad] = useState(initialTipoPropiedad);
+	const [localidad, setLocalidad] = useState(initialLocalidad);
+
+	useEffect(() => {
+		setTipoPropiedad(initialTipoPropiedad);
+		setLocalidad(initialLocalidad);
+	}, [initialTipoPropiedad, initialLocalidad]);
 
 	const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -32,6 +42,7 @@ export const PropertySearchForm = ({
 				labelEmpty="No se encontró ningún tipo de propiedad."
 				labelSearch="Buscar tipo de propiedad..."
 				className={`flex-1 md:rounded-r-none px-7 py-selects border-r border-r-input focus-visible:ring-transparent ${withBorder && "border border-muted-foreground/30"}`}
+				initialValue={initialTipoPropiedad}
 				onSelect={setTipoPropiedad}
 			/>
 			<SelectWithSearch
@@ -40,6 +51,7 @@ export const PropertySearchForm = ({
 				labelEmpty="No se encontró ninguna localidad."
 				labelSearch="Buscar localidad..."
 				className={`flex-1 md:rounded-none px-7 py-selects border-l border-l-input focus-visible:ring-transparent ${withBorder && "border md:border-x-0 border-muted-foreground/30"}`}
+				initialValue={initialLocalidad}
 				onSelect={setLocalidad}
 			/>
 			<Button

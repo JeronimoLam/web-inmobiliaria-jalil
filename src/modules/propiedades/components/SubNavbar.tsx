@@ -5,6 +5,7 @@ import { PropertySearchForm } from "@/components/PropertySearchForm";
 import { FilterSideBar } from "@/modules/propiedades/components/FilterSideBar";
 import { FiltersProvider } from "../../filters/context/FiltersContext";
 import { FilterData } from "@/modules/filters/types/filters.type";
+import { usePropertySearchSync } from "../hooks/usePropertySearchSync";
 
 interface SubNavbarProps {
 	showListOnly: boolean;
@@ -21,6 +22,9 @@ export default function SubNavbar({
 	setShowMapOnly,
 	filterData,
 }: SubNavbarProps) {
+	const { initialTipoPropiedad, initialLocalidad, handleSearchFormSubmit } =
+		usePropertySearchSync();
+
 	const allTabs = [
 		{ label: "Ver Listado", icon: <ListIcon width={20} height={20} />, action: "list" },
 		{ label: "Ver Mapa", icon: <MapIcon width={20} height={20} />, action: "map" },
@@ -48,7 +52,9 @@ export default function SubNavbar({
 							withBorder
 							localidades={filterData.localidades}
 							tiposPropiedad={filterData.tiposPropiedad}
-							onSearch={() => {}}
+							initialTipoPropiedad={initialTipoPropiedad}
+							initialLocalidad={initialLocalidad}
+							onSearch={handleSearchFormSubmit}
 						/>
 					</div>
 					<FiltersProvider>
