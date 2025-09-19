@@ -9,7 +9,7 @@ export const createPaginationResponse = (params: CreatePaginationResponse): Pagi
 		totalPages,
 		totalItems,
 		itemsPerPage: to - from + 1,
-		hasNextPage: to < totalItems,
+		hasNextPage: page < totalPages,
 		hasPreviousPage: from > 0,
 		startIndex: from,
 		endIndex: to,

@@ -1,9 +1,9 @@
+import { notFound } from "next/navigation";
 import { Footer } from "@/components/layouts/Footer";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadDetailScreen } from "@/modules/propiedades/screens/PropiedadDetailScreen";
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
-import { notFound } from "next/navigation";
+import { getPropiedad } from "@/modules/propiedades/services/get-propiedad.service";
 
 interface PropiedadDetailPageProps {
 	params: Promise<{
@@ -25,7 +25,7 @@ export default async function PropiedadDetailPage({
 	const codigoPropiedad = parts[parts.length - 1];
 	const op = operacion === "1" ? OperacionesEnum.ALQUILER : OperacionesEnum.VENTA;
 
-	const propiedad = await PropiedadesService.getPropiedad(Number(codigoPropiedad), op);
+	const propiedad = await getPropiedad(Number(codigoPropiedad), op);
 
 	if (!propiedad || !propiedad.precios || propiedad.precios.length === 0) {
 		return notFound();
