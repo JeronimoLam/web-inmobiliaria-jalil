@@ -44,5 +44,5 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		FiltersService.getAll(),
 	]);
 
-	return <PropiedadesScreen propiedades={propiedades} filterData={filterData} />;
+	return <PropiedadesScreen propiedades={propiedades.data} filterData={filterData} />;
 }

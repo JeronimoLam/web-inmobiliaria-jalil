@@ -22,5 +22,5 @@ export const OfferPropertyCarouselServer = async ({
 		});
 	}
 
-	return <OfferPropertyCarousel propiedades={propiedades} />;
+	return <OfferPropertyCarousel propiedades={propiedades.data} />;
 };
