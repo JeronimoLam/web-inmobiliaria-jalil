@@ -6,24 +6,19 @@ import { FilterSideBar } from "@/modules/propiedades/components/FilterSideBar";
 import { FiltersProvider } from "../../filters/context/FiltersContext";
 import { FilterData } from "@/modules/filters/types/filters.type";
 import { usePropertySearchSync } from "../hooks/usePropertySearchSync";
+import { usePropiedadesStore } from "../store/propiedades.store";
 
 interface SubNavbarProps {
-	showListOnly: boolean;
-	hasPropiedades: boolean;
-	setShowListOnly: (value: boolean) => void;
-	setShowMapOnly: (value: boolean) => void;
 	filterData: FilterData;
 }
 
-export default function SubNavbar({
-	showListOnly,
-	hasPropiedades,
-	setShowListOnly,
-	setShowMapOnly,
-	filterData,
-}: SubNavbarProps) {
+export default function SubNavbar({ filterData }: SubNavbarProps) {
 	const { initialTipoPropiedad, initialLocalidad, handleSearchFormSubmit } =
 		usePropertySearchSync();
+	const showListOnly = usePropiedadesStore((state) => state.showListOnly);
+	const setShowListOnly = usePropiedadesStore((state) => state.setShowListOnly);
+	const setShowMapOnly = usePropiedadesStore((state) => state.setShowMapOnly);
+	const hasPropiedades = usePropiedadesStore((state) => state.hasPropiedades);
 
 	const allTabs = [
 		{ label: "Ver Listado", icon: <ListIcon width={20} height={20} />, action: "list" },

@@ -1,9 +1,9 @@
-import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
-import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
 import { FiltersService } from "@/modules/filters/services/filters.service";
 import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 import { notFound } from "next/navigation";
-import { getPropiedades } from "@/modules/propiedades/services/get-propiedades.service";
+import { Suspense } from "react";
+import PropiedadesContainer from "@/modules/propiedades/components/server/PropiedadesContainer.server";
+import SubNavbar from "@/modules/propiedades/components/SubNavbar";
 
 interface PropiedadesPageProps {
 	params: Promise<{ operacion: string }>;
@@ -18,7 +18,7 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		return notFound();
 	}
 
-	const filters: PropiedadFilters = {
+	const filtersParams: PropiedadFilters = {
 		tipoPropiedad: queryParams.tipoPropiedad || undefined,
 		localidad: queryParams.localidad || undefined,
 		dormitorios: queryParams.dormitorios ? parseInt(queryParams.dormitorios) : undefined,
@@ -36,17 +36,27 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		pisos: queryParams.pisos ? parseInt(queryParams.pisos) : undefined,
 	};
 
-	const [propiedades, filterData] = await Promise.all([
-		getPropiedades({
-			operacion: operacion === "venta" ? OperacionesEnum.VENTA : OperacionesEnum.ALQUILER,
-			filters,
-			pagination: {
-				page: queryParams.page ? parseInt(queryParams.page) : 1,
-				limit: queryParams.limit ? parseInt(queryParams.limit) : 5,
-			},
-		}),
-		FiltersService.getAll(),
-	]);
+	const paginationParams = {
+		page: queryParams.page && parseInt(queryParams.page),
+		limit: queryParams.limit && parseInt(queryParams.limit),
+	};
 
-	return <PropiedadesScreen propiedades={propiedades.data} filterData={filterData} />;
+	const filterData = await FiltersService.getAll();
+
+	return (
+		<div className="flex flex-col w-full">
+			<SubNavbar filterData={filterData} />
+			<div className="flex-1 flex flex-col overflow-hidden">
+				<Suspense
+					fallback={<div className="w-full py-12 text-center">Cargando propiedades...</div>}
+				>
+					<PropiedadesContainer
+						operacion={operacion}
+						filtersParams={filtersParams}
+						paginationParams={paginationParams}
+					/>
+				</Suspense>
+			</div>
+		</div>
+	);
 }
