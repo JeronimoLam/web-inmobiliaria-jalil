@@ -75,6 +75,3 @@ type TipoPropiedad = {
 	id: number;
 	value: string;
 };
-
-// Usamos OperacionesEnum para todas las comparaciones por id en lugar de por el nombre
-// Asi evitamos problemas si en el futuro se cambia el nombre de alguna operacion

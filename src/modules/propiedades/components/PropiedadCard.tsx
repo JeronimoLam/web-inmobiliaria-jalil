@@ -31,7 +31,7 @@ export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) 
 			<Carousel
 				className="min-h-[220px] md:min-w-[380px] md:h-full"
 				opts={{
-					loop: false,
+					loop: true,
 				}}
 			>
 				<Link href={propiedadDetailUrl}>
