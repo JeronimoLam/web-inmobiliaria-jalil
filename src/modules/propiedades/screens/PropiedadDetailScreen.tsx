@@ -14,8 +14,6 @@ interface PropiedadDetailScreenProps {
 }
 
 export const PropiedadDetailScreen = ({ propiedad }: PropiedadDetailScreenProps) => {
-	console.log(JSON.stringify(propiedad, null, 2));
-
 	const precioImporte = propiedad.precios[0].importe ? propiedad.precios[0].importe : "Consultar";
 	const estadoPropiedad = propiedad.precios[0]?.estado_publicacion.nombre;
 	const title = buildPropiedadTitle(propiedad);

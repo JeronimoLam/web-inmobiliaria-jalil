@@ -127,7 +127,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">${precio.importe}</span>
+					<span className="font-semibold text-xl">$${precio.importe.toLocaleString("es-AR")}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}
