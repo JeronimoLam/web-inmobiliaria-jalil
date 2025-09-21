@@ -7,24 +7,25 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PaginationResponse } from "@/modules/pagination/types/pagination.type";
 
-interface CustomPaginationProps {
-	currentPage: number;
-	totalPages: number;
-	onPageChange: (page: number) => void;
+interface PropiedadesPaginationProps {
+	pagination: PaginationResponse;
+	handlePageChange: (page: number) => void;
 	className?: string;
 }
 
 export const PropiedadesPagination = ({
-	currentPage,
-	totalPages,
-	onPageChange,
+	pagination,
+	handlePageChange,
 	className = "",
-}: CustomPaginationProps) => {
+}: PropiedadesPaginationProps) => {
+	const { currentPage, totalPages, hasNextPage, hasPreviousPage } = pagination;
+
 	if (totalPages <= 1) return null;
 
 	return (
-		<div className={`mt-8 ${className}`}>
+		<div className={`${className}`}>
 			<Pagination>
 				<PaginationContent>
 					<PaginationItem>
@@ -32,11 +33,11 @@ export const PropiedadesPagination = ({
 							href="#"
 							onClick={(e) => {
 								e.preventDefault();
-								if (currentPage > 1) {
-									onPageChange(currentPage - 1);
+								if (hasPreviousPage) {
+									handlePageChange(currentPage - 1);
 								}
 							}}
-							className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+							className={!hasPreviousPage ? "pointer-events-none opacity-50" : ""}
 						/>
 					</PaginationItem>
 
@@ -66,7 +67,7 @@ export const PropiedadesPagination = ({
 									href="#"
 									onClick={(e) => {
 										e.preventDefault();
-										onPageChange(page);
+										handlePageChange(page);
 									}}
 									isActive={page === currentPage}
 								>
@@ -81,11 +82,11 @@ export const PropiedadesPagination = ({
 							href="#"
 							onClick={(e) => {
 								e.preventDefault();
-								if (currentPage < totalPages) {
-									onPageChange(currentPage + 1);
+								if (hasNextPage) {
+									handlePageChange(currentPage + 1);
 								}
 							}}
-							className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+							className={!hasNextPage ? "pointer-events-none opacity-50" : ""}
 						/>
 					</PaginationItem>
 				</PaginationContent>

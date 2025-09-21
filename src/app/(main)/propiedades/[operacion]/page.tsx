@@ -48,7 +48,11 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 			<SubNavbar filterData={filterData} />
 			<div className="flex flex-col pt-[80px]">
 				<Suspense
-					fallback={<div className="w-full py-12 text-center">Cargando propiedades...</div>}
+					fallback={
+						<div className="w-full py-12 text-center min-h-[calc(100vh-150px)]">
+							Cargando propiedades...
+						</div>
+					}
 				>
 					<PropiedadesContainer
 						operacion={operacion}
