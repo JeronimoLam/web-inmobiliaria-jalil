@@ -14,7 +14,7 @@ export const TabOperationSelector = () => {
 				variant={operacion === OperacionesEnum.VENTA ? "default" : "outline"}
 				className={cn(
 					"flex-1 h-11 rounded-lg font-medium transition-all",
-					operacion === OperacionesEnum.VENTA && "border border-primary shadow-sm",
+					operacion === OperacionesEnum.VENTA && "border border-primary",
 				)}
 			>
 				Venta
@@ -24,7 +24,7 @@ export const TabOperationSelector = () => {
 				variant={operacion === OperacionesEnum.ALQUILER ? "default" : "outline"}
 				className={cn(
 					"flex-1 h-11 rounded-lg font-medium transition-all",
-					operacion === OperacionesEnum.ALQUILER && "border border-primary shadow-sm",
+					operacion === OperacionesEnum.ALQUILER && "border border-primary",
 				)}
 			>
 				Alquiler
