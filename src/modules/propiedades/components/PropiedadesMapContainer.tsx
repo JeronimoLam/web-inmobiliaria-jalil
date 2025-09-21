@@ -10,5 +10,5 @@ export const PropiedadesMapContainer = ({ children }: PropiedadesMapContainerPro
 
 	const showMap = !showListOnly;
 
-	return <>{showMap && <div className="h-[calc(100vh-70px)]">{children}</div>}</>;
+	return <>{showMap && <div className="h-full">{children}</div>}</>;
 };
