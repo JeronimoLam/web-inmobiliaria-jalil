@@ -105,7 +105,7 @@ export const Footer = () => {
 				<hr className="my-6 border-[#DFDFDF]/20 sm:mx-auto lg:my-6" />
 				<div className="flex items-center justify-center">
 					<span className="text-sm text-gray-500 sm:text-center">
-						© 2025 Jalil Propiedades . Todos los derechos reservados.
+						© {new Date().getFullYear()} Jalil Propiedades . Todos los derechos reservados.
 					</span>
 				</div>
 			</PageContainer>
