@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { Footer } from "@/components/layouts/Footer";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { PropiedadDetailScreen } from "@/modules/propiedades/screens/PropiedadDetailScreen";
@@ -37,7 +36,6 @@ export default async function PropiedadDetailPage({
 			<div className="pb-14">
 				<OurBestOfferSection />
 			</div>
-			<Footer />
 		</>
 	);
 }
