@@ -1,11 +1,9 @@
-import { Ring2 } from "ldrs/react";
-import "ldrs/react/Ring2.css";
+import { LineSpinner } from "ldrs/react";
+import "ldrs/react/LineSpinner.css";
 
 interface SpinnerProps {
 	size?: number;
 	stroke?: number;
-	strokeLength?: number;
-	bgOpacity?: number;
 	speed?: number;
 	color?: string;
 }
@@ -13,19 +11,8 @@ interface SpinnerProps {
 export const Spinner = ({
 	size = 40,
 	stroke = 3,
-	strokeLength = 0.25,
-	bgOpacity = 0.1,
 	speed = 0.8,
 	color = "#ff9900",
 }: SpinnerProps) => {
-	return (
-		<Ring2
-			size={size}
-			stroke={stroke}
-			strokeLength={strokeLength}
-			bgOpacity={bgOpacity}
-			speed={speed}
-			color={color}
-		/>
-	);
+	return <LineSpinner size={size} stroke={stroke} speed={speed} color={color} />;
 };
