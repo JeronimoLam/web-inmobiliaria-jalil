@@ -23,7 +23,7 @@ export default function PropiedadesList({ propiedades }: PropiedadesListProps) {
 	return (
 		<>
 			{showList && (
-				<div className="w-full flex flex-col gap-6">
+				<div className="w-full flex flex-col gap-6 py-2">
 					{pagination.totalPages > 0 && (
 						<div className="text-sm text-gray-600 font-medium">
 							Mostrando <span className="font-bold">{pagination.totalPages}</span> de{" "}

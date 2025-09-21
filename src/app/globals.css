@@ -109,6 +109,8 @@
 	--text-md: 1.0625rem; /* 17px */
 
 	--text-2.5xl: 1.75rem; /* 28px */
+
+	--breakpoint-subnavbar-buttons: 1120px;
 }
 
 .dark {

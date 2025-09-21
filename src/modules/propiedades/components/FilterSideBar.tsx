@@ -41,8 +41,11 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 	return (
 		<Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
 			<SheetTrigger asChild>
-				<Button variant="outline" className="w-full sm:w-auto py-selects font-semibold">
-					<FilterIcon width={24} height={24} /> Filtros ({getActiveFiltersCount()})
+				<Button variant="outline" className="w-full h-full py-3 lg:w-auto font-semibold">
+					<FilterIcon width={24} height={24} />{" "}
+					<div className="flex items-center gap-1">
+						<span className="hidden sm:block">Filtros</span>({getActiveFiltersCount()})
+					</div>
 				</Button>
 			</SheetTrigger>
 

@@ -37,12 +37,12 @@ export default function SubNavbar({ filterData }: SubNavbarProps) {
 	};
 
 	return (
-		<div className="py-4">
+		<div className="max-h-[80px] py-4 fixed top-[70px] left-0 right-0 bg-background z-10">
 			<div
-				className={`flex gap-4 flex-col lg:flex-row lg:items-center justify-between px-4 sm:px-8 transition-transform ${showListOnly && "w-full px-4 sm:px-8 xl:max-w-[80rem] 2xl:max-w-[96rem] mx-auto"}`}
+				className={`flex gap-4 lg:items-center justify-between px-4 sm:px-8 transition-transform ${showListOnly && "w-full px-4 sm:px-8 xl:max-w-[80rem] 2xl:max-w-[96rem] mx-auto"}`}
 			>
-				<div className="flex flex-col md:flex-row xl:items-center gap-4">
-					<div className="flex-1 lg:w-[600px]">
+				<div className="hidden lg:flex flex-col md:flex-row xl:items-center gap-4">
+					<div className="hidden lg:block lg:w-[600px]">
 						<PropertySearchForm
 							withBorder
 							localidades={filterData.localidades}
@@ -56,7 +56,12 @@ export default function SubNavbar({ filterData }: SubNavbarProps) {
 						<FilterSideBar filterData={filterData} />
 					</FiltersProvider>
 				</div>
-				<ul className="flex flex-row gap-2 relative">
+				<ul className="flex flex-row gap-2 justify-end relative w-full subnavbar-buttons:w-auto">
+					<div className="block lg:hidden w-full">
+						<FiltersProvider>
+							<FilterSideBar filterData={filterData} />
+						</FiltersProvider>
+					</div>
 					{allTabs.map((item) => {
 						const isActive = item.label === selectedTab;
 						const isDisabled = !hasPropiedades;
@@ -70,15 +75,17 @@ export default function SubNavbar({ filterData }: SubNavbarProps) {
 									if (item.action === "list") toggleListOnly();
 									if (item.action === "map") toggleMapOnly();
 								}}
-								className={`w-full lg:w-auto hover:rounded-md hover:rounded-b-none transition-colors relative px-3 py-3 flex items-center select-none text-secondary font-medium ${
+								className={`w-full subnavbar-buttons:w-auto hover:rounded-md hover:rounded-b-none transition-colors relative lg:px-3 lg:py-3 flex items-center justify-center select-none text-secondary font-medium ${
 									isDisabled ? "opacity-50" : "cursor-pointer hover:bg-muted-secondary/40"
 								}`}
 							>
 								{isActive && !isDisabled && (
 									<div className="absolute inset-0 rounded-md rounded-b-none bg-muted-secondary" />
 								)}
-								<span className="mr-2 relative z-10">{item.icon}</span>
-								<span className="relative z-10">{item.label}</span>
+								<div className="flex gap-2 items-center justify-center">
+									<span className="relative z-10">{item.icon}</span>
+									<span className="hidden subnavbar-buttons:block relative z-10">{item.label}</span>
+								</div>
 							</li>
 						);
 					})}
