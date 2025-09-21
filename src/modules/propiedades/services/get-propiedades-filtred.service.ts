@@ -54,7 +54,7 @@ export const getPropiedadesFiltred = async (
 	if (filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) {
 		filterBuilder.gte("precios->0->>importe", filters.precioMin);
 	}
-	if (filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO) {
+	if (filters.precioMax) {
 		filterBuilder.lte("precios->0->>importe", filters.precioMax);
 	}
 
