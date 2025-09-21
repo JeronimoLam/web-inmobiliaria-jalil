@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import PropiedadesContainer from "@/modules/propiedades/components/server/PropiedadesContainer.server";
 import SubNavbar from "@/modules/propiedades/components/SubNavbar";
+import { PropiedadesListSkeleton } from "@/modules/propiedades/components/PropiedadesListSkeleton";
 
 interface PropiedadesPageProps {
 	params: Promise<{ operacion: string }>;
@@ -47,13 +48,7 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		<div className="flex flex-col w-full">
 			<SubNavbar filterData={filterData} />
 			<div className="flex flex-col pt-[80px]">
-				<Suspense
-					fallback={
-						<div className="w-full py-12 text-center min-h-[calc(100vh-150px)]">
-							Cargando propiedades...
-						</div>
-					}
-				>
+				<Suspense fallback={<PropiedadesListSkeleton count={5} />}>
 					<PropiedadesContainer
 						operacion={operacion}
 						filtersParams={filtersParams}

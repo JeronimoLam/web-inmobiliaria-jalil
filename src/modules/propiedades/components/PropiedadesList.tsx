@@ -37,7 +37,7 @@ export default function PropiedadesList({ propiedades }: PropiedadesListProps) {
 		<>
 			{showList && (
 				<div className="min-h-[calc(100vh-150px)] flex flex-col">
-					<div className="w-full flex flex-col gap-6 pt-2 flex-1">
+					<div className="w-full flex flex-col gap-6 pt-2 pb-10 lg:pb-14 flex-1">
 						{pagination.totalPages > 0 && (
 							<div>
 								<span className="font-bold">{pagination.totalItems}</span> propiedades en{" "}
@@ -54,7 +54,7 @@ export default function PropiedadesList({ propiedades }: PropiedadesListProps) {
 						)}
 					</div>
 					<PropiedadesPagination
-						className="py-10 lg:py-14"
+						className="pb-10 lg:pb-14"
 						pagination={pagination}
 						handlePageChange={handlePageChange}
 					/>
