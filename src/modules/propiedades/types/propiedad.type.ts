@@ -14,7 +14,7 @@ export type Propiedad = {
 	map_location: MapLocation;
 	localidad: Localidad;
 	precios: Precio[];
-	imagenes: Imagenes[];
+	imagenes: Imagen[];
 	detalles: Detalles;
 	servicios: { [key: string]: boolean };
 	ambientes: { [key: string]: boolean };
@@ -42,7 +42,7 @@ type Detalles = {
 	superficie_total_construida: number;
 };
 
-type Imagenes = {
+export type Imagen = {
 	id: number;
 	url: string;
 	principal: boolean;

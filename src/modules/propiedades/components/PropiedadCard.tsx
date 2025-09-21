@@ -14,6 +14,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
 import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
+import { getCardImagesToShow } from "../utils/getCardImagesToShow";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -22,33 +23,30 @@ export interface OfferPropertyCardProps {
 
 export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	const title = buildPropiedadTitle(propiedad);
-
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+	const imagesToShow = getCardImagesToShow(propiedad.imagenes);
 
 	return (
 		<Card className="w-full md:h-[280px] flex md:flex-row hover:shadow-lg transition-shadow duration-300 group">
 			<Carousel
 				className="min-h-[220px] md:min-w-[380px] md:h-full"
 				opts={{
-					loop: true,
+					loop: false,
 				}}
 			>
 				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
-						{propiedad.imagenes.map((imagen, index) => {
-							if (!imagen.principal) return null;
-							return (
-								<CarouselItem key={index} className="relative w-full h-[220px] md:h-[280px]">
-									<Image
-										src={imagen.url}
-										alt={propiedad.descripcion}
-										fill
-										sizes="(max-width: 768px) 100vw, 100vw"
-										className="object-cover"
-									/>
-								</CarouselItem>
-							);
-						})}
+						{imagesToShow.map((imagen, index) => (
+							<CarouselItem key={index} className="relative w-full h-[220px] md:h-[280px]">
+								<Image
+									src={imagen.url}
+									alt={propiedad.descripcion}
+									fill
+									sizes="(max-width: 768px) 100vw, 100vw"
+									className="object-cover"
+								/>
+							</CarouselItem>
+						))}
 					</CarouselContent>
 				</Link>
 				<CarouselPrevious />

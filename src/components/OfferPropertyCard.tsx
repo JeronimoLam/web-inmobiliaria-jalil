@@ -14,6 +14,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
 import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
+import { getCardImagesToShow } from "@/modules/propiedades/utils/getCardImagesToShow";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -23,6 +24,7 @@ export interface OfferPropertyCardProps {
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	const title = buildPropiedadTitle(propiedad);
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+	const imagesToShow = getCardImagesToShow(propiedad.imagenes);
 
 	return (
 		<Card className="w-full h-full flex flex-col hover:shadow-lg transition-shadow duration-300 group">
@@ -34,20 +36,17 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 			>
 				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
-						{propiedad.imagenes.map((imagen, index) => {
-							if (!imagen.principal) return null;
-							return (
-								<CarouselItem key={index} className="relative w-full h-[220px]">
-									<Image
-										src={imagen.url}
-										alt={propiedad.descripcion}
-										fill
-										sizes="(max-width: 768px) 100vw, 100vw"
-										className="h-full w-full object-cover"
-									/>
-								</CarouselItem>
-							);
-						})}
+						{imagesToShow.map((imagen, index) => (
+							<CarouselItem key={index} className="relative w-full h-[220px]">
+								<Image
+									src={imagen.url}
+									alt={propiedad.descripcion}
+									fill
+									sizes="(max-width: 768px) 100vw, 100vw"
+									className="h-full w-full object-cover"
+								/>
+							</CarouselItem>
+						))}
 					</CarouselContent>
 				</Link>
 				<CarouselPrevious />
@@ -127,7 +126,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">$${precio.importe.toLocaleString("es-AR")}</span>
+					<span className="font-semibold text-xl">${precio.importe.toLocaleString("es-AR")}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}
