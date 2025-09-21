@@ -17,6 +17,7 @@ export const getPropiedad = async (
 ): Promise<Propiedad | null> => {
 	try {
 		let response;
+
 		if (operacion === OperacionesEnum.ALQUILER) {
 			response = await fetch(`${SUPABASE_URL}/rest/v1/propiedades_alquiler?codigo=eq.${codigo}`, {
 				headers: getHeaders(),
@@ -28,7 +29,7 @@ export const getPropiedad = async (
 				cache: "no-store",
 			});
 		}
-		console.log(response);
+
 		if (!response.ok) {
 			throw new Error("Error fetching propiedad");
 		}

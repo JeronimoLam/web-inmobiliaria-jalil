@@ -22,18 +22,17 @@ export interface OfferPropertyCardProps {
 
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	const title = buildPropiedadTitle(propiedad);
-
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
 
 	return (
 		<Card className="w-full h-full flex flex-col hover:shadow-lg transition-shadow duration-300 group">
-			<Link href={propiedadDetailUrl} className="flex flex-col h-full">
-				<Carousel
-					className="min-h-[220px] flex-shrink-0"
-					opts={{
-						loop: true,
-					}}
-				>
+			<Carousel
+				className="min-h-[220px] flex-shrink-0"
+				opts={{
+					loop: true,
+				}}
+			>
+				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
 						{propiedad.imagenes.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px]">
@@ -47,10 +46,12 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
+				</Link>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
 
+			<Link href={propiedadDetailUrl} className="flex flex-col h-full flex-grow">
 				{/* Property Information */}
 				<div className="p-[15px] pb-0 flex-grow flex flex-col">
 					<div className="flex items-center justify-between">
@@ -89,10 +90,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				</div>
 
 				<Button
-					onClick={(e) => {
-						e.preventDefault();
-						onConsult?.();
-					}}
+					onClick={onConsult}
 					variant="secondary"
 					className="w-full text-white px-4 py-9 rounded-none justify-start transition group-hover:bg-secondary-dark flex-shrink-0"
 				>
