@@ -34,17 +34,20 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 			>
 				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
-						{propiedad.imagenes.map((imagen, index) => (
-							<CarouselItem key={index} className="relative w-full h-[220px]">
-								<Image
-									src={imagen.url}
-									alt={propiedad.descripcion}
-									fill
-									sizes="(max-width: 768px) 100vw, 100vw"
-									className="h-full w-full object-cover"
-								/>
-							</CarouselItem>
-						))}
+						{propiedad.imagenes.map((imagen, index) => {
+							if (!imagen.principal) return null;
+							return (
+								<CarouselItem key={index} className="relative w-full h-[220px]">
+									<Image
+										src={imagen.url}
+										alt={propiedad.descripcion}
+										fill
+										sizes="(max-width: 768px) 100vw, 100vw"
+										className="h-full w-full object-cover"
+									/>
+								</CarouselItem>
+							);
+						})}
 					</CarouselContent>
 				</Link>
 				<CarouselPrevious />
