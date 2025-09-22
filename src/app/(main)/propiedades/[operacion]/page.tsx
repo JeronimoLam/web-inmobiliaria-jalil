@@ -1,9 +1,10 @@
-import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
-import { PropiedadesScreen } from "@/modules/propiedades/screens/PropiedadesScreen";
-import { PropiedadesService } from "@/modules/propiedades/services/propiedades.service";
 import { FiltersService } from "@/modules/filters/services/filters.service";
 import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import PropiedadesContainer from "@/modules/propiedades/components/server/PropiedadesContainer.server";
+import SubNavbar from "@/modules/propiedades/components/SubNavbar";
+import { PropiedadesListSkeleton } from "@/modules/propiedades/components/PropiedadesListSkeleton";
 
 interface PropiedadesPageProps {
 	params: Promise<{ operacion: string }>;
@@ -18,7 +19,7 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		return notFound();
 	}
 
-	const filters: PropiedadFilters = {
+	const filtersParams: PropiedadFilters = {
 		tipoPropiedad: queryParams.tipoPropiedad || undefined,
 		localidad: queryParams.localidad || undefined,
 		dormitorios: queryParams.dormitorios ? parseInt(queryParams.dormitorios) : undefined,
@@ -36,13 +37,25 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		pisos: queryParams.pisos ? parseInt(queryParams.pisos) : undefined,
 	};
 
-	const [propiedades, filterData] = await Promise.all([
-		PropiedadesService.getAll({
-			operacion: operacion === "venta" ? OperacionesEnum.VENTA : OperacionesEnum.ALQUILER,
-			filters,
-		}),
-		FiltersService.getAll(),
-	]);
+	const paginationParams = {
+		page: queryParams.page && parseInt(queryParams.page),
+		limit: queryParams.limit && parseInt(queryParams.limit),
+	};
 
-	return <PropiedadesScreen propiedades={propiedades} filterData={filterData} />;
+	const filterData = await FiltersService.getAll();
+
+	return (
+		<div className="flex flex-col w-full">
+			<SubNavbar filterData={filterData} />
+			<div className="flex flex-col pt-[80px]">
+				<Suspense fallback={<PropiedadesListSkeleton count={5} />}>
+					<PropiedadesContainer
+						operacion={operacion}
+						filtersParams={filtersParams}
+						paginationParams={paginationParams}
+					/>
+				</Suspense>
+			</div>
+		</div>
+	);
 }

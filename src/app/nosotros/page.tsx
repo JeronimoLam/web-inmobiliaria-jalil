@@ -1,4 +1,3 @@
-import { Footer } from "@/components/layouts/Footer";
 import { NavBar } from "@/components/layouts/NavBar";
 import { PageContainer } from "@/components/layouts/PageContainer";
 import Image from "next/image";
@@ -60,7 +59,6 @@ export default function Home() {
 					</PageContainer>
 				</div>
 			</main>
-			<Footer />
 		</>
 	);
 }

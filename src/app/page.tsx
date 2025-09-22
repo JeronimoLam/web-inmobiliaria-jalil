@@ -1,4 +1,3 @@
-import { Footer } from "@/components/layouts/Footer";
 import { NavBar } from "@/components/layouts/NavBar";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import WhatsappFloatingButton from "@/components/WhatsappFloatingButton";
@@ -28,7 +27,6 @@ export default async function Home() {
 
 				<WhatsappFloatingButton />
 			</main>
-			<Footer />
 		</>
 	);
 }

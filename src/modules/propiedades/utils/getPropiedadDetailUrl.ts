@@ -15,7 +15,9 @@ const createSlug = (text: string): string => {
 
 export const getPropiedadDetailUrl = (propiedad: Propiedad) => {
 	const estadoPublicacion = propiedad.precios[0]?.estado_publicacion.nombre || "consulta";
-	const direccion = `${createSlug(propiedad.calle).toLocaleLowerCase()}-${propiedad.numero ? "nro-" + propiedad.numero : ""}`;
+	const direccion =
+		createSlug(propiedad.calle).toLocaleLowerCase() +
+		(propiedad.numero ? `-nro-${propiedad.numero}` : "");
 	let operacion: OperacionesEnum;
 
 	if (propiedad.precios[0]?.estado_publicacion.id === OperacionesEnum.ALQUILER) {

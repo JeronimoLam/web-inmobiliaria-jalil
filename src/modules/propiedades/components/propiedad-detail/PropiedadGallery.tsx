@@ -35,6 +35,8 @@ export const PropiedadGallery = ({ propiedad }: PropiedadGalleryProps) => {
 		alt: propiedad.descripcion,
 	}));
 
+	const mainImage = imagenes.find((img) => img.principal) || imagenes[0];
+
 	return (
 		<>
 			<section className="flex flex-col sm:flex-row h-[450px] sm:h-[390px] 2xl:h-[550px] gap-[10px]">
@@ -46,10 +48,10 @@ export const PropiedadGallery = ({ propiedad }: PropiedadGalleryProps) => {
 						setOpen(true);
 					}}
 				>
-					{imagenes[0] ? (
+					{mainImage ? (
 						<>
 							<Image
-								src={imagenes[0].url}
+								src={mainImage.url}
 								alt={propiedad.descripcion}
 								fill
 								sizes="(max-width: 768px) 100vw, 50vw"
@@ -148,11 +150,11 @@ export const PropiedadGallery = ({ propiedad }: PropiedadGalleryProps) => {
 				}}
 				plugins={[Thumbnails, Zoom, Fullscreen, Counter]}
 				zoom={{
-					maxZoomPixelRatio: 2, // cantidad max de zooms
-					zoomInMultiplier: 2, // cuánto escala por "tick" de zoom
+					maxZoomPixelRatio: 3, // cantidad max de zooms
+					zoomInMultiplier: 1.5, // cuánto escala por "tick" de zoom
 					doubleTapDelay: 300, // delay para detectar doble click
 					doubleClickDelay: 300,
-					doubleClickMaxStops: 2,
+					doubleClickMaxStops: 2, // niveles de zoom por doble click
 					keyboardMoveDistance: 50, // flechas cuando está en zoom
 					wheelZoomDistanceFactor: 100, // sensibilidad al scroll
 					pinchZoomDistanceFactor: 100, // sensibilidad al pinch

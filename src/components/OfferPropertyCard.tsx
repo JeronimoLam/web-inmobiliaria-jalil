@@ -14,6 +14,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
 import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
+import { getCardImagesToShow } from "@/modules/propiedades/utils/getCardImagesToShow";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -22,20 +23,20 @@ export interface OfferPropertyCardProps {
 
 export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	const title = buildPropiedadTitle(propiedad);
-
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+	const imagesToShow = getCardImagesToShow(propiedad.imagenes);
 
 	return (
 		<Card className="w-full h-full flex flex-col hover:shadow-lg transition-shadow duration-300 group">
-			<Link href={propiedadDetailUrl} className="flex flex-col h-full">
-				<Carousel
-					className="min-h-[220px] flex-shrink-0"
-					opts={{
-						loop: true,
-					}}
-				>
+			<Carousel
+				className="min-h-[220px] flex-shrink-0"
+				opts={{
+					loop: true,
+				}}
+			>
+				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
-						{propiedad.imagenes.map((imagen, index) => (
+						{imagesToShow.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px]">
 								<Image
 									src={imagen.url}
@@ -47,10 +48,12 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
+				</Link>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
 
+			<Link href={propiedadDetailUrl} className="flex flex-col h-full flex-grow">
 				{/* Property Information */}
 				<div className="p-[15px] pb-0 flex-grow flex flex-col">
 					<div className="flex items-center justify-between">
@@ -89,10 +92,7 @@ export function OfferPropertyCard({ propiedad, onConsult }: OfferPropertyCardPro
 				</div>
 
 				<Button
-					onClick={(e) => {
-						e.preventDefault();
-						onConsult?.();
-					}}
+					onClick={onConsult}
 					variant="secondary"
 					className="w-full text-white px-4 py-9 rounded-none justify-start transition group-hover:bg-secondary-dark flex-shrink-0"
 				>
@@ -126,7 +126,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">${precio.importe}</span>
+					<span className="font-semibold text-xl">${precio.importe.toLocaleString("es-AR")}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}

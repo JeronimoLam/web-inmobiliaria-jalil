@@ -14,6 +14,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import Link from "next/link";
 import { getPropiedadDetailUrl } from "@/modules/propiedades/utils/getPropiedadDetailUrl";
 import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadPropertyBuilder";
+import { getCardImagesToShow } from "../utils/getCardImagesToShow";
 
 export interface OfferPropertyCardProps {
 	propiedad: Propiedad;
@@ -22,8 +23,8 @@ export interface OfferPropertyCardProps {
 
 export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) {
 	const title = buildPropiedadTitle(propiedad);
-
 	const propiedadDetailUrl = getPropiedadDetailUrl(propiedad);
+	const imagesToShow = getCardImagesToShow(propiedad.imagenes);
 
 	return (
 		<Card className="w-full md:h-[280px] flex md:flex-row hover:shadow-lg transition-shadow duration-300 group">
@@ -35,7 +36,7 @@ export function PropiedadCard({ propiedad, onConsult }: OfferPropertyCardProps) 
 			>
 				<Link href={propiedadDetailUrl}>
 					<CarouselContent>
-						{propiedad.imagenes.map((imagen, index) => (
+						{imagesToShow.map((imagen, index) => (
 							<CarouselItem key={index} className="relative w-full h-[220px] md:h-[280px]">
 								<Image
 									src={imagen.url}
@@ -116,7 +117,7 @@ const PropiedadPrecios = ({ propiedad }: { propiedad: Propiedad }) => {
 			{precio.importe === 0 && <span className="font-semibold text-lg">Consultar</span>}
 			{precio.importe && precio.divisa && (
 				<>
-					<span className="font-semibold text-xl">{precio.importe}</span>
+					<span className="font-semibold text-xl">${precio.importe.toLocaleString("es-AR")}</span>
 					<span className="font-light text-xl">{precio.divisa}</span>
 				</>
 			)}

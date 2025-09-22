@@ -30,11 +30,7 @@ export const OfferPropertyCarousel = ({ propiedades }: { propiedades: Propiedad[
 						key={propiedad.id}
 						className="basis-full sm:basis-1/2 lg:basis-1/3 2xl:basis-1/4 flex justify-center items-center"
 					>
-						<OfferPropertyCard
-							key={propiedad.id}
-							propiedad={propiedad}
-							onConsult={() => console.log(`Consultar propiedad ${propiedad.codigo}`)}
-						/>
+						<OfferPropertyCard key={propiedad.id} propiedad={propiedad} />
 					</CarouselItem>
 				))}
 			</CarouselContent>
