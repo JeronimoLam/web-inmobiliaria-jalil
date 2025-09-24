@@ -26,7 +26,7 @@ function ServiceCard({ icon, title, items }: ServiceProps) {
 				<ul className="space-y-1.5 text-center lg:text-left text-sm lg:text-base">
 					{items.map((item, index) => (
 						<li key={index} className="flex items-center justify-center lg:justify-start gap-2">
-							<CheckIcon className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+							<CheckIcon className="w-4 h-4 mt-0.5 flex-shrink-0" />
 							<span>{item.text}</span>
 						</li>
 					))}
@@ -115,7 +115,7 @@ export default function NosotrosPage() {
 				<section className="bg-secondary-dark">
 					<div className="flex flex-col lg:flex-row items-stretch">
 						<div className="w-full lg:w-1/2 px-4 flex items-center justify-center sm:px-8 xl:px-20 py-12 lg:py-20 flex-shrink-0">
-							<div className="max-w-2xl text-white space-y-12 lg:space-y-20">
+							<div className="max-w-2xl text-background space-y-12 lg:space-y-20">
 								<AnimatedSlide delay={0.1}>
 									<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center lg:text-left">
 										Nuestros servicios
