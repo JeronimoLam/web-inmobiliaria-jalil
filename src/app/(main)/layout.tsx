@@ -4,7 +4,7 @@ export default function PropiedadesLayout({ children }: { children: React.ReactN
 	return (
 		<>
 			<NavBar />
-			<main className="pt-[70px]">{children}</main>
+			<main className="pt-[70px] flex-1">{children}</main>
 		</>
 	);
 }
