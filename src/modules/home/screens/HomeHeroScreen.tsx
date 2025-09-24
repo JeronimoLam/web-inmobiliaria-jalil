@@ -5,6 +5,7 @@ import { PropertySearchForm } from "../../../components/PropertySearchForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatedSlide } from "@/components/AnimatedSlide";
 
 interface HomeScreenProps {
 	tiposPropiedad: { value: string; label: string }[];
@@ -39,9 +40,12 @@ export const HomeHeroScreen = ({ tiposPropiedad, localidades, heroImages }: Home
 				<div className="absolute top-0 h-full 2xl:h-1/2 w-full flex items-center 2xl:items-end justify-center text-white">
 					<PageContainer>
 						<div className="flex flex-col gap-7">
-							<h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold w-fit">
-								Encontramos tu lugar ideal
-							</h1>
+							<AnimatedSlide delay={0.1}>
+								<h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold w-fit">
+									Encontramos tu lugar ideal
+								</h1>
+							</AnimatedSlide>
+
 							<div className="flex flex-col gap-4">
 								<div className="flex gap-2">
 									<Button

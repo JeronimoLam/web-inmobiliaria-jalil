@@ -3,6 +3,7 @@ import { OfferPropertyCarouselServer } from "./server/OfferPropertyCarousel.serv
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { Suspense } from "react";
 import { OfferPropertyCarouselSkeleton } from "./OfferPropertyCarouselSkeleton";
+import { AnimatedSlide } from "./AnimatedSlide";
 
 export const OurBestOfferSection = async () => {
 	return (
@@ -10,10 +11,12 @@ export const OurBestOfferSection = async () => {
 			<section className="overflow-x-hidden">
 				<div className="bg-muted-secondary">
 					<PageContainer className="py-10">
-						<h2 className="flex flex-col text-2.5xl font-light">
-							Nuestra mejor oferta
-							<span className="font-bold">Venta</span>
-						</h2>
+						<AnimatedSlide delay={0.1}>
+							<h2 className="flex flex-col text-2.5xl font-light">
+								Nuestra mejor oferta
+								<span className="font-bold">Venta</span>
+							</h2>
+						</AnimatedSlide>
 					</PageContainer>
 				</div>
 				<PageContainer className="py-4">
@@ -25,10 +28,12 @@ export const OurBestOfferSection = async () => {
 			<section className="overflow-x-hidden">
 				<div className="bg-muted-secondary">
 					<PageContainer className="py-10">
-						<h2 className="flex flex-col text-2.5xl font-light">
-							Nuestra mejor oferta
-							<span className="font-bold">Alquiler</span>
-						</h2>
+						<AnimatedSlide delay={0.1}>
+							<h2 className="flex flex-col text-2.5xl font-light">
+								Nuestra mejor oferta
+								<span className="font-bold">Alquiler</span>
+							</h2>
+						</AnimatedSlide>
 					</PageContainer>
 				</div>
 				<PageContainer className="py-4">

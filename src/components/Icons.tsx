@@ -21,6 +21,10 @@ import {
 	Edit3,
 	X,
 	Trash2,
+	Check,
+	Home,
+	Key,
+	Scale,
 } from "lucide-react";
 
 type IconProps = {
@@ -115,6 +119,22 @@ export const XIcon = ({ className, width, height, ...props }: IconProps) => (
 
 export const TrashIcon = ({ className, width, height, ...props }: IconProps) => (
 	<Trash2 className={className} width={width} height={height} {...props} />
+);
+
+export const CheckIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Check className={className} width={width} height={height} {...props} />
+);
+
+export const HomeIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Home className={className} width={width} height={height} {...props} />
+);
+
+export const KeyIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Key className={className} width={width} height={height} {...props} />
+);
+
+export const ScaleIcon = ({ className, width, height, ...props }: IconProps) => (
+	<Scale className={className} width={width} height={height} {...props} />
 );
 
 export const WhatsAppIcon = ({ className, width = 40, height = 40, ...props }: IconProps) => (
