@@ -77,8 +77,8 @@ export default function NosotrosPage() {
 							<Image
 								src="/images/nosotros-bg-2.webp"
 								alt="Diferenciación de la inmobiliaria"
-								width={1280}
-								height={850}
+								width={960}
+								height={1080}
 								className="w-full h-full object-cover"
 							/>
 						</div>
@@ -102,7 +102,7 @@ export default function NosotrosPage() {
 				</section>
 
 				<section className="bg-secondary-dark">
-					<div className="flex flex-col lg:flex-row h-full">
+					<div className="flex flex-col lg:flex-row items-stretch">
 						<div className="w-full lg:w-1/2 px-4 flex items-center justify-center sm:px-8 xl:px-20 py-12 lg:py-20 flex-shrink-0">
 							<div className="max-w-2xl text-white space-y-12 lg:space-y-20">
 								<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center lg:text-left">
@@ -149,13 +149,13 @@ export default function NosotrosPage() {
 							</div>
 						</div>
 
-						<div className="w-full lg:w-1/2 h-96 md:h-[500px] lg:h-full flex-grow">
+						<div className="w-full lg:w-1/2 flex">
 							<Image
-								src="https://th.bing.com/th/id/OIP.nTxG9T_2OJ-bIHxaJ4EGYgHaE8?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+								src="/images/nosotros-bg-3.webp"
 								alt="Nuestros servicios"
-								width={1280}
-								height={850}
-								className="w-full h-full object-cover"
+								width={960}
+								height={1141}
+								className="w-full object-cover"
 							/>
 						</div>
 					</div>
