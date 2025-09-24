@@ -1,5 +1,5 @@
 import { NavBar } from "@/components/layouts/NavBar";
-import { Check, Home, Key, Scale } from "lucide-react";
+import { CheckIcon, HomeIcon, KeyIcon, ScaleIcon, LightbulbIcon } from "@/components/Icons";
 import Image from "next/image";
 
 interface ServiceItem {
@@ -25,7 +25,7 @@ function ServiceCard({ icon, title, items }: ServiceProps) {
 				<ul className="space-y-1.5 text-center lg:text-left text-sm lg:text-base">
 					{items.map((item, index) => (
 						<li key={index} className="flex items-center justify-center lg:justify-start gap-2">
-							<Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+							<CheckIcon className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
 							<span>{item.text}</span>
 						</li>
 					))}
@@ -85,6 +85,9 @@ export default function NosotrosPage() {
 
 						<div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-8 xl:px-20 py-20 order-1 lg:order-2 flex-shrink-0">
 							<div className="max-w-2xl text-secondary space-y-6">
+								<div className="flex items-center justify-center lg:justify-start">
+									<LightbulbIcon width={60} height={60} className="text-secondary" />
+								</div>
 								<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center lg:text-left">
 									En qué nos diferenciamos
 								</h1>
@@ -108,7 +111,7 @@ export default function NosotrosPage() {
 
 								<div className="space-y-16">
 									<ServiceCard
-										icon={<Key className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
+										icon={<KeyIcon className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
 										title="Alquileres"
 										items={[
 											{ text: "Mejor Renta de plaza" },
@@ -121,7 +124,7 @@ export default function NosotrosPage() {
 									/>
 
 									<ServiceCard
-										icon={<Home className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
+										icon={<HomeIcon className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
 										title="Ventas"
 										items={[
 											{ text: "Tasación justa de mercado" },
@@ -134,7 +137,7 @@ export default function NosotrosPage() {
 									/>
 
 									<ServiceCard
-										icon={<Scale className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
+										icon={<ScaleIcon className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />}
 										title="Asesoramiento jurídico"
 										items={[
 											{
