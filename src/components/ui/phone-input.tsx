@@ -8,14 +8,29 @@ import flags from "react-phone-number-input/flags";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 
-interface PhoneInputProps extends React.ComponentProps<"input"> {
+interface PhoneInputProps {
 	className?: string;
 	name?: string;
+	value?: string;
+	onChange?: (value: string) => void;
+	required?: boolean;
 }
 
-export default function Component({ className, name = "phone" }: PhoneInputProps) {
+export default function Component({
+	className,
+	name = "phone",
+	value,
+	onChange,
+	required,
+}: PhoneInputProps) {
 	const id = useId();
-	const [value, setValue] = useState("");
+	const [internalValue, setInternalValue] = useState(value || "");
+
+	const handleChange = (newValue: string | undefined) => {
+		const stringValue = newValue ?? "";
+		setInternalValue(stringValue);
+		onChange?.(stringValue);
+	};
 
 	return (
 		<div className="*:not-first:mt-2" dir="ltr">
@@ -27,10 +42,11 @@ export default function Component({ className, name = "phone" }: PhoneInputProps
 				inputComponent={PhoneInput}
 				id={id}
 				placeholder="Teléfono"
-				value={value}
-				onChange={(newValue) => setValue(newValue ?? "")}
+				value={value || internalValue}
+				onChange={handleChange}
 				defaultCountry="AR"
 				name={name}
+				required={required}
 			/>
 		</div>
 	);

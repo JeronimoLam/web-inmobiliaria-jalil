@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${poppins.className} antialiased`}>
+			<body className={`${poppins.className} antialiased flex flex-col min-h-screen`}>
 				{children}
 				<Footer />
 			</body>

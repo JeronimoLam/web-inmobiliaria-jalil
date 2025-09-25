@@ -6,6 +6,7 @@ const contactFormSchema = z.object({
 	email: z.email("Email inválido"),
 	phone: z.string().min(10, "Número demasiado corto").max(15),
 	message: z.string().min(10, "El mensaje es muy corto").max(500),
+	prefieroQueMeLlamen: z.boolean(),
 });
 
 export async function sendContactForm(_prevState: unknown, formData: FormData) {
@@ -14,6 +15,7 @@ export async function sendContactForm(_prevState: unknown, formData: FormData) {
 		email: formData.get("email"),
 		phone: (formData.get("phone") as string)?.replace(/\s+/g, ""),
 		message: formData.get("message"),
+		prefieroQueMeLlamen: formData.get("prefiero-que-me-llamen") ?? false,
 	};
 
 	const result = contactFormSchema.safeParse(rawFormData);

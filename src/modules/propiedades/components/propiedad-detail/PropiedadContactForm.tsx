@@ -23,10 +23,12 @@ export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) =>
 
 	const defaultMessage = `Hola, quiero consultar sobre la propiedad: ${propiedad.tipo_propiedad.value} en ${operacionNombre} #${propiedad.codigo} de ${title}, quisiera más información.`;
 
+	const successMessage = "Gracias por tu consulta, nos pondremos en contacto contigo pronto.";
+
 	return (
 		<Card className="p-7 shadow-xs lg:sticky lg:top-22">
 			{state.success ? (
-				<SuccessMessage />
+				<SuccessMessage message={successMessage} />
 			) : (
 				<form action={formAction}>
 					<h2 className="font-semibold text-xl">Consultar por esta propiedad</h2>

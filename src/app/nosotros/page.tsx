@@ -40,7 +40,7 @@ export default function NosotrosPage() {
 	return (
 		<>
 			<NavBar transparent />
-			<main>
+			<main className="flex-1">
 				<section className="min-h-screen lg:h-screen bg-secondary-dark">
 					<div className="flex flex-col lg:flex-row h-full min-h-screen lg:h-screen">
 						<div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-8 xl:px-20 py-16 pt-30 flex-shrink-0">
