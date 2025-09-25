@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export const SuccessMessage = () => {
+export const SuccessMessage = ({ message }: { message: string }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -38,9 +38,7 @@ export const SuccessMessage = () => {
 				/>
 			</motion.svg>
 
-			<p className="mt-4 text-green-800 font-medium text-center">
-				Gracias por tu consulta, nos pondremos en contacto contigo pronto.
-			</p>
+			<p className="mt-4 text-green-800 font-medium text-center text-pretty">{message}</p>
 		</motion.div>
 	);
 };
