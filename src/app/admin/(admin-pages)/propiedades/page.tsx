@@ -4,7 +4,7 @@ import { DataTable } from "@/modules/admin/components/DataTable";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { getPropiedades } from "@/modules/propiedades/services/get-propiedades.service";
-import { columns } from "@/modules/admin/propiedades/columns";
+import { propiedadesColumns } from "@/modules/admin/propiedades/columns";
 
 export default async function PropiedadesAdminPage({
 	searchParams,
@@ -38,7 +38,7 @@ export default async function PropiedadesAdminPage({
 			<div className="px-4 py-6 sm:p-6">
 				<DataTable
 					title="propiedades"
-					columns={columns}
+					columns={propiedadesColumns}
 					data={data.data}
 					pagination={data.pagination}
 				/>

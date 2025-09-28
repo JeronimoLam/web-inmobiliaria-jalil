@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 
-export const columns: ColumnDef<Propiedad>[] = [
+export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 	{
 		accessorKey: "codigo",
 		header: "Código",
