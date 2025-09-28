@@ -16,13 +16,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function DeletePropiedad({ codigo }: { codigo: number }) {
+export default function DeletePropiedad({ id }: { id: number }) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleDelete = async () => {
 		try {
-			await deletePropiedad(codigo);
+			await deletePropiedad(id);
 			router.refresh();
 			setIsOpen(false);
 			toast.success("Propiedad eliminada correctamente");

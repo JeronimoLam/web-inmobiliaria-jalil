@@ -95,7 +95,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 							<Edit className="h-4 w-4" />
 						</Button>
 					</Link>
-					<DeletePropiedad codigo={propiedad.codigo} />
+					<DeletePropiedad id={propiedad.id} />
 				</div>
 			);
 		},
