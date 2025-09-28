@@ -12,13 +12,39 @@ import {
 	CardContent,
 	CardFooter,
 } from "@/components/ui/card";
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { createClient } from "@/modules/admin/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function LoginPage() {
 	const [state, loginAction, isPending] = useActionState(login, { error: "" });
+	const router = useRouter();
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const checkAuth = async () => {
+			const supabase = createClient();
+			const { data } = await supabase.auth.getUser();
+			if (data?.user) {
+				router.replace("/admin/propiedades");
+			} else {
+				setLoading(false);
+			}
+		};
+		checkAuth();
+	}, [router]);
+
+	if (loading) {
+		return (
+			<main className="min-h-screen flex items-center justify-center bg-secondary-dark">
+				<Spinner size={60} />
+			</main>
+		);
+	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-secondary-dark">
+		<main className="min-h-screen flex items-center justify-center bg-secondary-dark">
 			<Card className="w-full max-w-md shadow-lg py-8 space-y-8">
 				<CardHeader>
 					<CardTitle className="text-2xl font-bold text-center">Bienvenido</CardTitle>
@@ -49,6 +75,6 @@ export default function LoginPage() {
 					</CardFooter>
 				</form>
 			</Card>
-		</div>
+		</main>
 	);
 }
