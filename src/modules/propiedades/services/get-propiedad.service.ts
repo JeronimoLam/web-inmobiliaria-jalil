@@ -1,8 +1,6 @@
+import { SUPABASE_KEY, SUPABASE_URL } from "@/lib/supabaseClient";
 import { OperacionesEnum } from "../enums/propiedades.enum";
 import { Propiedad } from "../types/propiedad.type";
-
-const SUPABASE_URL = process.env.SUPABASE_URL || "";
-const SUPABASE_KEY = process.env.SUPABASE_KEY || "";
 
 export const getHeaders = () => {
 	return {
