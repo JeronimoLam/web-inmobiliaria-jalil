@@ -84,12 +84,12 @@ export const columns: ColumnDef<Propiedad>[] = [
 
 			return (
 				<div className="flex items-center space-x-2">
-					<Link href={`/admin/properties/${propiedad.id}`}>
+					<Link href={`/admin/propiedades/${propiedad.codigo}`}>
 						<Button variant="ghost" size="sm" title="Ver detalles">
 							<Eye className="h-4 w-4" />
 						</Button>
 					</Link>
-					<Link href={`/admin/properties/${propiedad.id}/edit`}>
+					<Link href={`/admin/propiedades/${propiedad.codigo}/edit`}>
 						<Button variant="ghost" size="sm" title="Editar">
 							<Edit className="h-4 w-4" />
 						</Button>
