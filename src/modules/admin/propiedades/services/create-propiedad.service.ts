@@ -1,23 +1,16 @@
+import { createClient } from "../../utils/supabase/client";
 import { CreatePropiedad } from "../types/create-propiedad.type";
 
 export const createPropiedad = async (newPropiedad: CreatePropiedad) => {
-	console.log(newPropiedad);
-	// const functionUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/create-propiedad`;
+	const supabase = createClient();
 
-	// const response = await fetch(functionUrl, {
-	// 	method: "POST",
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 		apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-	// 		Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
-	// 	},
-	// 	body: JSON.stringify(newPropiedad),
-	// });
+	const response = await supabase.functions.invoke("create-propiedad", {
+		body: newPropiedad,
+	});
 
-	// if (!response.ok) {
-	// 	const errorData = await response.json();
-	// 	throw new Error(errorData.message || "Error creating property");
-	// }
+	if (response.error) {
+		throw new Error(response.error.message);
+	}
 
-	// return response.json();
+	return response.data;
 };

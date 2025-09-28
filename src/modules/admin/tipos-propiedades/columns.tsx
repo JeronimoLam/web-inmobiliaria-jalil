@@ -38,12 +38,7 @@ export const tiposPropiedadesColumns: ColumnDef<TipoPropiedad>[] = [
 
 			return (
 				<div className="flex items-center space-x-2">
-					<Link href={`/admin/propiedades/${propiedad.id}`}>
-						<Button variant="ghost" size="sm" title="Ver detalles">
-							<Eye className="h-4 w-4" />
-						</Button>
-					</Link>
-					<Link href={`/admin/propiedades/${propiedad.id}/edit`}>
+					<Link href={`/admin/tipos-propiedades/${propiedad.id}/edit`}>
 						<Button variant="ghost" size="sm" title="Editar">
 							<Edit className="h-4 w-4" />
 						</Button>
