@@ -25,7 +25,10 @@ export default async function PropiedadesAdminPage({
 				title="Propiedades"
 				action={
 					<Button>
-						<Link href="#" className="flex items-center justify-center gap-2">
+						<Link
+							href="/admin/propiedades/nueva"
+							className="flex items-center justify-center gap-2"
+						>
 							{" "}
 							<PlusIcon className="w-4 h-4" /> Nueva propiedad
 						</Link>
