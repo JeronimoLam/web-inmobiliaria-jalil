@@ -9,9 +9,9 @@ import { propiedadesColumns } from "@/modules/admin/propiedades/columns";
 export default async function PropiedadesAdminPage({
 	searchParams,
 }: {
-	searchParams: { page: string; limit: string };
+	searchParams: Promise<{ page: string; limit: string }>;
 }) {
-	const { page, limit } = searchParams;
+	const { page, limit } = await searchParams;
 
 	const data = await getPropiedades({
 		pagination: {

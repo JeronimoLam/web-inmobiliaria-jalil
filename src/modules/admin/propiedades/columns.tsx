@@ -4,8 +4,9 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Trash2 } from "lucide-react";
+import { Eye, Edit } from "lucide-react";
 import Link from "next/link";
+import DeletePropiedad from "./components/DeletePropiedad";
 
 export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 	{
@@ -94,18 +95,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 							<Edit className="h-4 w-4" />
 						</Button>
 					</Link>
-					<Button
-						variant="ghost"
-						size="sm"
-						className="text-red-600 hover:text-red-700"
-						title="Eliminar"
-						onClick={() => {
-							// TODO: Implementar confirmación y eliminación
-							console.log("Eliminar propiedad:", propiedad.id);
-						}}
-					>
-						<Trash2 className="h-4 w-4" />
-					</Button>
+					<DeletePropiedad codigo={propiedad.codigo} />
 				</div>
 			);
 		},
