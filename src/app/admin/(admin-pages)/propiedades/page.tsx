@@ -1,9 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { AdminHeader } from "@/modules/admin/components/AdminHeader";
+import { DataTable } from "@/modules/admin/components/DataTable";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { getPropiedades } from "@/modules/propiedades/services/get-propiedades.service";
+import { columns } from "@/modules/admin/propiedades/columns";
 
-export default function PropiedadesAdminPage() {
+export default async function PropiedadesAdminPage({
+	searchParams,
+}: {
+	searchParams: { page: string; limit: string };
+}) {
+	const { page, limit } = searchParams;
+
+	const data = await getPropiedades({
+		pagination: {
+			page: page ? parseInt(page) : 1,
+			limit: limit ? parseInt(limit) : 6,
+		},
+	});
 	return (
 		<>
 			<AdminHeader
@@ -17,10 +32,8 @@ export default function PropiedadesAdminPage() {
 					</Button>
 				}
 			/>
-			<div className="p-4">
-				<div className="flex items-center justify-between">
-					<h2 className="text-lg font-bold">Tabla de Propiedades</h2>
-				</div>
+			<div className="px-4 py-6 sm:p-6">
+				<DataTable columns={columns} data={data.data} pagination={data.pagination} />
 			</div>
 		</>
 	);
