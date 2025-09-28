@@ -3,6 +3,7 @@ import { PageContainer } from "./PageContainer";
 import { Logo } from "../Logo";
 import Link from "next/link";
 import { MapPinIcon, PhoneIcon, MailIcon, Clock3Icon, FacebookIcon } from "@/components/Icons";
+import { usePathname } from "next/navigation";
 
 const TextWithIcon = ({
 	icon: Icon,
@@ -22,6 +23,10 @@ const TextWithIcon = ({
 );
 
 export const Footer = () => {
+	const pathname = usePathname();
+	const hideFooter = pathname.startsWith("/admin");
+	if (hideFooter) return null;
+
 	return (
 		<footer className="bg-secondary-dark text-secondary-foreground">
 			<PageContainer className="p-4 py-6 lg:pt-10">
