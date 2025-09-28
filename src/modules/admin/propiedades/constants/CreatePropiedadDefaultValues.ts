@@ -2,7 +2,7 @@ import { CreatePropiedad } from "../types/create-propiedad.type";
 
 export const CREATE_PROPIEDAD_DEFAULT_VALUES: CreatePropiedad = {
 	propiedad: {
-		codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
+		codigo: 0,
 		calle: "",
 		entre_calles: "",
 		numero: 0,

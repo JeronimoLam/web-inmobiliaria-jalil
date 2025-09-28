@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LocalidadSearchInput } from "@/modules/admin/propiedades/components/LocalidadSearchInput";
 import { createPropiedad } from "../services/create-propiedad.service";
 import { FiltersApiService } from "@/modules/filters/services/filtersApi.service";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
@@ -83,14 +84,40 @@ export const NuevaPropiedadForm = () => {
 			return;
 		}
 
+		// Generar código único justo antes de enviar
+		const dataWithCode = {
+			...data,
+			propiedad: {
+				...data.propiedad,
+				codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
+			},
+		};
+
 		setLoading(true);
 		try {
-			await createPropiedad(data);
+			await createPropiedad(dataWithCode);
 			toast.success("Propiedad creada exitosamente");
 			router.push("/admin/propiedades");
 		} catch (error) {
 			console.error("Error creando propiedad:", error);
-			toast.error("Error al crear la propiedad");
+
+			// Manejar diferentes tipos de errores
+			if (error instanceof Error) {
+				if (error.message.includes("409") || error.message.includes("Conflict")) {
+					toast.error("Ya existe una propiedad con este código o datos duplicados");
+				} else if (error.message.includes("400") || error.message.includes("Bad Request")) {
+					toast.error("Datos inválidos. Verifique la información ingresada");
+				} else if (
+					error.message.includes("500") ||
+					error.message.includes("Internal Server Error")
+				) {
+					toast.error("Error interno del servidor. Intente nuevamente");
+				} else {
+					toast.error(`Error: ${error.message}`);
+				}
+			} else {
+				toast.error("Error inesperado al crear la propiedad");
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -209,22 +236,21 @@ export const NuevaPropiedadForm = () => {
 										)}
 									</div>
 									<div>
-										<Label htmlFor="localidad_name">Localidad *</Label>
-										<select
-											id="localidad_name"
-											{...register("localidad_name", { required: "La localidad es obligatoria" })}
-											className="w-full p-2 border border-input rounded-md bg-background"
-										>
-											<option value="">Seleccionar localidad</option>
-											{localidades.map((localidad) => (
-												<option key={localidad.id} value={localidad.nombre}>
-													{localidad.nombre}
-												</option>
-											))}
-										</select>
-										{errors.localidad_name && (
-											<p className="text-sm text-destructive">{errors.localidad_name.message}</p>
-										)}
+										<Controller
+											name="localidad_name"
+											control={control}
+											rules={{ required: "La localidad es obligatoria" }}
+											render={({ field }) => (
+												<LocalidadSearchInput
+													localidades={localidades}
+													value={field.value}
+													onChange={field.onChange}
+													label="Localidad"
+													placeholder="Buscar o escribir localidad..."
+													error={errors.localidad_name?.message}
+												/>
+											)}
+										/>
 									</div>
 								</div>
 
@@ -244,7 +270,17 @@ export const NuevaPropiedadForm = () => {
 								</div>
 
 								<div className="flex items-center space-x-2">
-									<Checkbox id="destacada" {...register("propiedad.destacada")} />
+									<Controller
+										name="propiedad.destacada"
+										control={control}
+										render={({ field }) => (
+											<Checkbox
+												id="destacada"
+												checked={field.value}
+												onCheckedChange={field.onChange}
+											/>
+										)}
+									/>
 									<Label htmlFor="destacada">Propiedad destacada</Label>
 								</div>
 							</CardContent>
@@ -332,12 +368,18 @@ export const NuevaPropiedadForm = () => {
 											</div>
 
 											<div className="flex items-center space-x-2">
-												<Checkbox
-													id={`consulta-${index}`}
-													checked={importe === 0}
-													onCheckedChange={(checked) => {
-														setValue(`precios.${index}.importe`, checked ? 0 : 100000);
-													}}
+												<Controller
+													name={`precios.${index}.importe`}
+													control={control}
+													render={({ field }) => (
+														<Checkbox
+															id={`consulta-${index}`}
+															checked={field.value === 0}
+															onCheckedChange={(checked) => {
+																field.onChange(checked ? 0 : 100000);
+															}}
+														/>
+													)}
 												/>
 												<Label htmlFor={`consulta-${index}`}>Consultar precio</Label>
 											</div>
@@ -481,10 +523,15 @@ export const NuevaPropiedadForm = () => {
 										riego_automatico: "Riego automático",
 									}).map(([key, label]) => (
 										<div key={key} className="flex items-center space-x-2">
-											<Checkbox
-												id={key}
-												{...register(
-													`caracteristicas.${key as keyof CreatePropiedadType["caracteristicas"]}`,
+											<Controller
+												name={`caracteristicas.${key as keyof CreatePropiedadType["caracteristicas"]}`}
+												control={control}
+												render={({ field }) => (
+													<Checkbox
+														id={key}
+														checked={field.value}
+														onCheckedChange={field.onChange}
+													/>
 												)}
 											/>
 											<Label htmlFor={key} className="text-sm">
@@ -528,9 +575,16 @@ export const NuevaPropiedadForm = () => {
 										living_comedor: "Living comedor",
 									}).map(([key, label]) => (
 										<div key={key} className="flex items-center space-x-2">
-											<Checkbox
-												id={key}
-												{...register(`ambientes.${key as keyof CreatePropiedadType["ambientes"]}`)}
+											<Controller
+												name={`ambientes.${key as keyof CreatePropiedadType["ambientes"]}`}
+												control={control}
+												render={({ field }) => (
+													<Checkbox
+														id={key}
+														checked={field.value}
+														onCheckedChange={field.onChange}
+													/>
+												)}
 											/>
 											<Label htmlFor={key} className="text-sm">
 												{label}
@@ -559,9 +613,16 @@ export const NuevaPropiedadForm = () => {
 										videocable: "Videocable",
 									}).map(([key, label]) => (
 										<div key={key} className="flex items-center space-x-2">
-											<Checkbox
-												id={key}
-												{...register(`servicios.${key as keyof CreatePropiedadType["servicios"]}`)}
+											<Controller
+												name={`servicios.${key as keyof CreatePropiedadType["servicios"]}`}
+												control={control}
+												render={({ field }) => (
+													<Checkbox
+														id={key}
+														checked={field.value}
+														onCheckedChange={field.onChange}
+													/>
+												)}
 											/>
 											<Label htmlFor={key} className="text-sm">
 												{label}
@@ -611,10 +672,21 @@ export const NuevaPropiedadForm = () => {
 										</div>
 
 										<div className="flex items-center space-x-2">
-											<Checkbox
-												id={`principal-${index}`}
-												checked={watch(`imagenes.${index}.principal`)}
-												onCheckedChange={() => handleImagenPrincipalChange(index)}
+											<Controller
+												name={`imagenes.${index}.principal`}
+												control={control}
+												render={({ field }) => (
+													<Checkbox
+														id={`principal-${index}`}
+														checked={field.value}
+														onCheckedChange={(checked) => {
+															field.onChange(checked);
+															if (checked) {
+																handleImagenPrincipalChange(index);
+															}
+														}}
+													/>
+												)}
 											/>
 											<Label htmlFor={`principal-${index}`}>Imagen principal</Label>
 										</div>

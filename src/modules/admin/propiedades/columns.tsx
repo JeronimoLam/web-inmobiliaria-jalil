@@ -54,7 +54,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 				<div className="space-y-1">
 					{precios.map((precio, index) => (
 						<div key={index} className="text-sm">
-							<span className="font-medium">{precio.importe.toLocaleString()}</span>
+							<span className="font-medium">${precio.importe.toLocaleString()}</span>
 							<span className="text-gray-500 ml-1">{precio.divisa}</span>
 							<Badge variant="secondary" className="ml-2 text-xs">
 								{precio.estado_publicacion.nombre}
