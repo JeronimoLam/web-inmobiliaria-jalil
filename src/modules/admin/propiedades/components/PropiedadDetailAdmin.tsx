@@ -17,13 +17,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PropiedadGallery } from "@/modules/propiedades/components/propiedad-detail/PropiedadGallery";
+import { formatDateTime } from "../../utils/formatDate";
 
 export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) => {
 	const title = buildPropiedadTitle(propiedad);
 
 	const formatPrice = (price: number, currency: string) => `${price.toLocaleString()} ${currency}`;
 
-	const formatDate = (date: Date) => new Date(date).toLocaleDateString("es-ES");
+	const formatDate = (date: Date) => formatDateTime(new Date(date));
 
 	return (
 		<div className="p-6 space-y-5">

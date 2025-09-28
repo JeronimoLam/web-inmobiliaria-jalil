@@ -36,7 +36,12 @@ export default async function PropiedadesAdminPage({
 				}
 			/>
 			<div className="px-4 py-6 sm:p-6">
-				<DataTable columns={columns} data={data.data} pagination={data.pagination} />
+				<DataTable
+					title="propiedades"
+					columns={columns}
+					data={data.data}
+					pagination={data.pagination}
+				/>
 			</div>
 		</>
 	);

@@ -20,13 +20,17 @@ import type { PaginationResponse } from "@/modules/pagination/types/pagination.t
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
-	pagination: PaginationResponse;
+	pagination?: PaginationResponse;
+	searchTitle?: string;
+	title: string;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
 	pagination,
+	searchTitle,
+	title,
 }: DataTableProps<TData, TValue>) {
 	const [globalFilter, setGlobalFilter] = useState("");
 	const router = useRouter();
@@ -42,7 +46,7 @@ export function DataTable<TData, TValue>({
 		onGlobalFilterChange: setGlobalFilter,
 		globalFilterFn: "includesString",
 		manualPagination: true,
-		pageCount: pagination.totalPages,
+		pageCount: pagination?.totalPages,
 	});
 
 	const updatePage = (newPage: number) => {
@@ -65,18 +69,21 @@ export function DataTable<TData, TValue>({
 					<div className="relative">
 						<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
-							placeholder="Buscar propiedades..."
+							placeholder={`Buscar ${searchTitle || title.toLowerCase()}...`}
 							value={globalFilter}
 							onChange={(e) => setGlobalFilter(e.target.value)}
 							className="pl-8 w-[300px]"
 						/>
 					</div>
 				</div>
-				<div className="flex items-center space-x-4">
-					<div className="text-sm text-muted-foreground">
-						{pagination.startIndex + 1}-{pagination.endIndex} de {pagination.totalItems} propiedades
+				{pagination && (
+					<div className="flex items-center space-x-4">
+						<div className="text-sm text-muted-foreground">
+							{pagination.startIndex + 1}-{pagination.endIndex} de {pagination.totalItems}{" "}
+							{title.toLowerCase()}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 
 			<div className="overflow-hidden rounded-md border">
@@ -125,63 +132,65 @@ export function DataTable<TData, TValue>({
 				</Table>
 			</div>
 
-			<div className="flex sm:flex-row flex-col gap-4 items-center justify-between px-2">
-				<div className="flex items-center space-x-2">
-					<p className="text-sm font-medium">
-						Página {pagination.currentPage} de {pagination.totalPages}
-					</p>
+			{pagination && (
+				<div className="flex sm:flex-row flex-col gap-4 items-center justify-between px-2">
 					<div className="flex items-center space-x-2">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => updatePage(1)}
-							disabled={!pagination.hasPreviousPage}
+						<p className="text-sm font-medium">
+							Página {pagination.currentPage} de {pagination.totalPages}
+						</p>
+						<div className="flex items-center space-x-2">
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => updatePage(1)}
+								disabled={!pagination.hasPreviousPage}
+							>
+								<ChevronsLeft className="h-4 w-4" />
+							</Button>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => updatePage(pagination.currentPage - 1)}
+								disabled={!pagination.hasPreviousPage}
+							>
+								<ChevronLeft className="h-4 w-4" />
+							</Button>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => updatePage(pagination.currentPage + 1)}
+								disabled={!pagination.hasNextPage}
+							>
+								<ChevronRight className="h-4 w-4" />
+							</Button>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => updatePage(pagination.totalPages)}
+								disabled={!pagination.hasNextPage}
+							>
+								<ChevronsRight className="h-4 w-4" />
+							</Button>
+						</div>
+					</div>
+					<div className="flex items-center space-x-2">
+						<p className="text-sm text-muted-foreground">Filas por página:</p>
+						<select
+							value={pagination.itemsPerPage}
+							onChange={(e) => {
+								updatePageSize(Number(e.target.value));
+							}}
+							className="h-8 w-[70px] rounded border border-input bg-background px-2 text-sm"
 						>
-							<ChevronsLeft className="h-4 w-4" />
-						</Button>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => updatePage(pagination.currentPage - 1)}
-							disabled={!pagination.hasPreviousPage}
-						>
-							<ChevronLeft className="h-4 w-4" />
-						</Button>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => updatePage(pagination.currentPage + 1)}
-							disabled={!pagination.hasNextPage}
-						>
-							<ChevronRight className="h-4 w-4" />
-						</Button>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => updatePage(pagination.totalPages)}
-							disabled={!pagination.hasNextPage}
-						>
-							<ChevronsRight className="h-4 w-4" />
-						</Button>
+							{[6, 12, 20, 30, 40, 50].map((pageSize) => (
+								<option key={pageSize} value={pageSize}>
+									{pageSize}
+								</option>
+							))}
+						</select>
 					</div>
 				</div>
-				<div className="flex items-center space-x-2">
-					<p className="text-sm text-muted-foreground">Filas por página:</p>
-					<select
-						value={pagination.itemsPerPage}
-						onChange={(e) => {
-							updatePageSize(Number(e.target.value));
-						}}
-						className="h-8 w-[70px] rounded border border-input bg-background px-2 text-sm"
-					>
-						{[6, 12, 20, 30, 40, 50].map((pageSize) => (
-							<option key={pageSize} value={pageSize}>
-								{pageSize}
-							</option>
-						))}
-					</select>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 }

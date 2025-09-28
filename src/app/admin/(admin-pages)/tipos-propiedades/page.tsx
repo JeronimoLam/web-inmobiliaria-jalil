@@ -1,9 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { AdminHeader } from "@/modules/admin/components/AdminHeader";
+import { DataTable } from "@/modules/admin/components/DataTable";
+import { tiposPropiedadesColumns } from "@/modules/admin/tipos-propiedades/columns";
+import { formatDateTime } from "@/modules/admin/utils/formatDate";
+import { FiltersApiService } from "@/modules/filters/services/filtersApi.service";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function TiposPropiedadesAdminPage() {
+export default async function TiposPropiedadesAdminPage() {
+	const tiposPropiedad = await FiltersApiService.getTiposPropiedad();
+
+	const tiposPropiedadFormatted = tiposPropiedad.map((tipo) => ({
+		...tipo,
+		created_at: formatDateTime(new Date(tipo.created_at)),
+	}));
+
 	return (
 		<>
 			<AdminHeader
@@ -17,10 +28,12 @@ export default function TiposPropiedadesAdminPage() {
 					</Button>
 				}
 			/>
-			<div className="p-4">
-				<div className="flex items-center justify-between">
-					<h2 className="text-lg font-bold">Tabla de Tipos de Propiedades</h2>
-				</div>
+			<div className="px-4 py-6 sm:p-6">
+				<DataTable
+					title="Tipos de propiedad"
+					columns={tiposPropiedadesColumns}
+					data={tiposPropiedadFormatted}
+				/>
 			</div>
 		</>
 	);
