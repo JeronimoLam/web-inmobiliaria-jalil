@@ -112,3 +112,8 @@ export type CreatePropiedad = {
 		divisa: string;
 	}[];
 };
+
+export type PropiedadResponse = {
+	propiedad_id: number;
+	success: boolean;
+};

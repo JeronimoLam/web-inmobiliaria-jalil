@@ -1,4 +1,4 @@
-import { createStorageClient } from "../../utils/supabase/client";
+import { createClient } from "../../utils/supabase/client";
 
 interface ImageFile {
 	id: string;
@@ -15,28 +15,52 @@ interface UploadResult {
 
 const BUCKET = "jalil_public_images";
 
-const supabase = createStorageClient();
+const supabase = createClient();
+
+const getSupabaseApiKey = (): string => {
+	return (
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+		process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+		""
+	);
+};
 
 export const uploadImageToSupabase = async (
 	file: File,
 	propertyId: string,
 	index: number,
-	isPrincipal: boolean = false,
 ): Promise<UploadResult> => {
 	try {
-		const fileExtension = file.name.split(".").pop() || "jpg";
-		const fileName = isPrincipal ? "principal" : `${index}`;
+		const apiKey = getSupabaseApiKey();
+		if (!apiKey) {
+			return { success: false, error: "No se pudo obtener API key de Supabase" };
+		}
+
+		const fileExtension = file.name.split(".").pop()?.toLowerCase() || "jpg";
+		const sequentialNumber = String(index + 1).padStart(3, "0");
+		const fileName = `img_${sequentialNumber}`;
 		const uniqueFileName = `${fileName}.${fileExtension}`;
 		const filePath = `${propertyId}/${uniqueFileName}`;
 
-		const { error } = await supabase.storage
-			.from(BUCKET)
-			.upload(filePath, file, { cacheControl: "3600", upsert: true });
+		const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+		const uploadUrl = `${supabaseUrl}/storage/v1/object/${BUCKET}/${filePath}`;
 
-		if (error) return { success: false, error: error.message };
+		const response = await fetch(uploadUrl, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${apiKey}`,
+				"Content-Type": file.type,
+			},
+			body: file,
+		});
 
-		const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(filePath);
-		return { success: true, url: urlData.publicUrl };
+		if (!response.ok) {
+			const errorText = await response.text();
+			return { success: false, error: `Error ${response.status}: ${errorText}` };
+		}
+
+		const publicUrl = `${supabaseUrl}/storage/v1/object/public/${BUCKET}/${filePath}`;
+		return { success: true, url: publicUrl };
 	} catch (err) {
 		return { success: false, error: err instanceof Error ? err.message : "Error desconocido" };
 	}
@@ -49,7 +73,7 @@ export const uploadMultipleImages = async (
 	if (images.length === 0) return { success: true, images: [] };
 
 	const uploadPromises = images.map(async (image, index) => {
-		const result = await uploadImageToSupabase(image.file, propertyId, index, image.principal);
+		const result = await uploadImageToSupabase(image.file, propertyId, index);
 		if (result.success && result.url) return { ...image, url: result.url };
 		throw new Error(result.error || "Error subiendo imagen");
 	});

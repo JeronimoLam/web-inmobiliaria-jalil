@@ -76,8 +76,6 @@ export const NuevaPropiedadForm = () => {
 		loadData();
 	}, []);
 
-	// Ya no agregamos precio inicial automáticamente
-
 	const onSubmit = async (data: CreatePropiedadType) => {
 		// Validar que al menos haya un precio
 		if (data.precios.length === 0) {
@@ -115,7 +113,10 @@ export const NuevaPropiedadForm = () => {
 				setUploadingImages(true);
 
 				// Usar el ID de la propiedad creada para organizar las imágenes
-				const uploadResult = await uploadMultipleImages(images, createdPropiedad.id.toString());
+				const uploadResult = await uploadMultipleImages(
+					images,
+					createdPropiedad.propiedad_id.toString(),
+				);
 
 				if (!uploadResult.success) {
 					toast.error("Error subiendo imágenes. La propiedad fue creada pero sin imágenes.");
