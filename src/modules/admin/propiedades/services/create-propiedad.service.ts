@@ -1,9 +1,9 @@
 import { createClient } from "../../utils/supabase/client";
-import { CreatePropiedad, PropiedadResponse } from "../types/create-propiedad.type";
+import { CreatePropiedad, PropiedadCreatedResponse } from "../types/create-propiedad.type";
 
 export const createPropiedad = async (
 	newPropiedad: CreatePropiedad,
-): Promise<PropiedadResponse> => {
+): Promise<PropiedadCreatedResponse> => {
 	console.log("New propiedad:", newPropiedad);
 	const supabase = createClient();
 
@@ -16,7 +16,6 @@ export const createPropiedad = async (
 		throw new Error(response.error.message || "Error al crear la propiedad");
 	}
 
-	// Verificar si la respuesta tiene un error de estado HTTP
 	if (!response.data) {
 		throw new Error("No se recibió respuesta del servidor");
 	}

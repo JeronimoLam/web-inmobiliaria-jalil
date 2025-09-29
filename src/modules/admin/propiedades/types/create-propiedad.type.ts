@@ -113,7 +113,7 @@ export type CreatePropiedad = {
 	}[];
 };
 
-export type PropiedadResponse = {
+export type PropiedadCreatedResponse = {
 	propiedad_id: number;
 	success: boolean;
 };

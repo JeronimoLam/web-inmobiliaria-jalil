@@ -14,13 +14,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LocalidadSearchInput } from "@/modules/admin/propiedades/components/LocalidadSearchInput";
 import { InputImages } from "@/modules/admin/propiedades/components/InputImages";
 import { createPropiedad } from "../services/create-propiedad.service";
-import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-images.service";
+import {
+	deleteImageFromSupabase,
+	uploadMultipleImages,
+} from "@/modules/admin/propiedades/services/upload-images.service";
 import { FiltersApiService } from "@/modules/filters/services/filtersApi.service";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import type { Localidad } from "@/modules/filters/types/filters.type";
 import type { CreatePropiedad as CreatePropiedadType } from "../types/create-propiedad.type";
 import type { TipoPropiedad } from "@/modules/filters/types/filters.type";
 import { CREATE_PROPIEDAD_DEFAULT_VALUES } from "../constants/CreatePropiedadDefaultValues";
+import { saveImage } from "../services/save-image.service";
 
 interface ImageFile {
 	id: string;

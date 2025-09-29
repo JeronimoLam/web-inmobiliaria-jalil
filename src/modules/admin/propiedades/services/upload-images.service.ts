@@ -1,4 +1,5 @@
 import { createClient } from "../../utils/supabase/client";
+import { saveImage } from "./save-image.service";
 
 interface ImageFile {
 	id: string;
@@ -17,13 +18,13 @@ const BUCKET = "jalil_public_images";
 
 const supabase = createClient();
 
-const getSupabaseApiKey = (): string => {
-	return (
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-		process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-		""
-	);
-};
+// const getSupabaseApiKey = (): string => {
+// 	return (
+// 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+// 		process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+// 		""
+// 	);
+// };
 
 export const uploadImageToSupabase = async (
 	file: File,
@@ -31,11 +32,6 @@ export const uploadImageToSupabase = async (
 	index: number,
 ): Promise<UploadResult> => {
 	try {
-		const apiKey = getSupabaseApiKey();
-		if (!apiKey) {
-			return { success: false, error: "No se pudo obtener API key de Supabase" };
-		}
-
 		const fileExtension = file.name.split(".").pop()?.toLowerCase() || "jpg";
 		const sequentialNumber = String(index + 1).padStart(3, "0");
 		const fileName = `img_${sequentialNumber}`;
@@ -45,10 +41,19 @@ export const uploadImageToSupabase = async (
 		const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 		const uploadUrl = `${supabaseUrl}/storage/v1/object/${BUCKET}/${filePath}`;
 
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+		const jwt = session?.access_token;
+
+		if (!jwt) {
+			return { success: false, error: "El usuario no está autenticado" };
+		}
+
 		const response = await fetch(uploadUrl, {
 			method: "POST",
 			headers: {
-				Authorization: `Bearer ${apiKey}`,
+				Authorization: `Bearer ${jwt}`,
 				"Content-Type": file.type,
 			},
 			body: file,
@@ -80,7 +85,27 @@ export const uploadMultipleImages = async (
 
 	try {
 		const uploadedImages = await Promise.all(uploadPromises);
-		return { success: true, images: uploadedImages };
+
+		if (uploadedImages.length > 0) {
+			try {
+				await Promise.all(
+					uploadedImages.map((image) =>
+						saveImage({
+							id_propiedad: parseInt(propertyId),
+							url: image.url,
+							principal: image.principal,
+						}),
+					),
+				);
+
+				return { success: true, images: uploadedImages };
+			} catch (error) {
+				await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
+				throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
+			}
+		}
+
+		return { success: false, images: [], errors: ["No se subieron imágenes"] };
 	} catch (err) {
 		return { success: false, errors: [err instanceof Error ? err.message : "Error desconocido"] };
 	}
