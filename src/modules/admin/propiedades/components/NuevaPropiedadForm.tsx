@@ -12,7 +12,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LocalidadSearchInput } from "@/modules/admin/propiedades/components/LocalidadSearchInput";
+import { InputImages } from "@/modules/admin/propiedades/components/InputImages";
 import { createPropiedad } from "../services/create-propiedad.service";
+import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-images.service";
 import { FiltersApiService } from "@/modules/filters/services/filtersApi.service";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import type { Localidad } from "@/modules/filters/types/filters.type";
@@ -20,30 +22,29 @@ import type { CreatePropiedad as CreatePropiedadType } from "../types/create-pro
 import type { TipoPropiedad } from "@/modules/filters/types/filters.type";
 import { CREATE_PROPIEDAD_DEFAULT_VALUES } from "../constants/CreatePropiedadDefaultValues";
 
+interface ImageFile {
+	id: string;
+	file: File;
+	url: string;
+	principal: boolean;
+}
+
 export const NuevaPropiedadForm = () => {
 	const router = useRouter();
 	const [tiposPropiedad, setTiposPropiedad] = useState<TipoPropiedad[]>([]);
 	const [localidades, setLocalidades] = useState<Localidad[]>([]);
 	const [loading, setLoading] = useState(false);
+	const [uploadingImages, setUploadingImages] = useState(false);
+	const [images, setImages] = useState<ImageFile[]>([]);
 
 	const {
 		register,
 		control,
 		handleSubmit,
 		watch,
-		setValue,
 		formState: { errors },
 	} = useForm<CreatePropiedadType>({
 		defaultValues: CREATE_PROPIEDAD_DEFAULT_VALUES,
-	});
-
-	const {
-		fields: imagenFields,
-		append: appendImagen,
-		remove: removeImagen,
-	} = useFieldArray({
-		control,
-		name: "imagenes",
 	});
 
 	const {
@@ -84,18 +85,47 @@ export const NuevaPropiedadForm = () => {
 			return;
 		}
 
-		// Generar código único justo antes de enviar
-		const dataWithCode = {
-			...data,
-			propiedad: {
-				...data.propiedad,
-				codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
-			},
-		};
+		// Validar que si hay imágenes, al menos una sea principal
+		if (images.length > 0) {
+			const hasPrincipal = images.some((img) => img.principal);
+			if (!hasPrincipal) {
+				toast.error("Debe seleccionar una imagen principal");
+				return;
+			}
+		}
 
 		setLoading(true);
+
 		try {
-			await createPropiedad(dataWithCode);
+			// Generar código único justo antes de enviar
+			const dataWithCode = {
+				...data,
+				propiedad: {
+					...data.propiedad,
+					codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
+				},
+				imagenes: [], // Inicialmente sin imágenes
+			};
+
+			// Crear la propiedad primero (sin imágenes)
+			const createdPropiedad = await createPropiedad(dataWithCode);
+
+			// Si hay imágenes, subirlas después de crear la propiedad
+			if (images.length > 0) {
+				setUploadingImages(true);
+
+				// Usar el ID de la propiedad creada para organizar las imágenes
+				const uploadResult = await uploadMultipleImages(images, createdPropiedad.id.toString());
+
+				if (!uploadResult.success) {
+					toast.error("Error subiendo imágenes. La propiedad fue creada pero sin imágenes.");
+					router.push("/admin/propiedades");
+					return;
+				}
+
+				setUploadingImages(false);
+			}
+
 			toast.success("Propiedad creada exitosamente");
 			router.push("/admin/propiedades");
 		} catch (error) {
@@ -120,6 +150,7 @@ export const NuevaPropiedadForm = () => {
 			}
 		} finally {
 			setLoading(false);
+			setUploadingImages(false);
 		}
 	};
 
@@ -127,8 +158,8 @@ export const NuevaPropiedadForm = () => {
 		router.push("/admin/propiedades");
 	};
 
-	const handleAgregarImagen = () => {
-		appendImagen({ url: "", principal: imagenFields.length === 0 });
+	const handleImagesChange = (newImages: ImageFile[]) => {
+		setImages(newImages);
 	};
 
 	const handleAgregarPrecioAlquiler = () => {
@@ -151,15 +182,6 @@ export const NuevaPropiedadForm = () => {
 			importe: 100000,
 			divisa: "USD",
 		});
-	};
-
-	const handleImagenPrincipalChange = (index: number) => {
-		// Marcar todas las imágenes como no principales
-		imagenFields.forEach((_, i) => {
-			setValue(`imagenes.${i}.principal`, false);
-		});
-		// Marcar la seleccionada como principal
-		setValue(`imagenes.${index}.principal`, true);
 	};
 
 	return (
@@ -636,68 +658,11 @@ export const NuevaPropiedadForm = () => {
 
 					{/* Tab 3: Imágenes */}
 					<TabsContent value="imagenes" className="space-y-6">
-						<Card className="py-6">
-							<CardHeader>
-								<CardTitle>Imágenes</CardTitle>
-							</CardHeader>
-							<CardContent className="space-y-4">
-								{imagenFields.map((field, index) => (
-									<div key={field.id} className="border p-4 rounded-lg space-y-4">
-										<div className="flex justify-between items-center">
-											<h4 className="font-medium">Imagen {index + 1}</h4>
-											<Button
-												type="button"
-												variant="outline"
-												size="sm"
-												onClick={() => removeImagen(index)}
-											>
-												Eliminar
-											</Button>
-										</div>
-
-										<div>
-											<Label htmlFor={`imagen-${index}`}>URL de la imagen *</Label>
-											<Input
-												id={`imagen-${index}`}
-												{...register(`imagenes.${index}.url`, {
-													required: "La URL es obligatoria",
-												})}
-												placeholder="https://ejemplo.com/imagen.jpg"
-											/>
-											{errors.imagenes?.[index]?.url && (
-												<p className="text-sm text-red-500">
-													{errors.imagenes[index]?.url?.message}
-												</p>
-											)}
-										</div>
-
-										<div className="flex items-center space-x-2">
-											<Controller
-												name={`imagenes.${index}.principal`}
-												control={control}
-												render={({ field }) => (
-													<Checkbox
-														id={`principal-${index}`}
-														checked={field.value}
-														onCheckedChange={(checked) => {
-															field.onChange(checked);
-															if (checked) {
-																handleImagenPrincipalChange(index);
-															}
-														}}
-													/>
-												)}
-											/>
-											<Label htmlFor={`principal-${index}`}>Imagen principal</Label>
-										</div>
-									</div>
-								))}
-
-								<Button type="button" variant="outline" onClick={handleAgregarImagen}>
-									Agregar imagen
-								</Button>
-							</CardContent>
-						</Card>
+						<InputImages
+							images={images}
+							onImagesChange={handleImagesChange}
+							errors={errors.imagenes?.message}
+						/>
 					</TabsContent>
 				</Tabs>
 
@@ -706,8 +671,8 @@ export const NuevaPropiedadForm = () => {
 					<Button type="button" variant="outline" onClick={handleCancel}>
 						Cancelar
 					</Button>
-					<Button type="submit" disabled={loading}>
-						{loading ? "Creando..." : "Crear Propiedad"}
+					<Button type="submit" disabled={loading || uploadingImages}>
+						{loading || uploadingImages ? "Procesando..." : "Crear Propiedad"}
 					</Button>
 				</div>
 			</form>
