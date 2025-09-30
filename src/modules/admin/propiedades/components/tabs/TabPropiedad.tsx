@@ -87,7 +87,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 									required: "El tipo de propiedad es obligatorio",
 									valueAsNumber: true,
 								})}
-								className="w-full p-2 border border-gray-300 rounded-md"
+								className="w-full p-2 border border-input rounded-md text-sm"
 							>
 								<option value="">Seleccionar tipo</option>
 								{tiposPropiedad.map((tipo) => (
@@ -100,7 +100,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 								<p className="text-sm text-red-500">{errors.propiedad.tipo_propiedad.message}</p>
 							)}
 						</div>
-						<div>
+						<div className="flex items-center">
 							<Controller
 								name="localidad_name"
 								control={control}

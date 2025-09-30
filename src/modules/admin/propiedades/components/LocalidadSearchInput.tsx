@@ -64,7 +64,7 @@ export const LocalidadSearchInput = ({
 	const selectedLocalidad = localidades.find((l) => l.nombre === value);
 
 	return (
-		<div className={cn("space-y-2", className)}>
+		<div className={cn("space-y-2 w-full", className)}>
 			{label && <Label>{label} *</Label>}
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
@@ -72,7 +72,7 @@ export const LocalidadSearchInput = ({
 						variant="outline"
 						role="combobox"
 						aria-expanded={open}
-						className="w-full justify-between font-normal"
+						className="w-full h-full justify-between font-normal border-input"
 					>
 						<span className={cn("truncate", !value && "text-muted-foreground")}>
 							{value || placeholder}
