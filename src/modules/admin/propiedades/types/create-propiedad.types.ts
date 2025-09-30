@@ -1,3 +1,5 @@
+import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
+
 export type CreatePropiedad = {
 	propiedad: {
 		codigo: number;
@@ -6,7 +8,7 @@ export type CreatePropiedad = {
 		numero: number;
 		map_location: {
 			type: "Point";
-			coordinates: [number, number]; // [longitud, latitud]
+			coordinates: [number, number];
 		};
 		descripcion: string;
 		tipo_propiedad: number;
@@ -107,7 +109,7 @@ export type CreatePropiedad = {
 		principal: boolean;
 	}[];
 	precios: {
-		estado_publicacion_id: number;
+		estado_publicacion_id: OperacionesEnum;
 		importe: number;
 		divisa: string;
 	}[];

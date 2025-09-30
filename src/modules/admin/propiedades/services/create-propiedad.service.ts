@@ -1,5 +1,5 @@
 import { createClient } from "../../utils/supabase/client";
-import { CreatePropiedad, PropiedadCreatedResponse } from "../types/create-propiedad.type";
+import { CreatePropiedad, PropiedadCreatedResponse } from "../types/create-propiedad.types";
 
 export const createPropiedad = async (
 	newPropiedad: CreatePropiedad,

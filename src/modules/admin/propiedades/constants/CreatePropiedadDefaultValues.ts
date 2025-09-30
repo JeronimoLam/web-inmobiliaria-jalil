@@ -1,4 +1,4 @@
-import { CreatePropiedad } from "../types/create-propiedad.type";
+import { CreatePropiedad } from "../types/create-propiedad.types";
 
 export const CREATE_PROPIEDAD_DEFAULT_VALUES: CreatePropiedad = {
 	propiedad: {

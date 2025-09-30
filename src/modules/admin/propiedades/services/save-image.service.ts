@@ -1,5 +1,5 @@
-import { createClient } from "../../utils/supabase/client";
-import { SaveImage } from "../types/save-image";
+import { createClient } from "@/modules/admin/utils/supabase/client";
+import { SaveImage } from "@/modules/admin/propiedades/types/images.types";
 
 export const saveImage = async (image: SaveImage) => {
 	const supabase = createClient();
