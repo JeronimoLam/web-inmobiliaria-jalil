@@ -11,6 +11,7 @@ import { usePrecios } from "../../hooks/usePrecios";
 import { CreatePropiedad } from "../../types/create-propiedad.types";
 import { TipoPropiedad } from "@/modules/filters/types/filters.type";
 import { Localidad } from "@/modules/filters/types/filters.type";
+import { LocationPicker } from "../LocationPicker";
 
 interface TabPropiedadProps {
 	tiposPropiedad: TipoPropiedad[];
@@ -22,6 +23,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 		register,
 		control,
 		watch,
+		setValue,
 		formState: { errors },
 	} = useFormContext<CreatePropiedad>();
 
@@ -38,6 +40,13 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 	const { handleAgregarPrecioAlquiler, handleAgregarPrecioVenta, canAddAlquiler, canAddVenta } =
 		usePrecios(precios, appendPrecio);
+
+	const handleLocationChange = (coordinates: { lat: number; lng: number }) => {
+		setValue("propiedad.map_location.coordinates", [coordinates.lat, coordinates.lng]);
+	};
+
+	const currentCoordinates = watch("propiedad.map_location.coordinates");
+	const currentCoordinatesObject = { lat: currentCoordinates[0], lng: currentCoordinates[1] };
 
 	return (
 		<div className="space-y-6">
@@ -265,6 +274,18 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 							Agregar Precio Venta
 						</Button>
 					</div>
+				</CardContent>
+			</Card>
+
+			<Card className="py-6">
+				<CardHeader>
+					<CardTitle>Ubicación</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<LocationPicker
+						handleCoordinates={handleLocationChange}
+						currentCoordinates={currentCoordinatesObject}
+					/>
 				</CardContent>
 			</Card>
 		</div>

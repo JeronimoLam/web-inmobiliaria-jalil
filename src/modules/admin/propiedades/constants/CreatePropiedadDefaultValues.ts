@@ -8,7 +8,7 @@ export const CREATE_PROPIEDAD_DEFAULT_VALUES: CreatePropiedad = {
 		numero: 0,
 		map_location: {
 			type: "Point",
-			coordinates: [-58.3816, -34.6037],
+			coordinates: [0, 0],
 		},
 		descripcion: "",
 		tipo_propiedad: 1,

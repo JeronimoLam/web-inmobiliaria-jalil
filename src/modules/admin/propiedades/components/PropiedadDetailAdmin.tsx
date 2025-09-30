@@ -14,10 +14,12 @@ import {
 	Calendar,
 	ListChecks,
 	Sparkles,
+	MapPin,
 } from "lucide-react";
 import Link from "next/link";
 import { PropiedadGallery } from "@/modules/propiedades/components/propiedad-detail/PropiedadGallery";
 import { formatDateTime } from "../../utils/formatDate";
+import { PropiedadMap } from "@/modules/propiedades/components/propiedad-detail/PropiedadMap";
 
 export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) => {
 	const title = buildPropiedadTitle(propiedad);
@@ -222,6 +224,20 @@ export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) =>
 						<p className="text-base text-muted-foreground font-medium">Última actualización</p>
 						<p>{formatDate(propiedad.updated_at)}</p>
 					</div>
+				</CardContent>
+			</Card>
+
+			<Card className="py-6">
+				<CardHeader>
+					<CardTitle className="flex items-center text-lg">
+						<MapPin className="mr-2 h-4 w-4" /> Ubicación
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<PropiedadMap
+						latitud={propiedad.map_location.coordinates[0]}
+						longitud={propiedad.map_location.coordinates[1]}
+					/>
 				</CardContent>
 			</Card>
 		</div>
