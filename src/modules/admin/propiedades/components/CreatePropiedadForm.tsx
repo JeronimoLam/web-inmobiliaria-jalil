@@ -11,6 +11,7 @@ import { useCreatePropiedadForm } from "../hooks/useCreatePropiedadForm";
 import { useRouter } from "next/navigation";
 import { useImages } from "../hooks/useImages";
 import { FormProvider } from "react-hook-form";
+import { AdminLoader } from "../../components/AdminLoader";
 
 export const CreatePropiedadForm = () => {
 	const router = useRouter();
@@ -22,6 +23,10 @@ export const CreatePropiedadForm = () => {
 	const handleCancel = () => {
 		router.push("/admin/propiedades");
 	};
+
+	if (loading || uploadingImages) {
+		return <AdminLoader text="Creando propiedad..." />;
+	}
 
 	return (
 		<div className="px-4 py-6 sm:p-6">
