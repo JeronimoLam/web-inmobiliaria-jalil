@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { TipoPropiedad } from "@/modules/filters/types/filters.type";
 
