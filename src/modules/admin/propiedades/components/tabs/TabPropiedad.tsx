@@ -57,7 +57,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 				<CardContent className="space-y-4">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<Label htmlFor="calle">Calle *</Label>
+							<Label htmlFor="calle">
+								Calle <span className="text-red-500">*</span>
+							</Label>
 							<Input
 								id="calle"
 								{...register("propiedad.calle", { required: "La calle es obligatoria" })}
@@ -89,7 +91,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
-							<Label htmlFor="tipo_propiedad">Tipo de Propiedad *</Label>
+							<Label htmlFor="tipo_propiedad">
+								Tipo de Propiedad <span className="text-red-500">*</span>
+							</Label>
 							<select
 								id="tipo_propiedad"
 								{...register("propiedad.tipo_propiedad", {
@@ -129,7 +133,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 					</div>
 
 					<div>
-						<Label htmlFor="descripcion">Descripción *</Label>
+						<Label htmlFor="descripcion">
+							Descripción <span className="text-red-500">*</span>
+						</Label>
 						<Textarea
 							id="descripcion"
 							{...register("propiedad.descripcion", {
@@ -158,7 +164,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 			<Card className="py-6">
 				<CardHeader>
-					<CardTitle>Precios</CardTitle>
+					<CardTitle>
+						Precios <span className="text-red-500">*</span>
+					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					{precioFields.length === 0 && (
@@ -191,7 +199,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div>
-										<Label htmlFor={`divisa-${index}`}>Divisa *</Label>
+										<Label htmlFor={`divisa-${index}`}>
+											Divisa <span className="text-red-500">*</span>
+										</Label>
 										<select
 											id={`divisa-${index}`}
 											{...register(`precios.${index}.divisa`, {
@@ -217,7 +227,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 									</div>
 
 									<div>
-										<Label htmlFor={`importe-${index}`}>Importe *</Label>
+										<Label htmlFor={`importe-${index}`}>
+											Importe <span className="text-red-500">*</span>
+										</Label>
 										<Input
 											id={`importe-${index}`}
 											type="number"
@@ -279,7 +291,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 			<Card className="py-6">
 				<CardHeader>
-					<CardTitle>Ubicación</CardTitle>
+					<CardTitle>
+						Ubicación <span className="text-red-500">*</span>
+					</CardTitle>
 				</CardHeader>
 				<CardContent>
 					<LocationPicker

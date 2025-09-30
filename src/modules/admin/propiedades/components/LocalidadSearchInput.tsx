@@ -65,7 +65,11 @@ export const LocalidadSearchInput = ({
 
 	return (
 		<div className={cn("space-y-2 w-full", className)}>
-			{label && <Label>{label} *</Label>}
+			{label && (
+				<Label>
+					{label} <span className="text-red-500">*</span>
+				</Label>
+			)}
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<Button

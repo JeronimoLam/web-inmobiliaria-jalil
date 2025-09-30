@@ -15,7 +15,7 @@ import { FormProvider } from "react-hook-form";
 export const CreatePropiedadForm = () => {
 	const router = useRouter();
 	const { tiposPropiedad, localidades } = useGetInitDataForm();
-	const { formMethods, handleSubmit } = useCreatePropiedadForm();
+	const { formMethods, handleSubmit, isFormValid } = useCreatePropiedadForm();
 	const { images, handleImagesChange } = useImages();
 	const { loading, uploadingImages, onSubmit } = useSubmitCreatePropiedadForm({ images });
 
@@ -51,7 +51,7 @@ export const CreatePropiedadForm = () => {
 						<Button type="button" variant="outline" onClick={handleCancel}>
 							Cancelar
 						</Button>
-						<Button type="submit" disabled={loading || uploadingImages}>
+						<Button type="submit" disabled={loading || uploadingImages || !isFormValid()}>
 							{loading || uploadingImages ? "Procesando..." : "Crear Propiedad"}
 						</Button>
 					</div>
