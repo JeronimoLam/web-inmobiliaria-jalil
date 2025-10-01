@@ -15,13 +15,16 @@ import { deletePropiedad } from "../services/delete.propiedad.service";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function DeletePropiedad({ id }: { id: number }) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const handleDelete = async () => {
 		try {
+			setLoading(true);
 			await deletePropiedad(id);
 			router.refresh();
 			setIsOpen(false);
@@ -30,6 +33,7 @@ export default function DeletePropiedad({ id }: { id: number }) {
 			toast.error((error as Error).message);
 		} finally {
 			setIsOpen(false);
+			setLoading(false);
 		}
 	};
 
@@ -45,20 +49,32 @@ export default function DeletePropiedad({ id }: { id: number }) {
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Eliminar propiedad</DialogTitle>
-				</DialogHeader>
-				<DialogDescription>
-					¿Estás seguro que quieres eliminar esta propiedad? <br /> No podrás revertir la acción.
-				</DialogDescription>
-				<DialogFooter>
-					<Button variant="destructive" onClick={handleDelete}>
-						Eliminar
-					</Button>
-					<Button variant="secondary" onClick={handleCancel}>
-						Cancelar
-					</Button>
-				</DialogFooter>
+				{loading ? (
+					<DialogHeader>
+						<div className="flex flex-col items-center gap-4">
+							<div>Eliminando propiedad...</div>
+							<Spinner size={30} />
+						</div>
+					</DialogHeader>
+				) : (
+					<>
+						<DialogHeader>
+							<DialogTitle>Eliminar propiedad</DialogTitle>
+						</DialogHeader>
+						<DialogDescription>
+							¿Estás seguro que quieres eliminar esta propiedad? <br /> No podrás revertir la
+							acción.
+						</DialogDescription>
+						<DialogFooter>
+							<Button variant="destructive" onClick={handleDelete}>
+								Eliminar
+							</Button>
+							<Button variant="secondary" onClick={handleCancel}>
+								Cancelar
+							</Button>
+						</DialogFooter>
+					</>
+				)}
 			</DialogContent>
 		</Dialog>
 	);
