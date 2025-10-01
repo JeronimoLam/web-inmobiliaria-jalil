@@ -8,7 +8,6 @@ import { buildPropiedadTitle } from "@/modules/propiedades/utils/propiedadProper
 import {
 	ArrowLeft,
 	Edit,
-	Trash2,
 	Home,
 	DollarSign,
 	Calendar,

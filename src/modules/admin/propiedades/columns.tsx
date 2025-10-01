@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Edit } from "lucide-react";
 import Link from "next/link";
 import { DeletePropiedadButton } from "./components/DeletePropiedadButton";
+import { EditPropiedadButton } from "./components/EditPropiedadButton";
 
 export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 	{
@@ -90,11 +91,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 							<Eye className="h-4 w-4" />
 						</Button>
 					</Link>
-					<Link href={`/admin/propiedades/${propiedad.codigo}/edit`}>
-						<Button variant="ghost" size="sm" title="Editar">
-							<Edit className="h-4 w-4" />
-						</Button>
-					</Link>
+					<EditPropiedadButton propiedad={propiedad} />
 					<DeletePropiedadButton id={propiedad.id} context="table" />
 				</div>
 			);
