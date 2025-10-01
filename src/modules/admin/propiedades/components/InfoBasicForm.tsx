@@ -79,21 +79,28 @@ export const InfoBasicForm = ({ tiposPropiedad, localidades }: InfoBasicFormProp
 						<Label htmlFor="tipo_propiedad">
 							Tipo de Propiedad <span className="text-red-500">*</span>
 						</Label>
-						<select
-							id="tipo_propiedad"
-							{...register("propiedad.tipo_propiedad", {
-								required: "El tipo de propiedad es obligatorio",
-								setValueAs: (value) => (value === "" ? undefined : Number(value)),
-							})}
-							className="w-full p-2 border border-input rounded-md text-sm"
-						>
-							<option value="">Seleccionar tipo</option>
-							{tiposPropiedad.map((tipo) => (
-								<option key={tipo.id} value={tipo.id}>
-									{tipo.tipo}
-								</option>
-							))}
-						</select>
+						<Controller
+							name="propiedad.tipo_propiedad"
+							control={control}
+							rules={{ required: "El tipo de propiedad es obligatorio" }}
+							render={({ field }) => (
+								<select
+									id="tipo_propiedad"
+									value={field.value || ""}
+									onChange={(e) =>
+										field.onChange(e.target.value === "" ? undefined : Number(e.target.value))
+									}
+									className="w-full p-2 border border-input rounded-md text-sm"
+								>
+									<option value="">Seleccionar tipo</option>
+									{tiposPropiedad.map((tipo) => (
+										<option key={tipo.id} value={tipo.id}>
+											{tipo.tipo}
+										</option>
+									))}
+								</select>
+							)}
+						/>
 						{errors.propiedad?.tipo_propiedad && (
 							<p className="text-sm text-red-500">{errors.propiedad.tipo_propiedad.message}</p>
 						)}

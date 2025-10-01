@@ -4,7 +4,10 @@ import { UpdatePropiedad } from "../types/update-propiedad.types";
 export const updatePropiedad = async (updatePropiedad: UpdatePropiedad): Promise<void> => {
 	const supabase = createClient();
 
+	console.log("Update propiedad:", updatePropiedad);
+
 	const { data, error } = await supabase.functions.invoke("update-propiedad", {
+		method: "PATCH",
 		body: updatePropiedad,
 	});
 

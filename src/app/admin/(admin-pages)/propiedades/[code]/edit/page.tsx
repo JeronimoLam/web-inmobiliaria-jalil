@@ -1,5 +1,6 @@
 import { AdminHeader } from "@/modules/admin/components/AdminHeader";
 import { getPropiedadByCode } from "@/modules/admin/propiedades/services/get-propiedad-by-code.service";
+import { EditPropiedadForm } from "@/modules/admin/propiedades/components/EditPropiedadForm";
 import { notFound } from "next/navigation";
 
 interface PropiedadAdminEditPageProps {
@@ -17,11 +18,10 @@ export default async function PropiedadAdminEditPage({ params }: PropiedadAdminE
 		return notFound();
 	}
 
-	console.log(propiedad);
-
 	return (
 		<>
 			<AdminHeader title="Editar Propiedad" />
+			<EditPropiedadForm propiedad={propiedad} />
 		</>
 	);
 }
