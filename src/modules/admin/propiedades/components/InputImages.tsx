@@ -29,7 +29,7 @@ export const InputImages = ({ images, onImagesChange, updatePreviewUrls }: Input
 
 			if (imageFiles.length === 0) return;
 
-			const newImages: ImageFile[] = imageFiles.map((file) => {
+			const newImages: ImageFile[] = imageFiles.map((file, index) => {
 				const id = Math.random().toString(36).substr(2, 9);
 				const url = URL.createObjectURL(file);
 
@@ -39,13 +39,9 @@ export const InputImages = ({ images, onImagesChange, updatePreviewUrls }: Input
 					id,
 					file,
 					url: "",
-					principal: images.length === 0,
+					principal: images.length === 0 && index === 0,
 				};
 			});
-
-			if (images.length === 0 && newImages.length > 0) {
-				newImages[0].principal = true;
-			}
 
 			onImagesChange([...images, ...newImages]);
 		},
