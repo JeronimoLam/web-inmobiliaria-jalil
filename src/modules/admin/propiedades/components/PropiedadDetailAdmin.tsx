@@ -20,6 +20,7 @@ import Link from "next/link";
 import { PropiedadGallery } from "@/modules/propiedades/components/propiedad-detail/PropiedadGallery";
 import { formatDateTime } from "../../utils/formatDate";
 import { PropiedadMap } from "@/modules/propiedades/components/propiedad-detail/PropiedadMap";
+import { DeletePropiedadButton } from "./DeletePropiedadButton";
 
 export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) => {
 	const title = buildPropiedadTitle(propiedad);
@@ -29,12 +30,12 @@ export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) =>
 	const formatDate = (date: Date) => formatDateTime(new Date(date));
 
 	return (
-		<div className="p-6 space-y-5">
+		<div className="px-4 py-6 sm:p-6 space-y-5">
 			<div className="flex items-center justify-between">
 				<Link href="/admin/propiedades">
 					<Button variant="ghost" size="sm">
 						<ArrowLeft className="mr-2 h-4 w-4" />
-						Volver
+						<span className="hidden sm:block">Volver</span>
 					</Button>
 				</Link>
 				<div className="flex gap-2">
@@ -44,10 +45,7 @@ export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) =>
 							Editar
 						</Button>
 					</Link>
-					<Button variant="destructive" size="sm">
-						<Trash2 className="mr-2 h-4 w-4" />
-						Eliminar
-					</Button>
+					<DeletePropiedadButton id={propiedad.id} context="detail" text={true} />
 				</div>
 			</div>
 			<div className="rounded-xl overflow-hidden">

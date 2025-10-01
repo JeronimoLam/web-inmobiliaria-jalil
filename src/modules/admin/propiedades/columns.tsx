@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Edit } from "lucide-react";
 import Link from "next/link";
-import DeletePropiedad from "./components/DeletePropiedad";
+import { DeletePropiedadButton } from "./components/DeletePropiedadButton";
 
 export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 	{
@@ -95,7 +95,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 							<Edit className="h-4 w-4" />
 						</Button>
 					</Link>
-					<DeletePropiedad id={propiedad.id} />
+					<DeletePropiedadButton id={propiedad.id} context="table" />
 				</div>
 			);
 		},

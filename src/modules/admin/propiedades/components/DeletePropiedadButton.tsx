@@ -17,7 +17,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/Spinner";
 
-export default function DeletePropiedad({ id }: { id: number }) {
+interface DeletePropiedadProps {
+	id: number;
+	context: "table" | "detail";
+	text?: boolean;
+}
+
+export const DeletePropiedadButton = ({ id, context, text = false }: DeletePropiedadProps) => {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -26,7 +32,11 @@ export default function DeletePropiedad({ id }: { id: number }) {
 		try {
 			setLoading(true);
 			await deletePropiedad(id);
-			router.refresh();
+			if (context === "detail") {
+				router.push("/admin/propiedades");
+			} else {
+				router.refresh();
+			}
 			setIsOpen(false);
 			toast.success("Propiedad eliminada correctamente");
 		} catch (error) {
@@ -46,6 +56,7 @@ export default function DeletePropiedad({ id }: { id: number }) {
 			<DialogTrigger asChild>
 				<Button variant="destructive" size="sm" title="Eliminar" onClick={() => setIsOpen(true)}>
 					<Trash2 className="h-4 w-4" />
+					<>{text && "Eliminar"}</>
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
@@ -78,4 +89,4 @@ export default function DeletePropiedad({ id }: { id: number }) {
 			</DialogContent>
 		</Dialog>
 	);
-}
+};
