@@ -7,18 +7,81 @@ import { uploadMultipleImages } from "@/modules/admin/propiedades/services/uploa
 import type { CreatePropiedad as CreatePropiedadType } from "../types/create-propiedad.types";
 import type { ImageFile } from "../types/images.types";
 
-interface UseNuevaPropiedadFormProps {
+const transformUndefinedToNull = (obj: unknown): unknown => {
+	if (obj === undefined) {
+		return null;
+	}
+
+	if (Array.isArray(obj)) {
+		return obj.map(transformUndefinedToNull);
+	}
+
+	if (typeof obj === "object" && obj !== null) {
+		const transformed: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(obj)) {
+			transformed[key] = transformUndefinedToNull(value);
+		}
+		return transformed;
+	}
+
+	return obj;
+};
+
+interface UseSubmitCreatePropiedadFormProps {
 	images: ImageFile[];
 }
 
-export const useSubmitCreatePropiedadForm = ({ images }: UseNuevaPropiedadFormProps) => {
+export const useSubmitCreatePropiedadForm = ({ images }: UseSubmitCreatePropiedadFormProps) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [uploadingImages, setUploadingImages] = useState(false);
 
 	const onSubmit = async (data: CreatePropiedadType) => {
+		if (!data.propiedad.calle || data.propiedad.calle.trim() === "") {
+			toast.error("La calle es obligatoria");
+			return;
+		}
+
+		if (data.propiedad.numero === undefined || data.propiedad.numero === null) {
+			toast.error("El número es obligatorio");
+			return;
+		}
+
+		if (data.propiedad.tipo_propiedad === undefined || data.propiedad.tipo_propiedad === null) {
+			toast.error("El tipo de propiedad es obligatorio");
+			return;
+		}
+
+		if (!data.localidad_name || data.localidad_name.trim() === "") {
+			toast.error("La localidad es obligatoria");
+			return;
+		}
+
+		if (data.propiedad.descripcion === undefined || data.propiedad.descripcion.trim() === "") {
+			toast.error("La descripción es obligatoria");
+			return;
+		}
+
 		if (data.precios.length === 0) {
-			toast.error("Debe agregar al menos un precio");
+			toast.error("Debe agregar al menos un precio (alquiler o venta)");
+			return;
+		}
+
+		const preciosInvalidos = data.precios.filter((precio) => precio.importe === undefined);
+
+		if (preciosInvalidos.length > 0) {
+			toast.error(
+				"Todos los precios deben tener un importe válido o estar marcados como 'Consultar precio'",
+			);
+			return;
+		}
+
+		if (
+			!data.propiedad.map_location.coordinates ||
+			data.propiedad.map_location.coordinates[0] === 0 ||
+			data.propiedad.map_location.coordinates[1] === 0
+		) {
+			toast.error("La ubicación es obligatoria");
 			return;
 		}
 
@@ -33,10 +96,12 @@ export const useSubmitCreatePropiedadForm = ({ images }: UseNuevaPropiedadFormPr
 		setLoading(true);
 
 		try {
+			const transformedData = transformUndefinedToNull(data) as CreatePropiedadType;
+
 			const dataWithCode = {
-				...data,
+				...transformedData,
 				propiedad: {
-					...data.propiedad,
+					...transformedData.propiedad,
 					codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
 				},
 				imagenes: [],

@@ -20,8 +20,10 @@ export const TabDetalles = () => {
 							<Input
 								id="ambientes"
 								type="number"
-								{...register("detalles.ambientes", { valueAsNumber: true })}
-								placeholder="0"
+								{...register("detalles.ambientes", {
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 3"
 							/>
 						</div>
 						<div>
@@ -29,8 +31,10 @@ export const TabDetalles = () => {
 							<Input
 								id="dormitorios"
 								type="number"
-								{...register("detalles.dormitorios", { valueAsNumber: true })}
-								placeholder="0"
+								{...register("detalles.dormitorios", {
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 2"
 							/>
 						</div>
 						<div>
@@ -38,8 +42,10 @@ export const TabDetalles = () => {
 							<Input
 								id="banos"
 								type="number"
-								{...register("detalles.banos", { valueAsNumber: true })}
-								placeholder="0"
+								{...register("detalles.banos", {
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 1"
 							/>
 						</div>
 					</div>
@@ -51,8 +57,10 @@ export const TabDetalles = () => {
 								id="superficie_lote"
 								type="number"
 								step="0.1"
-								{...register("detalles.superficie_lote", { valueAsNumber: true })}
-								placeholder="0"
+								{...register("detalles.superficie_lote", {
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 500"
 							/>
 						</div>
 						<div>
@@ -61,8 +69,10 @@ export const TabDetalles = () => {
 								id="superficie_cubierta"
 								type="number"
 								step="0.1"
-								{...register("detalles.superficie_cubierta", { valueAsNumber: true })}
-								placeholder="0"
+								{...register("detalles.superficie_cubierta", {
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 120"
 							/>
 						</div>
 						<div>

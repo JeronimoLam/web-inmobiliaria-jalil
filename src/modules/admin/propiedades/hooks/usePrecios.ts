@@ -3,7 +3,11 @@ import { CreatePropiedad } from "../types/create-propiedad.types";
 
 export const usePrecios = (
 	precios: CreatePropiedad["precios"],
-	appendPrecio: (value: { estado_publicacion_id: number; importe: number; divisa: string }) => void,
+	appendPrecio: (value: {
+		estado_publicacion_id: number;
+		importe: number | undefined;
+		divisa: string;
+	}) => void,
 ) => {
 	const handleAgregarPrecioAlquiler = () => {
 		const tieneAlquiler = precios.some((p) => p.estado_publicacion_id === OperacionesEnum.ALQUILER);
@@ -11,7 +15,7 @@ export const usePrecios = (
 
 		appendPrecio({
 			estado_publicacion_id: OperacionesEnum.ALQUILER,
-			importe: 100000,
+			importe: undefined,
 			divisa: "ARS",
 		});
 	};
@@ -22,7 +26,7 @@ export const usePrecios = (
 
 		appendPrecio({
 			estado_publicacion_id: OperacionesEnum.VENTA,
-			importe: 100000,
+			importe: undefined,
 			divisa: "USD",
 		});
 	};

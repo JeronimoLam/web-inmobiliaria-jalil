@@ -5,13 +5,13 @@ export type CreatePropiedad = {
 		codigo: number;
 		calle: string;
 		entre_calles: string;
-		numero: number;
+		numero: number | undefined;
 		map_location: {
 			type: "Point";
 			coordinates: [number, number];
 		};
 		descripcion: string;
-		tipo_propiedad: number;
+		tipo_propiedad: number | undefined;
 		destacada: boolean;
 	};
 	localidad_name: string;
@@ -80,19 +80,19 @@ export type CreatePropiedad = {
 		sum: boolean;
 	};
 	detalles: {
-		ambientes: number;
-		superficie_lote: number;
-		superficie_cubierta: number;
-		superficie_total_construida: number;
-		medida_frontal: number;
-		medida_profundidad: number;
+		ambientes: number | undefined;
+		superficie_lote: number | undefined;
+		superficie_cubierta: number | undefined;
+		superficie_total_construida: number | undefined;
+		medida_frontal: number | undefined;
+		medida_profundidad: number | undefined;
 		antiguedad: string;
-		dormitorios: number;
-		habitaciones: number;
-		banos: number;
+		dormitorios: number | undefined;
+		habitaciones: number | undefined;
+		banos: number | undefined;
 		garage: string;
-		pisos: number;
-		toilettes: number;
+		pisos: number | undefined;
+		toilettes: number | undefined;
 	};
 	servicios: {
 		agua_corriente: boolean;
@@ -110,7 +110,7 @@ export type CreatePropiedad = {
 	}[];
 	precios: {
 		estado_publicacion_id: OperacionesEnum;
-		importe: number;
+		importe: number | undefined;
 		divisa: string;
 	}[];
 };

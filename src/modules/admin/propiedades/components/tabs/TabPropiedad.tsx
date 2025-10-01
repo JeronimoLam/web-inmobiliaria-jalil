@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LocalidadSearchInput } from "@/modules/admin/propiedades/components/LocalidadSearchInput";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { usePrecios } from "../../hooks/usePrecios";
 import { CreatePropiedad } from "../../types/create-propiedad.types";
 import { TipoPropiedad } from "@/modules/filters/types/filters.type";
@@ -24,8 +25,10 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 		control,
 		watch,
 		setValue,
-		formState: { errors },
+		formState: { errors, isSubmitted },
 	} = useFormContext<CreatePropiedad>();
+
+	const [showPreciosError, setShowPreciosError] = useState(false);
 
 	const {
 		fields: precioFields,
@@ -40,6 +43,14 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 
 	const { handleAgregarPrecioAlquiler, handleAgregarPrecioVenta, canAddAlquiler, canAddVenta } =
 		usePrecios(precios, appendPrecio);
+
+	useEffect(() => {
+		if (isSubmitted && precios.length === 0) {
+			setShowPreciosError(true);
+		} else if (precios.length > 0) {
+			setShowPreciosError(false);
+		}
+	}, [isSubmitted, precios.length]);
 
 	const handleLocationChange = (coordinates: { lat: number; lng: number }) => {
 		setValue("propiedad.map_location.coordinates", [coordinates.lat, coordinates.lng]);
@@ -63,20 +74,34 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 							<Input
 								id="calle"
 								{...register("propiedad.calle", { required: "La calle es obligatoria" })}
-								placeholder="Nombre de la calle"
+								placeholder="Ej: Calle 7"
 							/>
 							{errors.propiedad?.calle && (
 								<p className="text-sm text-red-500">{errors.propiedad.calle.message}</p>
 							)}
 						</div>
 						<div>
-							<Label htmlFor="numero">Número</Label>
+							<Label htmlFor="numero">
+								Número <span className="text-red-500">*</span>
+							</Label>
 							<Input
 								id="numero"
 								type="number"
-								{...register("propiedad.numero", { valueAsNumber: true })}
-								placeholder="Número"
+								{...register("propiedad.numero", {
+									required: "El número es obligatorio",
+									validate: (value) => {
+										if (value === undefined || value === null) {
+											return "El número es obligatorio";
+										}
+										return true;
+									},
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
+								})}
+								placeholder="Ej: 1234"
 							/>
+							{errors.propiedad?.numero && (
+								<p className="text-sm text-red-500">{errors.propiedad.numero.message}</p>
+							)}
 						</div>
 					</div>
 
@@ -85,7 +110,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 						<Input
 							id="entre_calles"
 							{...register("propiedad.entre_calles")}
-							placeholder="Entre calle A y calle B"
+							placeholder="Ej: 54 y 55"
 						/>
 					</div>
 
@@ -98,7 +123,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 								id="tipo_propiedad"
 								{...register("propiedad.tipo_propiedad", {
 									required: "El tipo de propiedad es obligatorio",
-									valueAsNumber: true,
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
 								})}
 								className="w-full p-2 border border-input rounded-md text-sm"
 							>
@@ -170,8 +195,12 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 				</CardHeader>
 				<CardContent className="space-y-4">
 					{precioFields.length === 0 && (
-						<div className="py-6 text-muted-foreground">
-							<p>No hay precios agregados</p>
+						<div className={`py-4 ${showPreciosError ? "text-red-500" : "text-muted-foreground"}`}>
+							<p>
+								{showPreciosError
+									? "Debe agregar al menos un precio (alquiler o venta)"
+									: "No hay precios agregados"}
+							</p>
 						</div>
 					)}
 
@@ -180,6 +209,7 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 						const importe = watch(`precios.${index}.importe`);
 						const esAlquiler = operacion === OperacionesEnum.ALQUILER;
 						const esVenta = operacion === OperacionesEnum.VENTA;
+						const esConsultaPrecio = importe === 0;
 
 						return (
 							<div key={field.id} className="border rounded-lg p-4 space-y-4">
@@ -234,11 +264,11 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 											id={`importe-${index}`}
 											type="number"
 											{...register(`precios.${index}.importe`, {
-												required: "El importe es obligatorio",
-												valueAsNumber: true,
+												required: !esConsultaPrecio ? "El importe es obligatorio" : false,
+												setValueAs: (value) => (value === "" ? undefined : Number(value)),
 											})}
-											placeholder="0"
-											disabled={importe === 0}
+											placeholder={esAlquiler ? "Ej: 150000" : "Ej: 50000"}
+											disabled={esConsultaPrecio}
 										/>
 										{errors.precios?.[index]?.importe && (
 											<p className="text-sm text-destructive">
@@ -255,9 +285,9 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 										render={({ field }) => (
 											<Checkbox
 												id={`consulta-${index}`}
-												checked={field.value === 0}
+												checked={esConsultaPrecio}
 												onCheckedChange={(checked) => {
-													field.onChange(checked ? 0 : 100000);
+													field.onChange(checked ? 0 : undefined);
 												}}
 											/>
 										)}
@@ -296,9 +326,31 @@ export const TabPropiedad = ({ tiposPropiedad, localidades }: TabPropiedadProps)
 					</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<LocationPicker
-						handleCoordinates={handleLocationChange}
-						currentCoordinates={currentCoordinatesObject}
+					<Controller
+						name="propiedad.map_location.coordinates"
+						control={control}
+						rules={{
+							required: "Debe seleccionar una ubicación en el mapa",
+							validate: (value) => {
+								if (!value || (value[0] === 0 && value[1] === 0)) {
+									return "Debe seleccionar una ubicación en el mapa";
+								}
+								return true;
+							},
+						}}
+						render={() => (
+							<>
+								<LocationPicker
+									handleCoordinates={handleLocationChange}
+									currentCoordinates={currentCoordinatesObject}
+								/>
+								{errors.propiedad?.map_location?.coordinates && (
+									<p className="text-sm text-red-500 mt-2">
+										{errors.propiedad.map_location.coordinates.message}
+									</p>
+								)}
+							</>
+						)}
 					/>
 				</CardContent>
 			</Card>

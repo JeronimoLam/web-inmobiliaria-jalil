@@ -16,7 +16,7 @@ import { AdminLoader } from "../../components/AdminLoader";
 export const CreatePropiedadForm = () => {
 	const router = useRouter();
 	const { tiposPropiedad, localidades } = useGetInitDataForm();
-	const { formMethods, handleSubmit, isFormValid } = useCreatePropiedadForm();
+	const { formMethods, handleSubmit } = useCreatePropiedadForm();
 	const { images, handleImagesChange } = useImages();
 	const { loading, uploadingImages, onSubmit } = useSubmitCreatePropiedadForm({ images });
 
@@ -56,7 +56,7 @@ export const CreatePropiedadForm = () => {
 						<Button type="button" variant="outline" onClick={handleCancel}>
 							Cancelar
 						</Button>
-						<Button type="submit" disabled={loading || uploadingImages || !isFormValid()}>
+						<Button type="submit" disabled={loading || uploadingImages}>
 							{loading || uploadingImages ? "Procesando..." : "Crear Propiedad"}
 						</Button>
 					</div>
