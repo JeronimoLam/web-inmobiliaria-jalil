@@ -11,6 +11,8 @@ import type { ImageFile } from "../types/images.types";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { getChangedFields } from "../utils/getChangedFields";
 import { UpdatePropiedad } from "../types/update-propiedad.types";
+import { deleteImage } from "../services/delete-image.service";
+import { getImagenesFromPropiedadId } from "../services/get-imagenes-from-propiedad-id.service";
 
 const transformUndefinedToNull = (obj: unknown): unknown => {
 	if (obj === undefined) {
@@ -129,12 +131,12 @@ export const useSubmitEditPropiedadForm = ({
 				setUploadingImages(true);
 
 				const oldUrls = propiedad.imagenes.map((img) => img.url);
-				const nuevas = images.filter((img) => !oldUrls.includes(img.url));
+				const newImages = images.filter((img) => !oldUrls.includes(img.url));
 
-				console.log("nuevas", nuevas);
-				if (nuevas.length > 0) {
+				console.log("Nuevas imágenes", newImages);
+				if (newImages.length > 0) {
 					const uploadResult = await uploadMultipleImages(
-						nuevas,
+						newImages,
 						propiedad.id.toString(),
 						propiedad,
 					);
@@ -148,15 +150,25 @@ export const useSubmitEditPropiedadForm = ({
 				}
 
 				const currentUrls = images.map((img) => img.url);
-				const eliminadas = propiedad.imagenes.filter((img) => !currentUrls.includes(img.url));
+				const deletedImages = propiedad.imagenes.filter((img) => !currentUrls.includes(img.url));
 
-				console.log("eliminadas", eliminadas);
+				console.log("Imágenes a eliminar", deletedImages);
 
-				if (eliminadas.length > 0) {
+				if (deletedImages.length > 0) {
 					try {
 						// Borra primero del bucket
-						await Promise.all(eliminadas.map((img) => deleteImageFromSupabase(img.url)));
+						console.log("eliminadas", deletedImages);
 
+						const deletedImagesData = await Promise.all(
+							deletedImages.map((img) => deleteImage(img.id)),
+						);
+						console.log("deletedImagesData", deletedImagesData);
+
+						if (deletedImagesData.length > 0) {
+							console.log("Eliminando imagen/es del bucket...");
+							// await Promise.all(deletedImagesData.map((img) => deleteImageFromSupabase(img.url)));
+						}
+						// await Promise.all(eliminadas.map((img) => deleteImageFromSupabase(img.url)));
 						// // Borra de la base de datos
 						// await Promise.all(
 						// 	eliminadas.map(
@@ -167,6 +179,22 @@ export const useSubmitEditPropiedadForm = ({
 						console.error("Error eliminando imágenes:", error);
 						toast.error("Ocurrió un error al eliminar imágenes");
 					}
+				}
+
+				// Una vez agregadas o eliminadas las imágenes, actualizamos la propiedad
+				// actualizamos la imagen principal
+				const newMainImage = newImages.find((img) => img.principal);
+				// Recuperamos todas las imágenes actualizadas
+
+				const updatedPropiedadImages = await getImagenesFromPropiedadId(propiedad.id);
+
+				// const imageToUpdate = updatedPropiedadImages.find((img) => img.id === newMainImage?.id);
+
+				if (newMainImage) {
+					await updatePropiedad({
+						id: propiedad.id,
+						imagenes: [newMainImage],
+					});
 				}
 
 				setUploadingImages(false);

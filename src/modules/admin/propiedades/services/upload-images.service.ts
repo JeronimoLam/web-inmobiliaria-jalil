@@ -19,14 +19,6 @@ const BUCKET = "jalil_public_images";
 
 const supabase = createClient();
 
-// const getSupabaseApiKey = (): string => {
-// 	return (
-// 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-// 		process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-// 		""
-// 	);
-// };
-
 export const uploadImageToSupabase = async (
 	file: File,
 	propertyId: string,
@@ -91,29 +83,25 @@ export const uploadMultipleImages = async (
 	try {
 		const uploadedImages = await Promise.all(uploadPromises);
 
-		if (!propiedad) {
-			if (uploadedImages.length > 0) {
-				try {
-					await Promise.all(
-						uploadedImages.map((image) =>
-							saveImage({
-								id_propiedad: parseInt(propertyId),
-								url: image.url,
-								principal: image.principal,
-							}),
-						),
-					);
+		if (uploadedImages.length > 0) {
+			try {
+				await Promise.all(
+					uploadedImages.map((image) =>
+						saveImage({
+							id_propiedad: parseInt(propertyId),
+							url: image.url,
+							principal: image.principal,
+						}),
+					),
+				);
 
-					return { success: true, images: uploadedImages };
-				} catch (error) {
-					await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
-					throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
-				}
+				return { success: true, images: uploadedImages };
+			} catch (error) {
+				await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
+				throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
 			}
-			return { success: false, images: [], errors: ["No se subieron imágenes"] };
-		} else {
-			return { success: true, images: uploadedImages };
 		}
+		return { success: false, images: [], errors: ["No se subieron imágenes"] };
 	} catch (err) {
 		return { success: false, errors: [err instanceof Error ? err.message : "Error desconocido"] };
 	}
