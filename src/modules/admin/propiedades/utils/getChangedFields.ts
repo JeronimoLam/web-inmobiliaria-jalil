@@ -154,5 +154,24 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.precios = preciosChanges;
 	}
 
+	console.log(originalData);
+	console.log(modifiedData);
+
+	type Image = { url: string; principal: boolean };
+	function imagesChanged(imgs1: Image[], imgs2: Image[]) {
+		if (imgs1.length !== imgs2.length) return true;
+
+		return imgs1.some((img, i) => {
+			return img.url !== imgs2[i].url || img.principal !== imgs2[i].principal;
+		});
+	}
+
+	if (imagesChanged(originalData.imagenes, modifiedData.imagenes)) {
+		console.log("imagesChanged");
+		console.log(originalData.imagenes);
+		console.log(modifiedData.imagenes);
+		changes.imagenes = modifiedData.imagenes;
+	}
+
 	return changes;
 };

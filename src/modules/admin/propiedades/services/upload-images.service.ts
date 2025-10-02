@@ -1,3 +1,4 @@
+import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { createClient } from "../../utils/supabase/client";
 import { saveImage } from "./save-image.service";
 
@@ -34,9 +35,8 @@ export const uploadImageToSupabase = async (
 	try {
 		const fileExtension = file.name.split(".").pop()?.toLowerCase() || "jpg";
 		const sequentialNumber = String(index + 1).padStart(3, "0");
-		const fileName = `img_${sequentialNumber}`;
-		const uniqueFileName = `${fileName}.${fileExtension}`;
-		const filePath = `${propertyId}/${uniqueFileName}`;
+		const fileName = `img_${sequentialNumber}.${fileExtension}`;
+		const filePath = `${propertyId}/${fileName}`;
 
 		const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 		const uploadUrl = `${supabaseUrl}/storage/v1/object/${BUCKET}/${filePath}`;
@@ -74,11 +74,16 @@ export const uploadImageToSupabase = async (
 export const uploadMultipleImages = async (
 	images: ImageFile[],
 	propertyId: string,
+	propiedad?: Propiedad,
 ): Promise<{ success: boolean; images?: ImageFile[]; errors?: string[] }> => {
 	if (images.length === 0) return { success: true, images: [] };
 
 	const uploadPromises = images.map(async (image, index) => {
-		const result = await uploadImageToSupabase(image.file, propertyId, index);
+		const result = await uploadImageToSupabase(
+			image.file,
+			propertyId,
+			index + (propiedad?.imagenes.length || 0),
+		);
 		if (result.success && result.url) return { ...image, url: result.url };
 		throw new Error(result.error || "Error subiendo imagen");
 	});
@@ -86,26 +91,29 @@ export const uploadMultipleImages = async (
 	try {
 		const uploadedImages = await Promise.all(uploadPromises);
 
-		if (uploadedImages.length > 0) {
-			try {
-				await Promise.all(
-					uploadedImages.map((image) =>
-						saveImage({
-							id_propiedad: parseInt(propertyId),
-							url: image.url,
-							principal: image.principal,
-						}),
-					),
-				);
+		if (!propiedad) {
+			if (uploadedImages.length > 0) {
+				try {
+					await Promise.all(
+						uploadedImages.map((image) =>
+							saveImage({
+								id_propiedad: parseInt(propertyId),
+								url: image.url,
+								principal: image.principal,
+							}),
+						),
+					);
 
-				return { success: true, images: uploadedImages };
-			} catch (error) {
-				await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
-				throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
+					return { success: true, images: uploadedImages };
+				} catch (error) {
+					await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
+					throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
+				}
 			}
+			return { success: false, images: [], errors: ["No se subieron imágenes"] };
+		} else {
+			return { success: true, images: uploadedImages };
 		}
-
-		return { success: false, images: [], errors: ["No se subieron imágenes"] };
 	} catch (err) {
 		return { success: false, errors: [err instanceof Error ? err.message : "Error desconocido"] };
 	}

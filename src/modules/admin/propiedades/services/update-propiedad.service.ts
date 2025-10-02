@@ -5,13 +5,22 @@ export const updatePropiedad = async (updatePropiedad: UpdatePropiedad): Promise
 	const supabase = createClient();
 
 	console.log("Update propiedad:", updatePropiedad);
+	const { id, ...fieldsToUpdate } = updatePropiedad;
+
+	// const { id, imagenes, ...fieldsToUpdate } = updatePropiedad;
+
+	// const imagesSinUrls = imagenes?.map((image) => {
+	// 	return {
+	// 		principal: image.principal,
+	// 	};
+	// });
+
+	// console.log("imagesSinUrls", { id, ...fieldsToUpdate, imagenes: imagesSinUrls });
 
 	const { data, error } = await supabase.functions.invoke("update-propiedad", {
 		method: "PATCH",
-		body: updatePropiedad,
+		body: { id, ...fieldsToUpdate },
 	});
 
 	if (error || !data) throw new Error(error?.message || "Error al actualizar la propiedad");
-
-	console.log({ data, error });
 };

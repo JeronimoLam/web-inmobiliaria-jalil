@@ -38,7 +38,7 @@ export const InputImages = ({ images, onImagesChange, updatePreviewUrls }: Input
 				return {
 					id,
 					file,
-					url: "",
+					url: url,
 					principal: images.length === 0 && index === 0,
 				};
 			});

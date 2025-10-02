@@ -22,7 +22,7 @@ export const EditPropiedadForm = ({ propiedad }: EditPropiedadFormProps) => {
 	const router = useRouter();
 	const { tiposPropiedad, localidades } = useGetInitDataForm();
 	const { formMethods, handleSubmit } = useEditPropiedadForm({ propiedad });
-	const { images, handleImagesChange } = useImages();
+	const { images, handleImagesChange } = useImages({ propiedad });
 	const { loading, uploadingImages, onSubmit } = useSubmitEditPropiedadForm({ images, propiedad });
 
 	const handleCancel = () => {

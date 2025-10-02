@@ -1,6 +1,6 @@
 import { X, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { ImageFile } from "@/modules/admin/propiedades/types/images.types";
 import { Button } from "@/components/ui/button";
@@ -17,10 +17,15 @@ interface TabImagenesProps {
 
 export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 	const {
+		watch,
+		getValues,
+		setValue,
 		formState: { errors },
 	} = useFormContext<CreatePropiedad>();
 
 	const [previewUrls, setPreviewUrls] = useState<Record<string, string>>({});
+
+	console.log("watch imagenes", watch("imagenes"));
 
 	const removeImage = (imageId: string) => {
 		const updatedImages = images.filter((img) => img.id !== imageId);
@@ -37,6 +42,10 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 		});
 
 		onImagesChange(updatedImages);
+		setValue(
+			"imagenes",
+			updatedImages.map((img) => ({ url: img.url, principal: img.principal })),
+		);
 	};
 
 	const setPrincipalImage = (imageId: string) => {
@@ -46,11 +55,29 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 		}));
 
 		onImagesChange(updatedImages);
+		setValue(
+			"imagenes",
+			updatedImages.map((img) => ({ url: img.url, principal: img.principal })),
+		);
 	};
 
 	const updatePreviewUrls = (urls: Record<string, string>) => {
 		setPreviewUrls((prev) => ({ ...prev, ...urls }));
+		setValue(
+			"imagenes",
+			images.map((img) => ({ url: img.url, principal: img.principal })),
+		);
 	};
+
+	useEffect(() => {
+		if (images.length > 0) {
+			setPreviewUrls(Object.fromEntries(images.map((img) => [img.id, img.url])));
+			setValue(
+				"imagenes",
+				images.map((img) => ({ url: img.url, principal: img.principal })),
+			);
+		}
+	}, [images, setValue]);
 
 	return (
 		<div className="space-y-6">

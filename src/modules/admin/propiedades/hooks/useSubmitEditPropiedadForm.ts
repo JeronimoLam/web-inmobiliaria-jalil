@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updatePropiedad } from "../services/update-propiedad.service";
-import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-images.service";
+import {
+	deleteImageFromSupabase,
+	uploadMultipleImages,
+} from "@/modules/admin/propiedades/services/upload-images.service";
 import type { CreatePropiedad as CreatePropiedadType } from "../types/create-propiedad.types";
 import type { ImageFile } from "../types/images.types";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
@@ -122,17 +125,48 @@ export const useSubmitEditPropiedadForm = ({
 			await updatePropiedad(updateData);
 
 			// Si hay imágenes nuevas, subirlas
-			if (images.length > 0) {
+			if (changedFields.imagenes) {
 				setUploadingImages(true);
 
-				const uploadResult = await uploadMultipleImages(images, propiedad.id.toString());
+				const oldUrls = propiedad.imagenes.map((img) => img.url);
+				const nuevas = images.filter((img) => !oldUrls.includes(img.url));
 
-				if (!uploadResult.success) {
-					toast.error(
-						"Error subiendo imágenes. La propiedad fue actualizada pero sin las nuevas imágenes.",
+				console.log("nuevas", nuevas);
+				if (nuevas.length > 0) {
+					const uploadResult = await uploadMultipleImages(
+						nuevas,
+						propiedad.id.toString(),
+						propiedad,
 					);
-					router.push("/admin/propiedades");
-					return;
+					if (!uploadResult.success) {
+						toast.error(
+							"Error subiendo imágenes. La propiedad fue actualizada pero sin las nuevas imágenes.",
+						);
+						router.push("/admin/propiedades");
+						return;
+					}
+				}
+
+				const currentUrls = images.map((img) => img.url);
+				const eliminadas = propiedad.imagenes.filter((img) => !currentUrls.includes(img.url));
+
+				console.log("eliminadas", eliminadas);
+
+				if (eliminadas.length > 0) {
+					try {
+						// Borra primero del bucket
+						await Promise.all(eliminadas.map((img) => deleteImageFromSupabase(img.url)));
+
+						// // Borra de la base de datos
+						// await Promise.all(
+						// 	eliminadas.map(
+						// 		(img) => deleteImageFromSupabase(img.url), // suponiendo que tenés una función para borrar el registro en DB
+						// 	),
+						// );
+					} catch (error) {
+						console.error("Error eliminando imágenes:", error);
+						toast.error("Ocurrió un error al eliminar imágenes");
+					}
 				}
 
 				setUploadingImages(false);
