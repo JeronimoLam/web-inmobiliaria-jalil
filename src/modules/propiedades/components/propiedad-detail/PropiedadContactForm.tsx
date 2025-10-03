@@ -11,8 +11,29 @@ import { Separator } from "@/components/ui/separator";
 import { SuccessMessage } from "./SuccessMessage";
 import { ContactFormFields } from "./ContactFormFields";
 import { ContactButtons } from "./ContactButtons";
+import { useFormStatus } from "react-dom";
+import { Spinner } from "@/components/ui/Spinner";
 
 const initialState = { errors: {} as Record<string, string>, success: false };
+
+const SubmitButton = () => {
+	const isLoading = useFormStatus();
+	return (
+		<>
+			{isLoading.pending ? (
+				<Button type="submit" className="w-full flex-1 py-7 font-semibold mt-5">
+					<Spinner size={20} color="#34344c" />
+					Enviando...
+				</Button>
+			) : (
+				<Button type="submit" className="w-full flex-1 py-7 font-semibold mt-5">
+					<MailIcon className="size-5" />
+					Contactar
+				</Button>
+			)}
+		</>
+	);
+};
 
 export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) => {
 	const [state, formAction] = useActionState(sendContactForm, initialState);
@@ -34,10 +55,7 @@ export const PropiedadContactForm = ({ propiedad }: { propiedad: Propiedad }) =>
 					<h2 className="font-semibold text-xl">Consultar por esta propiedad</h2>
 					<ContactFormFields errors={state.errors} defaultMessage={defaultMessage} />
 
-					<Button type="submit" className="w-full flex-1 py-7 font-semibold mt-5">
-						<MailIcon className="size-5" />
-						Contactar
-					</Button>
+					<SubmitButton />
 				</form>
 			)}
 			<Separator className="my-6" />
