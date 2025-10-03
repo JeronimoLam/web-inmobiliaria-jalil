@@ -30,7 +30,7 @@ export async function sendContactForm(_prevState: unknown, formData: FormData) {
 	const emailBody = `
 	<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
 	  <h2 style="color: #1a73e8; margin: 0 0 15px 0;">
-		📩 Hola! Tienes un nuevo mensaje sobre la consulta de una propiedad
+		📩 Nueva consulta sobre una propiedad
 	  </h2>
 	  <hr style="border:none; border-top:1px solid #eee; margin:15px 0;" />
 	  
