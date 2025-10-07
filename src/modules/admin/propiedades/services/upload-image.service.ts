@@ -3,6 +3,7 @@ import { createClient } from "../../utils/supabase/client";
 import { deleteImageFromSupabase } from "./delete-image.service";
 import { ImageFile, SaveImage } from "@/modules/admin/propiedades/types/images.types";
 import { IMAGE_BUCKET } from "../constants/image-bucket";
+import { updateMainImage } from "./update-image.service";
 
 const supabase = createClient();
 
@@ -18,6 +19,10 @@ export const saveImageToDatabase = async (image: SaveImage) => {
 	});
 
 	if (error || !data) throw new Error(error?.message || "Error al guardar la imagen");
+
+	if (data.data[0].principal) {
+		await updateMainImage(Number(data.data[0].id));
+	}
 };
 
 interface UploadImageToSupabaseResult {
@@ -83,7 +88,9 @@ export const uploadMultipleImages = async (
 			propertyId,
 			index + (propiedad?.imagenes.length || 0),
 		);
-		if (result.success && result.url) return { ...image, url: result.url };
+		if (result.success && result.url) {
+			return { ...image, url: result.url };
+		}
 		throw new Error(result.error || "Error subiendo imagen");
 	});
 

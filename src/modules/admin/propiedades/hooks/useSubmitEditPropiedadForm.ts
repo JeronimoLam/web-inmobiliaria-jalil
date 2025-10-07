@@ -9,7 +9,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { getChangedFields } from "../utils/getChangedFields";
 import { UpdatePropiedad } from "../types/update-propiedad.types";
 import { deleteImage } from "../services/delete-image.service";
-import { getImagenesFromPropiedadId } from "../services/get-imagenes-from-propiedad-id.service";
+import { updateMainImage } from "../services/update-image.service";
 
 const transformUndefinedToNull = (obj: unknown): unknown => {
 	if (obj === undefined) {
@@ -153,20 +153,9 @@ export const useSubmitEditPropiedadForm = ({
 					}
 				}
 
-				// Una vez agregadas o eliminadas las imágenes, actualizamos la propiedad
-				// actualizamos la imagen principal
-				const newMainImage = newImages.find((img) => img.principal);
-				// Recuperamos todas las imágenes actualizadas
-
-				const updatedPropiedadImages = await getImagenesFromPropiedadId(propiedad.id);
-
-				// const imageToUpdate = updatedPropiedadImages.find((img) => img.id === newMainImage?.id);
-
-				if (newMainImage) {
-					await updatePropiedad({
-						id: propiedad.id,
-						imagenes: [newMainImage],
-					});
+				if (newImages.length === 0 && deletedImages.length === 0) {
+					const mainImage = images.find((img) => img.principal)?.id;
+					await updateMainImage(Number(mainImage));
 				}
 
 				setUploadingImages(false);
