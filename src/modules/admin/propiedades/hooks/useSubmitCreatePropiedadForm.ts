@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createPropiedad } from "../services/create-propiedad.service";
-import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-images.service";
+import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-image.service";
 import type { CreatePropiedad as CreatePropiedadType } from "../types/create-propiedad.types";
 import type { ImageFile } from "../types/images.types";
 
@@ -112,10 +112,7 @@ export const useSubmitCreatePropiedadForm = ({ images }: UseSubmitCreatePropieda
 			if (images.length > 0) {
 				setUploadingImages(true);
 
-				const uploadResult = await uploadMultipleImages(
-					images,
-					createdPropiedad.propiedad_id.toString(),
-				);
+				const uploadResult = await uploadMultipleImages(images, createdPropiedad.propiedad_id);
 
 				if (!uploadResult.success) {
 					toast.error("Error subiendo imágenes. La propiedad fue creada pero sin imágenes.");

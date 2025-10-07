@@ -1,21 +1,30 @@
 import { createClient } from "../../utils/supabase/client";
+import { IMAGE_BUCKET } from "../constants/image-bucket";
 
-export const deleteImage = async (imageId: number) => {
-	const supabase = createClient();
+const supabase = createClient();
 
-	// Probemos si existe la imagen
-	const { data: image, error: imageError } = await supabase
-		.from("imagenes")
-		.select("*")
-		.eq("id", imageId);
+export const deleteImageFromSupabase = async (
+	propiedadId: number,
+	imageUrl: string,
+): Promise<void> => {
+	const fileName = imageUrl.split("/").pop();
+	if (!fileName) throw new Error("No se pudo obtener el nombre del archivo de la URL");
 
-	if (imageError || !image) throw new Error(imageError?.message || "Error al obtener la imagen");
-	console.log("Imagen encontrada...", image);
+	const filePath = `${propiedadId}/${fileName}`;
 
-	console.log("Eliminando imagen...", imageId);
-	const { data, error } = await supabase.from("imagenes").delete().eq("id", imageId).select("*");
+	const { error } = await supabase.storage.from(IMAGE_BUCKET).remove([filePath]);
 
-	if (error || !data) throw new Error(error?.message || "Error al eliminar la imagen");
+	if (error) throw new Error(error.message);
+};
 
-	return data;
+export const deleteImage = async (
+	propiedadId: number,
+	imageId: number,
+	imageUrl: string,
+): Promise<void> => {
+	const { error } = await supabase.from("imagenes").delete().eq("id", imageId);
+
+	if (error) throw new Error(error.message || "Error al eliminar la imagen de la base de datos");
+
+	await deleteImageFromSupabase(propiedadId, imageUrl);
 };

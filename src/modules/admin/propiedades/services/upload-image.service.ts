@@ -1,29 +1,36 @@
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { createClient } from "../../utils/supabase/client";
-import { saveImage } from "./save-image.service";
+import { deleteImageFromSupabase } from "./delete-image.service";
+import { ImageFile, SaveImage } from "@/modules/admin/propiedades/types/images.types";
+import { IMAGE_BUCKET } from "../constants/image-bucket";
 
-interface ImageFile {
-	id: string;
-	file: File;
-	url: string;
-	principal: boolean;
-}
+const supabase = createClient();
 
-interface UploadResult {
+export const saveImageToDatabase = async (image: SaveImage) => {
+	const supabase = createClient();
+
+	const { data, error } = await supabase.functions.invoke("save-image", {
+		body: {
+			id_propiedad: image.id_propiedad,
+			url: image.url,
+			principal: image.principal,
+		},
+	});
+
+	if (error || !data) throw new Error(error?.message || "Error al guardar la imagen");
+};
+
+interface UploadImageToSupabaseResult {
 	success: boolean;
 	url?: string;
 	error?: string;
 }
 
-const BUCKET = "jalil_public_images";
-
-const supabase = createClient();
-
 export const uploadImageToSupabase = async (
 	file: File,
-	propertyId: string,
+	propertyId: number,
 	index: number,
-): Promise<UploadResult> => {
+): Promise<UploadImageToSupabaseResult> => {
 	try {
 		const fileExtension = file.name.split(".").pop()?.toLowerCase() || "jpg";
 		const sequentialNumber = String(index + 1).padStart(3, "0");
@@ -31,7 +38,7 @@ export const uploadImageToSupabase = async (
 		const filePath = `${propertyId}/${fileName}`;
 
 		const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-		const uploadUrl = `${supabaseUrl}/storage/v1/object/${BUCKET}/${filePath}`;
+		const uploadUrl = `${supabaseUrl}/storage/v1/object/${IMAGE_BUCKET}/${filePath}`;
 
 		const {
 			data: { session },
@@ -56,7 +63,7 @@ export const uploadImageToSupabase = async (
 			return { success: false, error: `Error ${response.status}: ${errorText}` };
 		}
 
-		const publicUrl = `${supabaseUrl}/storage/v1/object/public/${BUCKET}/${filePath}`;
+		const publicUrl = `${supabaseUrl}/storage/v1/object/public/${IMAGE_BUCKET}/${filePath}`;
 		return { success: true, url: publicUrl };
 	} catch (err) {
 		return { success: false, error: err instanceof Error ? err.message : "Error desconocido" };
@@ -65,7 +72,7 @@ export const uploadImageToSupabase = async (
 
 export const uploadMultipleImages = async (
 	images: ImageFile[],
-	propertyId: string,
+	propertyId: number,
 	propiedad?: Propiedad,
 ): Promise<{ success: boolean; images?: ImageFile[]; errors?: string[] }> => {
 	if (images.length === 0) return { success: true, images: [] };
@@ -87,8 +94,8 @@ export const uploadMultipleImages = async (
 			try {
 				await Promise.all(
 					uploadedImages.map((image) =>
-						saveImage({
-							id_propiedad: parseInt(propertyId),
+						saveImageToDatabase({
+							id_propiedad: propertyId,
 							url: image.url,
 							principal: image.principal,
 						}),
@@ -97,24 +104,14 @@ export const uploadMultipleImages = async (
 
 				return { success: true, images: uploadedImages };
 			} catch (error) {
-				await Promise.all(uploadedImages.map((image) => deleteImageFromSupabase(image.url)));
+				await Promise.all(
+					uploadedImages.map((image) => deleteImageFromSupabase(propertyId, image.url)),
+				);
 				throw new Error(error instanceof Error ? error.message : "Error al guardar las imágenes");
 			}
 		}
 		return { success: false, images: [], errors: ["No se subieron imágenes"] };
 	} catch (err) {
 		return { success: false, errors: [err instanceof Error ? err.message : "Error desconocido"] };
-	}
-};
-
-export const deleteImageFromSupabase = async (imageUrl: string): Promise<boolean> => {
-	try {
-		const parts = imageUrl.split(`${BUCKET}/`);
-		const filePath = parts[1];
-		if (!filePath) return false;
-		const { error } = await supabase.storage.from(BUCKET).remove([filePath]);
-		return !error;
-	} catch {
-		return false;
 	}
 };

@@ -2,10 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updatePropiedad } from "../services/update-propiedad.service";
-import {
-	deleteImageFromSupabase,
-	uploadMultipleImages,
-} from "@/modules/admin/propiedades/services/upload-images.service";
+import { uploadMultipleImages } from "@/modules/admin/propiedades/services/upload-image.service";
 import type { CreatePropiedad as CreatePropiedadType } from "../types/create-propiedad.types";
 import type { ImageFile } from "../types/images.types";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
@@ -109,16 +106,13 @@ export const useSubmitEditPropiedadForm = ({
 		try {
 			const transformedData = transformUndefinedToNull(data) as CreatePropiedadType;
 
-			// Obtener solo los campos que han cambiado
 			const changedFields = getChangedFields(propiedad, transformedData);
 
-			// Si no hay cambios, mostrar mensaje y salir
 			if (Object.keys(changedFields).length === 0) {
 				toast.info("No se detectaron cambios en la propiedad");
 				return;
 			}
 
-			// Preparar los datos para la actualización (solo campos modificados + id)
 			const updateData: UpdatePropiedad = {
 				id: propiedad.id,
 				...changedFields,
@@ -126,20 +120,14 @@ export const useSubmitEditPropiedadForm = ({
 
 			await updatePropiedad(updateData);
 
-			// Si hay imágenes nuevas, subirlas
 			if (changedFields.imagenes) {
 				setUploadingImages(true);
 
 				const oldUrls = propiedad.imagenes.map((img) => img.url);
 				const newImages = images.filter((img) => !oldUrls.includes(img.url));
 
-				console.log("Nuevas imágenes", newImages);
 				if (newImages.length > 0) {
-					const uploadResult = await uploadMultipleImages(
-						newImages,
-						propiedad.id.toString(),
-						propiedad,
-					);
+					const uploadResult = await uploadMultipleImages(newImages, propiedad.id, propiedad);
 					if (!uploadResult.success) {
 						toast.error(
 							"Error subiendo imágenes. La propiedad fue actualizada pero sin las nuevas imágenes.",
@@ -152,32 +140,16 @@ export const useSubmitEditPropiedadForm = ({
 				const currentUrls = images.map((img) => img.url);
 				const deletedImages = propiedad.imagenes.filter((img) => !currentUrls.includes(img.url));
 
-				console.log("Imágenes a eliminar", deletedImages);
-
 				if (deletedImages.length > 0) {
 					try {
-						// Borra primero del bucket
-						console.log("eliminadas", deletedImages);
-
-						const deletedImagesData = await Promise.all(
-							deletedImages.map((img) => deleteImage(img.id)),
+						await Promise.all(
+							deletedImages.map((img) => deleteImage(propiedad.id, img.id, img.url)),
 						);
-						console.log("deletedImagesData", deletedImagesData);
-
-						if (deletedImagesData.length > 0) {
-							console.log("Eliminando imagen/es del bucket...");
-							// await Promise.all(deletedImagesData.map((img) => deleteImageFromSupabase(img.url)));
+					} catch (error: unknown) {
+						if (error instanceof Error) {
+							throw new Error(error.message || "Error al eliminar imágenes");
 						}
-						// await Promise.all(eliminadas.map((img) => deleteImageFromSupabase(img.url)));
-						// // Borra de la base de datos
-						// await Promise.all(
-						// 	eliminadas.map(
-						// 		(img) => deleteImageFromSupabase(img.url), // suponiendo que tenés una función para borrar el registro en DB
-						// 	),
-						// );
-					} catch (error) {
-						console.error("Error eliminando imágenes:", error);
-						toast.error("Ocurrió un error al eliminar imágenes");
+						throw new Error("Error al eliminar imágenes");
 					}
 				}
 
