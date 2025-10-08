@@ -1,9 +1,10 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit } from "lucide-react";
 import Link from "next/link";
 import { Localidad } from "@/modules/filters/types/filters.type";
+import { LocalidadDeleteButton } from "./components/LocalidadDeleteButton";
 
 export const localidadesColumns: ColumnDef<Localidad>[] = [
 	{
@@ -43,18 +44,7 @@ export const localidadesColumns: ColumnDef<Localidad>[] = [
 							<Edit className="h-4 w-4" />
 						</Button>
 					</Link>
-					<Button
-						variant="ghost"
-						size="sm"
-						className="text-red-600 hover:text-red-700"
-						title="Eliminar"
-						onClick={() => {
-							// TODO: Implementar confirmación y eliminación
-							console.log("Eliminar localidad:", localidad.id);
-						}}
-					>
-						<Trash2 className="h-4 w-4" />
-					</Button>
+					<LocalidadDeleteButton id={localidad.id} />
 				</div>
 			);
 		},
