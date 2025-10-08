@@ -27,7 +27,6 @@ interface TabImagenesProps {
 export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 	const {
 		watch,
-		getValues,
 		setValue,
 		formState: { errors },
 	} = useFormContext<CreatePropiedad>();
