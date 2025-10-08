@@ -1,9 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { AdminHeader } from "@/modules/admin/components/AdminHeader";
+import { DataTable } from "@/modules/admin/components/DataTable";
+import { localidadesColumns } from "@/modules/admin/localidades/colums";
+import { formatDateTime } from "@/modules/admin/utils/formatDate";
+import { FiltersApiService } from "@/modules/filters/services/filtersApi.service";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function LocalidadesAdminPage() {
+export default async function LocalidadesAdminPage() {
+	const localidades = await FiltersApiService.getLocalidades();
+
+	const localidadesFormatted = localidades.map((localidad) => ({
+		...localidad,
+		created_at: formatDateTime(new Date(localidad.created_at)),
+	}));
+
 	return (
 		<>
 			<AdminHeader
@@ -17,10 +28,8 @@ export default function LocalidadesAdminPage() {
 					</Button>
 				}
 			/>
-			<div className="p-4">
-				<div className="flex items-center justify-between">
-					<h2 className="text-lg font-bold">Tabla de Localidades</h2>
-				</div>
+			<div className="px-4 py-6 sm:p-6">
+				<DataTable title="Localidades" columns={localidadesColumns} data={localidadesFormatted} />
 			</div>
 		</>
 	);
