@@ -14,9 +14,9 @@ export const updateLocalidad = async (formData: FormData): Promise<actionRespons
 
 	const supabase = await createClient();
 
-	const { error, data } = await supabase.from("localidades").update({ nombre }).eq("id", id);
+	const { error } = await supabase.from("localidades").update({ nombre }).eq("id", id);
 
-	if (error || !data) {
+	if (error) {
 		return { success: false, error: error?.message || "Error al actualizar la localidad" };
 	}
 

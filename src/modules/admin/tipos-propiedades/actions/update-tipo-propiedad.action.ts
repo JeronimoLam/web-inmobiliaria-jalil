@@ -14,10 +14,9 @@ export const updateTipoPropiedad = async (formData: FormData): Promise<actionRes
 
 	const supabase = await createClient();
 
-	const { error, data } = await supabase.from("tipos_propiedades").update({ tipo }).eq("id", id);
+	const { error } = await supabase.from("tipos_propiedades").update({ tipo }).eq("id", id);
 
-	console.log({ data, error });
-	if (error || !data) {
+	if (error) {
 		return { success: false, error: error?.message || "Error al actualizar el tipo de propiedad" };
 	}
 
