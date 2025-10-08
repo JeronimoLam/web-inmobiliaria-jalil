@@ -36,7 +36,7 @@ export default async function TipoPropiedadAdminEditPage({
 				<div className="flex flex-col gap-2">
 					<h1 className="text-2xl font-bold">Editar Tipo de Propiedad</h1>
 					<p className="text-sm text-gray-500">
-						Edita el tipo de propiedad para que se muestre en el listado de propiedades.
+						Edita el tipo de propiedad para que se muestre en el listado de tipos de propiedades.
 					</p>
 				</div>
 				<TipoPropiedadEditForm tipoPropiedad={tipoPropiedad} />

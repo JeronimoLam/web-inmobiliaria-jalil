@@ -20,7 +20,8 @@ export default function NuevoTipoPropiedadAdminPage() {
 				<div className="flex flex-col gap-2">
 					<h1 className="text-2xl font-bold">Nuevo Tipo de Propiedad</h1>
 					<p className="text-sm text-gray-500">
-						Crear un nuevo tipo de propiedad para que se muestre en el listado de propiedades.
+						Crea un nuevo tipo de propiedad para que se muestre en el listado de tipos de
+						propiedades.
 					</p>
 				</div>
 				<TipoPropiedadCreateForm />
