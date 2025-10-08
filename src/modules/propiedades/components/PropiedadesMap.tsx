@@ -1,11 +1,12 @@
 "use client";
 
-import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Propiedad } from "../types/propiedad.type";
-import { MapInfoCard } from "./MapInfoCard";
+// import { InfoWindow } from "@vis.gl/react-google-maps";
+// import { MapInfoCard } from "./MapInfoCard";
+// import { DrawingControls } from "./DrawingControls";
 import { PropertyMarker } from "./PropertyMarker";
-import { DrawingControls } from "./DrawingControls";
-import { DrawingManager } from "./DrawingManager";
+// import { DrawingManager } from "./DrawingManager";
 import { useMapLogic } from "../hooks/useMapLogic";
 import { MapCenter } from "../utils/mapUtils";
 
@@ -17,28 +18,30 @@ interface PropiedadesMapProps {
 
 export const PropiedadesMap = ({ propiedades, center, zoom = 14 }: PropiedadesMapProps) => {
 	const {
-		selectedProperty,
+		// selectedProperty,
 		setSelectedProperty,
 		filteredProperties,
-		drawingMode,
-		polygonOverlay,
-		setPolygonOverlay,
 		mapCenter,
-		handlePolygonComplete,
-		handleClearZone,
-		handleCancelDrawing,
-		handleStartDrawing,
+		// drawingMode,
+		// setPolygonOverlay,
+		// handlePolygonComplete,
+		// polygonOverlay,
+		// handleClearZone,
+		// handleCancelDrawing,
+		// handleStartDrawing,
 	} = useMapLogic({ propiedades, center });
 
 	return (
 		<div className="w-full h-full overflow-hidden relative">
-			<DrawingControls
+			{/* TODO: Controles de dibujo ocultos (funcionalidad de mapa aún no implementada) */}
+
+			{/* <DrawingControls
 				drawingMode={drawingMode}
 				polygonOverlay={polygonOverlay}
 				onStartDrawing={handleStartDrawing}
 				onCancelDrawing={handleCancelDrawing}
 				onClearZone={handleClearZone}
-			/>
+			/> */}
 
 			<APIProvider
 				apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}
@@ -50,13 +53,13 @@ export const PropiedadesMap = ({ propiedades, center, zoom = 14 }: PropiedadesMa
 					defaultCenter={mapCenter}
 					gestureHandling={"greedy"}
 				>
-					{drawingMode && (
+					{/* {drawingMode && (
 						<DrawingManager
 							active={drawingMode}
 							onPolygonComplete={handlePolygonComplete}
 							setPolygonOverlay={setPolygonOverlay}
 						/>
-					)}
+					)} */}
 
 					{filteredProperties.map((propiedad) => (
 						<PropertyMarker
@@ -65,8 +68,9 @@ export const PropiedadesMap = ({ propiedades, center, zoom = 14 }: PropiedadesMa
 							onSelect={setSelectedProperty}
 						/>
 					))}
+					{/* TODO: Información de la propiedad oculto (funcionalidad ya implementada, solo ocultada por ahora) */}
 
-					{selectedProperty && (
+					{/* {selectedProperty && (
 						<InfoWindow
 							position={{
 								lat: selectedProperty.map_location.coordinates[0],
@@ -76,7 +80,7 @@ export const PropiedadesMap = ({ propiedades, center, zoom = 14 }: PropiedadesMa
 						>
 							<MapInfoCard propiedad={selectedProperty} />
 						</InfoWindow>
-					)}
+					)} */}
 				</Map>
 			</APIProvider>
 		</div>

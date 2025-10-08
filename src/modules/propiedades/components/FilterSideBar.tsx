@@ -78,7 +78,8 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 								className="bg-gray-50 rounded-lg p-3"
 							/>
 						</div>
-						<PriceRangeFilter />
+						{/* TODO: Rango de precio oculto (funcionalidad ya implementada, hay que arreglarlo) */}
+						{/* <PriceRangeFilter /> */}
 						<CheckboxGroupFilter
 							placeholder="Características"
 							options={filterData.caracteristicas}

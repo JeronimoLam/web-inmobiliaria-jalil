@@ -12,10 +12,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import type { PaginationResponse } from "@/modules/pagination/types/pagination.type";
+// import { Input } from "@/components/ui/input";
+// import { Search } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -29,7 +30,7 @@ export function DataTable<TData, TValue>({
 	columns,
 	data,
 	pagination,
-	searchTitle,
+	// searchTitle,
 	title,
 }: DataTableProps<TData, TValue>) {
 	const [globalFilter, setGlobalFilter] = useState("");
@@ -66,7 +67,9 @@ export function DataTable<TData, TValue>({
 		<div className="space-y-4">
 			<div className="flex sm:flex-row flex-col gap-4 items-center justify-between">
 				<div className="flex items-center space-x-2">
-					<div className="relative">
+					{/* TODO: Buscador oculto (funcionalidad aún no implementada) */}
+
+					{/* <div className="relative">
 						<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							placeholder={`Buscar ${searchTitle || title.toLowerCase()}...`}
@@ -74,7 +77,7 @@ export function DataTable<TData, TValue>({
 							onChange={(e) => setGlobalFilter(e.target.value)}
 							className="pl-8 w-[300px]"
 						/>
-					</div>
+					</div> */}
 				</div>
 				{pagination && (
 					<div className="flex items-center space-x-4">
