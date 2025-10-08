@@ -1,18 +1,20 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormProvider } from "react-hook-form";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TabPropiedad } from "./tabs/TabPropiedad";
-import { TabDetalles } from "./tabs/TabDetalles";
-import { TabImagenes } from "./tabs/TabImagenes";
-import { useGetInitDataForm } from "../hooks/getInitDataForm";
-import { useRouter } from "next/navigation";
-import { useImages } from "../hooks/useImages";
-import { FormProvider } from "react-hook-form";
-import { AdminLoader } from "../../components/AdminLoader";
+import { TabPropiedad } from "@/modules/admin/propiedades/components/tabs/TabPropiedad";
+import { TabDetalles } from "@/modules/admin/propiedades/components/tabs/TabDetalles";
+import { TabImagenes } from "@/modules/admin/propiedades/components/tabs/TabImagenes";
+import { useGetInitDataForm } from "@/modules/admin/propiedades/hooks/getInitDataForm";
+import { useImages } from "@/modules/admin/propiedades/hooks/useImages";
+import { AdminLoader } from "@/modules/admin/components/AdminLoader";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
-import { usePropiedadForm } from "../hooks/usePropiedadForm";
-import { useSubmitPropiedadForm } from "../hooks/useSubmitPropiedadForm";
+import { usePropiedadForm } from "@/modules/admin/propiedades/hooks/usePropiedadForm";
+import { useSubmitPropiedadForm } from "@/modules/admin/propiedades/hooks/useSubmitPropiedadForm";
 
 interface PropiedadFormProps {
 	context: "create" | "edit";
@@ -45,7 +47,15 @@ export const PropiedadForm = ({ context, propiedad }: PropiedadFormProps) => {
 	}
 
 	return (
-		<div className="px-4 py-6 sm:p-6">
+		<div className="px-4 py-6 sm:p-6 flex flex-col gap-4">
+			<div className="flex items-center justify-between">
+				<Button asChild variant="ghost" size="sm">
+					<Link href="/admin/propiedades">
+						<ArrowLeft className="mr-2 h-4 w-4" />
+						Volver
+					</Link>
+				</Button>
+			</div>
 			<FormProvider {...formMethods}>
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 					<Tabs defaultValue="propiedad" className="w-full">
