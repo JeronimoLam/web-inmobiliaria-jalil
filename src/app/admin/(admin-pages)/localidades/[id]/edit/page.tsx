@@ -35,7 +35,7 @@ export default async function LocalidadAdminEditPage({
 				<div className="flex flex-col gap-2">
 					<h1 className="text-2xl font-bold">Editar Localidad</h1>
 					<p className="text-sm text-gray-500">
-						Edita la localidad para que se muestre en el listado de propiedades.
+						Edita la localidad para que se muestre en el listado de localidades.
 					</p>
 				</div>
 				<LocalidadEditForm localidad={localidad} />

@@ -21,7 +21,10 @@ export default async function LocalidadesAdminPage() {
 				title="Localidades"
 				action={
 					<Button>
-						<Link href="#" className="flex items-center justify-center gap-2">
+						<Link
+							href="/admin/localidades/nueva"
+							className="flex items-center justify-center gap-2"
+						>
 							{" "}
 							<PlusIcon className="w-4 h-4" /> Nueva localidad
 						</Link>
