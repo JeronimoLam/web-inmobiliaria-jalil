@@ -16,12 +16,14 @@ import {
 	MapPin,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PropiedadGallery } from "@/modules/propiedades/components/propiedad-detail/PropiedadGallery";
 import { formatDateTime } from "../../utils/formatDate";
 import { PropiedadMap } from "@/modules/propiedades/components/propiedad-detail/PropiedadMap";
 import { DeletePropiedadButton } from "./DeletePropiedadButton";
 
 export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) => {
+	const router = useRouter();
 	const title = buildPropiedadTitle(propiedad);
 
 	const formatPrice = (price: number, currency: string) => `${price.toLocaleString()} ${currency}`;
@@ -31,12 +33,11 @@ export const PropiedadDetailAdmin = ({ propiedad }: { propiedad: Propiedad }) =>
 	return (
 		<div className="px-4 py-6 sm:p-6 space-y-5">
 			<div className="flex items-center justify-between">
-				<Link href="/admin/propiedades">
-					<Button variant="ghost" size="sm">
-						<ArrowLeft className="mr-2 h-4 w-4" />
-						<span className="hidden sm:block">Volver</span>
-					</Button>
-				</Link>
+				<Button variant="ghost" size="sm" onClick={() => router.back()}>
+					<ArrowLeft className="mr-2 h-4 w-4" />
+					<span className="hidden sm:block">Volver</span>
+				</Button>
+
 				<div className="flex gap-2">
 					<Link href={`/admin/propiedades/${propiedad.codigo}/edit`}>
 						<Button size="sm">

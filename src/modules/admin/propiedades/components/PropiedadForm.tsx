@@ -49,11 +49,9 @@ export const PropiedadForm = ({ context, propiedad }: PropiedadFormProps) => {
 	return (
 		<div className="px-4 py-6 sm:p-6 flex flex-col gap-4">
 			<div className="flex items-center justify-between">
-				<Button asChild variant="ghost" size="sm">
-					<Link href="/admin/propiedades">
-						<ArrowLeft className="mr-2 h-4 w-4" />
-						Volver
-					</Link>
+				<Button variant="ghost" size="sm" onClick={() => router.back()}>
+					<ArrowLeft className="mr-2 h-4 w-4" />
+					Volver
 				</Button>
 			</div>
 			<FormProvider {...formMethods}>
