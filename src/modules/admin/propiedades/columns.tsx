@@ -52,7 +52,7 @@ export const propiedadesColumns: ColumnDef<Propiedad>[] = [
 			}
 
 			return (
-				<div className="space-y-1">
+				<div className="space-y-4">
 					{precios.map((precio, index) => (
 						<div key={index} className="text-sm">
 							<span className="font-medium">${precio.importe.toLocaleString()}</span>

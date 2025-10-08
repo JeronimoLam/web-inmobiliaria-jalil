@@ -28,7 +28,7 @@ export const PricesForm = () => {
 		name: "precios",
 	});
 
-	const precios = watch("precios");
+	const precios = watch("precios") || [];
 
 	const { handleAgregarPrecioAlquiler, handleAgregarPrecioVenta, canAddAlquiler, canAddVenta } =
 		usePrecios(precios, appendPrecio);

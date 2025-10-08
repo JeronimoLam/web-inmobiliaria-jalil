@@ -76,6 +76,13 @@ const MapComponent = ({ handleCoordinates, currentCoordinates }: MapComponentPro
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map, hasCoordinates]);
 
+	useEffect(() => {
+		if (hasCoordinates) {
+			setMarkerPosition(currentCoordinates);
+			setMapCenter(currentCoordinates);
+		}
+	}, [currentCoordinates, hasCoordinates]);
+
 	const handlePlaceSelect = useCallback(
 		(place: google.maps.places.PlaceResult) => {
 			const location = place.geometry?.location;

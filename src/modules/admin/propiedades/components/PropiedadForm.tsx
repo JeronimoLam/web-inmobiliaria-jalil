@@ -5,32 +5,39 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabPropiedad } from "./tabs/TabPropiedad";
 import { TabDetalles } from "./tabs/TabDetalles";
 import { TabImagenes } from "./tabs/TabImagenes";
-import { useSubmitEditPropiedadForm } from "../hooks/useSubmitEditPropiedadForm";
 import { useGetInitDataForm } from "../hooks/getInitDataForm";
-import { useEditPropiedadForm } from "../hooks/useEditPropiedadForm";
 import { useRouter } from "next/navigation";
 import { useImages } from "../hooks/useImages";
 import { FormProvider } from "react-hook-form";
 import { AdminLoader } from "../../components/AdminLoader";
 import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
+import { usePropiedadForm } from "../hooks/usePropiedadForm";
+import { useSubmitPropiedadForm } from "../hooks/useSubmitPropiedadForm";
 
-interface EditPropiedadFormProps {
-	propiedad: Propiedad;
+interface PropiedadFormProps {
+	context: "create" | "edit";
+	propiedad?: Propiedad;
 }
 
-export const EditPropiedadForm = ({ propiedad }: EditPropiedadFormProps) => {
+export const PropiedadForm = ({ context, propiedad }: PropiedadFormProps) => {
 	const router = useRouter();
 	const { tiposPropiedad, localidades } = useGetInitDataForm();
-	const { formMethods, handleSubmit } = useEditPropiedadForm({ propiedad });
+	const { formMethods, handleSubmit } = usePropiedadForm({ context, propiedad });
 	const { images, handleImagesChange } = useImages({ propiedad });
-	const { loading, uploadingImages, onSubmit } = useSubmitEditPropiedadForm({ images, propiedad });
+	const { loading, uploadingImages, onSubmit } = useSubmitPropiedadForm({
+		context,
+		propiedad,
+		images,
+	});
 
 	const handleCancel = () => {
 		router.push("/admin/propiedades");
 	};
 
 	if (loading || uploadingImages) {
-		return <AdminLoader text="Actualizando propiedad..." />;
+		return (
+			<AdminLoader text={`${context === "create" ? "Creando" : "Actualizando"} propiedad...`} />
+		);
 	}
 
 	return (
@@ -62,7 +69,9 @@ export const EditPropiedadForm = ({ propiedad }: EditPropiedadFormProps) => {
 							Cancelar
 						</Button>
 						<Button type="submit" disabled={loading || uploadingImages}>
-							{loading || uploadingImages ? "Procesando..." : "Actualizar Propiedad"}
+							{loading || uploadingImages
+								? "Procesando..."
+								: `${context === "create" ? "Crear" : "Actualizar"} Propiedad`}
 						</Button>
 					</div>
 				</form>

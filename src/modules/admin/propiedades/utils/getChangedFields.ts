@@ -6,7 +6,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 	const originalData = transformPropiedadToFormData(originalPropiedad);
 	const changes: Record<string, unknown> = {};
 
-	// Comparar propiedad
 	const propiedadChanges: Record<string, unknown> = {};
 	if (modifiedData.propiedad.calle !== originalData.propiedad.calle) {
 		propiedadChanges.calle = modifiedData.propiedad.calle;
@@ -37,12 +36,10 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.propiedad = propiedadChanges;
 	}
 
-	// Comparar localidad
 	if (modifiedData.localidad_name !== originalData.localidad_name) {
 		changes.localidad_name = modifiedData.localidad_name;
 	}
 
-	// Comparar ambientes
 	const ambientesChanges: Record<string, boolean> = {};
 	Object.keys(modifiedData.ambientes).forEach((key) => {
 		if (
@@ -56,7 +53,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.ambientes = ambientesChanges;
 	}
 
-	// Comparar características
 	const caracteristicasChanges: Record<string, boolean> = {};
 	Object.keys(modifiedData.caracteristicas).forEach((key) => {
 		if (
@@ -71,7 +67,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.caracteristicas = caracteristicasChanges;
 	}
 
-	// Comparar detalles
 	const detallesChanges: Record<string, unknown> = {};
 	Object.keys(modifiedData.detalles).forEach((key) => {
 		if (
@@ -85,7 +80,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.detalles = detallesChanges;
 	}
 
-	// Comparar servicios
 	const serviciosChanges: Record<string, boolean> = {};
 	Object.keys(modifiedData.servicios).forEach((key) => {
 		if (
@@ -99,7 +93,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.servicios = serviciosChanges;
 	}
 
-	// Comparar precios - lógica más inteligente
 	const preciosChanges: Array<{
 		estado_publicacion_id: number;
 		delete?: boolean;
@@ -107,11 +100,9 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		divisa?: string;
 	}> = [];
 
-	// Obtener IDs de precios originales y modificados
 	const originalPrecioIds = originalData.precios.map((p) => p.estado_publicacion_id);
 	const modifiedPrecioIds = modifiedData.precios.map((p) => p.estado_publicacion_id);
 
-	// Precios que se eliminaron (estaban en original pero no en modificado)
 	const preciosEliminados = originalPrecioIds.filter((id) => !modifiedPrecioIds.includes(id));
 	preciosEliminados.forEach((id) => {
 		preciosChanges.push({
@@ -120,13 +111,11 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		});
 	});
 
-	// Precios que se modificaron o agregaron
 	modifiedData.precios.forEach((modifiedPrecio) => {
 		const originalPrecio = originalData.precios.find(
 			(p) => p.estado_publicacion_id === modifiedPrecio.estado_publicacion_id,
 		);
 
-		// Si no existía antes, es nuevo
 		if (!originalPrecio) {
 			preciosChanges.push({
 				estado_publicacion_id: modifiedPrecio.estado_publicacion_id,
@@ -135,7 +124,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 				divisa: modifiedPrecio.divisa,
 			});
 		} else {
-			// Si existía, verificar si cambió
 			const cambioImporte = originalPrecio.importe !== modifiedPrecio.importe;
 			const cambioDivisa = originalPrecio.divisa !== modifiedPrecio.divisa;
 
@@ -154,9 +142,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.precios = preciosChanges;
 	}
 
-	console.log(originalData);
-	console.log(modifiedData);
-
 	type Image = { url: string; principal: boolean };
 	function imagesChanged(imgs1: Image[], imgs2: Image[]) {
 		if (imgs1.length !== imgs2.length) return true;
@@ -167,9 +152,6 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 	}
 
 	if (imagesChanged(originalData.imagenes, modifiedData.imagenes)) {
-		console.log("imagesChanged");
-		console.log(originalData.imagenes);
-		console.log(modifiedData.imagenes);
 		changes.imagenes = modifiedData.imagenes;
 	}
 

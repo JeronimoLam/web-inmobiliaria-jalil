@@ -26,15 +26,12 @@ interface TabImagenesProps {
 
 export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 	const {
-		watch,
 		setValue,
 		formState: { errors },
 	} = useFormContext<CreatePropiedad>();
 
 	const [previewUrls, setPreviewUrls] = useState<Record<string, string>>({});
 	const [isOpen, setIsOpen] = useState(false);
-
-	console.log("watch imagenes", watch("imagenes"));
 
 	const removeImage = (imageId: string) => {
 		const updatedImages = images.filter((img) => img.id !== imageId);

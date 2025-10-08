@@ -11,7 +11,6 @@ export const useImages = ({ propiedad }: { propiedad?: Propiedad } = {}) => {
 
 	useEffect(() => {
 		if (propiedad && propiedad.imagenes.length > 0) {
-			console.log("propiedad a editar", propiedad.imagenes);
 			setImages(
 				propiedad.imagenes.map((img) => ({
 					id: img.id.toString(),
@@ -23,7 +22,6 @@ export const useImages = ({ propiedad }: { propiedad?: Propiedad } = {}) => {
 		}
 	}, [propiedad]);
 
-	console.log(images);
 	return {
 		images,
 		handleImagesChange,

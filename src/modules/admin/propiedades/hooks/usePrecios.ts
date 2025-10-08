@@ -1,14 +1,26 @@
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 import { CreatePropiedad } from "../types/create-propiedad.types";
+import { useEffect } from "react";
 
 export const usePrecios = (
-	precios: CreatePropiedad["precios"],
+	precios: CreatePropiedad["precios"] = [],
 	appendPrecio: (value: {
 		estado_publicacion_id: number;
 		importe: number | undefined;
 		divisa: string;
 	}) => void,
 ) => {
+	useEffect(() => {
+		if (precios.length === 0) {
+			appendPrecio({
+				estado_publicacion_id: OperacionesEnum.ALQUILER,
+				importe: undefined,
+				divisa: "ARS",
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const handleAgregarPrecioAlquiler = () => {
 		const tieneAlquiler = precios.some((p) => p.estado_publicacion_id === OperacionesEnum.ALQUILER);
 		if (tieneAlquiler) return;

@@ -15,7 +15,7 @@ export const LocationForm = () => {
 		setValue("propiedad.map_location.coordinates", [coordinates.lat, coordinates.lng]);
 	};
 
-	const currentCoordinates = watch("propiedad.map_location.coordinates");
+	const currentCoordinates = watch("propiedad.map_location.coordinates") || [0, 0];
 	const currentCoordinatesObject = { lat: currentCoordinates[0], lng: currentCoordinates[1] };
 
 	return (

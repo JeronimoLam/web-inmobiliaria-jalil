@@ -1,11 +1,11 @@
 import { AdminHeader } from "@/modules/admin/components/AdminHeader";
-import { CreatePropiedadForm } from "@/modules/admin/propiedades/components/CreatePropiedadForm";
+import { PropiedadForm } from "@/modules/admin/propiedades/components/PropiedadForm";
 
 export default function NuevaPropiedadAdminPage() {
 	return (
 		<>
 			<AdminHeader title="Nueva Propiedad" />
-			<CreatePropiedadForm />
+			<PropiedadForm context="create" />
 		</>
 	);
 }
