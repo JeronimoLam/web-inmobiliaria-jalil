@@ -21,7 +21,10 @@ export default async function TiposPropiedadesAdminPage() {
 				title="Tipos de Propiedades"
 				action={
 					<Button>
-						<Link href="#" className="flex items-center justify-center gap-2">
+						<Link
+							href="/admin/tipos-propiedades/nuevo"
+							className="flex items-center justify-center gap-2"
+						>
 							{" "}
 							<PlusIcon className="w-4 h-4" /> Nuevo tipo de propiedad
 						</Link>
