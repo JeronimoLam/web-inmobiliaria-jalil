@@ -1,9 +1,9 @@
-import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { createClient } from "../../utils/supabase/client";
 import { deleteImageFromSupabase } from "./delete-image.service";
 import { ImageFile, SaveImage } from "@/modules/admin/propiedades/types/images.types";
 import { IMAGE_BUCKET } from "../constants/image-bucket";
 import { updateMainImage } from "./update-image.service";
+import { nanoid } from "nanoid";
 
 const supabase = createClient();
 
@@ -34,12 +34,11 @@ interface UploadImageToSupabaseResult {
 export const uploadImageToSupabase = async (
 	file: File,
 	propertyId: number,
-	index: number,
 ): Promise<UploadImageToSupabaseResult> => {
 	try {
 		const fileExtension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-		const sequentialNumber = String(index + 1).padStart(3, "0");
-		const fileName = `img_${sequentialNumber}.${fileExtension}`;
+		const uniqueId = nanoid(10);
+		const fileName = `img_${uniqueId}.${fileExtension}`;
 		const filePath = `${propertyId}/${fileName}`;
 
 		const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -78,16 +77,11 @@ export const uploadImageToSupabase = async (
 export const uploadMultipleImages = async (
 	images: ImageFile[],
 	propertyId: number,
-	propiedad?: Propiedad,
 ): Promise<{ success: boolean; images?: ImageFile[]; errors?: string[] }> => {
 	if (images.length === 0) return { success: true, images: [] };
 
-	const uploadPromises = images.map(async (image, index) => {
-		const result = await uploadImageToSupabase(
-			image.file,
-			propertyId,
-			index + (propiedad?.imagenes.length || 0),
-		);
+	const uploadPromises = images.map(async (image) => {
+		const result = await uploadImageToSupabase(image.file, propertyId);
 		if (result.success && result.url) {
 			return { ...image, url: result.url };
 		}

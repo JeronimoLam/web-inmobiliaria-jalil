@@ -127,7 +127,8 @@ export const useSubmitEditPropiedadForm = ({
 				const newImages = images.filter((img) => !oldUrls.includes(img.url));
 
 				if (newImages.length > 0) {
-					const uploadResult = await uploadMultipleImages(newImages, propiedad.id, propiedad);
+					const uploadResult = await uploadMultipleImages(newImages, propiedad.id);
+
 					if (!uploadResult.success) {
 						toast.error(
 							"Error subiendo imágenes. La propiedad fue actualizada pero sin las nuevas imágenes.",
@@ -145,12 +146,6 @@ export const useSubmitEditPropiedadForm = ({
 						await Promise.all(
 							deletedImages.map((img) => deleteImage(propiedad.id, img.id, img.url)),
 						);
-
-						const hasPrincipalDeleted = deletedImages.some((img) => img.principal);
-						if (hasPrincipalDeleted && images.length > 0) {
-							const mainImage = images.find((img) => img.principal)?.id;
-							await updateMainImage(Number(mainImage));
-						}
 					} catch (error: unknown) {
 						if (error instanceof Error) {
 							throw new Error(error.message || "Error al eliminar imágenes");
@@ -162,6 +157,16 @@ export const useSubmitEditPropiedadForm = ({
 				if (newImages.length === 0 && deletedImages.length === 0) {
 					const mainImage = images.find((img) => img.principal)?.id;
 					await updateMainImage(Number(mainImage));
+				}
+
+				const deletedHasPrincipal = deletedImages.some((img) => img.principal);
+				const newHasPrincipal = newImages.some((img) => img.principal);
+
+				if (deletedHasPrincipal && !newHasPrincipal) {
+					const mainImage = images.find((img) => img.principal)?.id;
+					if (mainImage) {
+						await updateMainImage(Number(mainImage));
+					}
 				}
 
 				setUploadingImages(false);
