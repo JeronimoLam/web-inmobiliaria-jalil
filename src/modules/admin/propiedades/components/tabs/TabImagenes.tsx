@@ -9,6 +9,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { InputImages } from "@/modules/admin/propiedades/components/InputImages";
 import { CreatePropiedad } from "@/modules/admin/propiedades/types/create-propiedad.types";
+import {
+	Dialog,
+	DialogContent,
+	DialogTrigger,
+	DialogHeader,
+	DialogTitle,
+	DialogDescription,
+	DialogFooter,
+} from "@/components/ui/dialog";
 
 interface TabImagenesProps {
 	images: ImageFile[];
@@ -24,16 +33,12 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 	} = useFormContext<CreatePropiedad>();
 
 	const [previewUrls, setPreviewUrls] = useState<Record<string, string>>({});
+	const [isOpen, setIsOpen] = useState(false);
 
 	console.log("watch imagenes", watch("imagenes"));
 
 	const removeImage = (imageId: string) => {
 		const updatedImages = images.filter((img) => img.id !== imageId);
-
-		const wasPrincipal = images.find((img) => img.id === imageId)?.principal;
-		if (wasPrincipal && updatedImages.length > 0) {
-			updatedImages[0].principal = true;
-		}
 
 		setPreviewUrls((prev) => {
 			const newUrls = { ...prev };
@@ -46,6 +51,8 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 			"imagenes",
 			updatedImages.map((img) => ({ url: img.url, principal: img.principal })),
 		);
+
+		setIsOpen(false);
 	};
 
 	const setPrincipalImage = (imageId: string) => {
@@ -121,13 +128,6 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 											)}
 										</div>
 
-										<div className="space-y-2">
-											<p className="text-sm font-medium truncate">{image.file.name}</p>
-											<p className="text-xs text-gray-500">
-												{(image.file.size / 1024 / 1024).toFixed(2)} MB
-											</p>
-										</div>
-
 										<div className="flex items-center justify-between">
 											<div className="flex items-center space-x-2">
 												<Checkbox
@@ -140,15 +140,49 @@ export const TabImagenes = ({ images, onImagesChange }: TabImagenesProps) => {
 												</Label>
 											</div>
 
-											<Button
-												type="button"
-												variant="ghost"
-												size="sm"
-												onClick={() => removeImage(image.id)}
-												className="text-red-500 hover:text-red-700"
-											>
-												<X className="h-4 w-4" />
-											</Button>
+											{image.principal ? (
+												<Dialog open={isOpen} onOpenChange={setIsOpen}>
+													<DialogTrigger asChild>
+														<Button
+															type="button"
+															variant="ghost"
+															size="sm"
+															className="text-red-500 hover:text-red-700"
+														>
+															<X className="h-4 w-4" />
+														</Button>
+													</DialogTrigger>
+													<DialogContent>
+														<DialogHeader>
+															<DialogTitle>Eliminar imagen principal</DialogTitle>
+														</DialogHeader>
+														<DialogDescription>
+															Estás a punto de eliminar la imagen principal.
+															<br />
+															Si deseas continuar, por favor luego selecciona otra imagen antes de
+															guardar los cambios.
+														</DialogDescription>
+														<DialogFooter>
+															<Button variant="destructive" onClick={() => removeImage(image.id)}>
+																Eliminar
+															</Button>
+															<Button variant="secondary" onClick={() => setIsOpen(false)}>
+																Cancelar
+															</Button>
+														</DialogFooter>
+													</DialogContent>
+												</Dialog>
+											) : (
+												<Button
+													type="button"
+													variant="ghost"
+													size="sm"
+													onClick={() => removeImage(image.id)}
+													className="text-red-500 hover:text-red-700"
+												>
+													<X className="h-4 w-4" />
+												</Button>
+											)}
 										</div>
 									</div>
 								))}

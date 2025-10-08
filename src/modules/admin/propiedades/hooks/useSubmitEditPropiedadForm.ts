@@ -145,6 +145,12 @@ export const useSubmitEditPropiedadForm = ({
 						await Promise.all(
 							deletedImages.map((img) => deleteImage(propiedad.id, img.id, img.url)),
 						);
+
+						const hasPrincipalDeleted = deletedImages.some((img) => img.principal);
+						if (hasPrincipalDeleted && images.length > 0) {
+							const mainImage = images.find((img) => img.principal)?.id;
+							await updateMainImage(Number(mainImage));
+						}
 					} catch (error: unknown) {
 						if (error instanceof Error) {
 							throw new Error(error.message || "Error al eliminar imágenes");

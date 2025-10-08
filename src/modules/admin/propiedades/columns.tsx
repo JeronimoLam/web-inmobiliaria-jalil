@@ -4,7 +4,7 @@ import { Propiedad } from "@/modules/propiedades/types/propiedad.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit } from "lucide-react";
+import { Eye } from "lucide-react";
 import Link from "next/link";
 import { DeletePropiedadButton } from "./components/DeletePropiedadButton";
 import { EditPropiedadButton } from "./components/EditPropiedadButton";
