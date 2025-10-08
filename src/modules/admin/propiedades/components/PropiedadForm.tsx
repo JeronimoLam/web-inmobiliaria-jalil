@@ -34,6 +34,10 @@ export const PropiedadForm = ({ context, propiedad }: PropiedadFormProps) => {
 		router.push("/admin/propiedades");
 	};
 
+	if (context === "edit" && !propiedad) {
+		return <AdminLoader text="Cargando propiedad..." />;
+	}
+
 	if (loading || uploadingImages) {
 		return (
 			<AdminLoader text={`${context === "create" ? "Creando" : "Actualizando"} propiedad...`} />
