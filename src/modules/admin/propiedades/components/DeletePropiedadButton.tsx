@@ -77,11 +77,11 @@ export const DeletePropiedadButton = ({ id, context, text = false }: DeletePropi
 							acción.
 						</DialogDescription>
 						<DialogFooter>
-							<Button variant="destructive" onClick={handleDelete}>
-								Eliminar
-							</Button>
 							<Button variant="secondary" onClick={handleCancel}>
 								Cancelar
+							</Button>
+							<Button variant="destructive" onClick={handleDelete}>
+								Eliminar
 							</Button>
 						</DialogFooter>
 					</>
