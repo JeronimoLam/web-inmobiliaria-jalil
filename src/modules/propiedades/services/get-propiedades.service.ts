@@ -32,10 +32,8 @@ export interface GetPropiedadesParams {
 export const getPropiedades = async ({
 	operacion,
 	filters,
-	pagination = { page: DEFAULT_PAGE, limit: DEFAULT_LIMIT },
+	pagination,
 }: GetPropiedadesParams): Promise<PaginatedResponse<Propiedad>> => {
-	// const { from, to } = createRangePagination(pagination);
-
 	let tableName;
 
 	if (!operacion) {
@@ -77,8 +75,8 @@ export const getPropiedades = async ({
 	}
 
 	const paginationResponse = createPaginationResponse({
-		page: pagination.page,
-		limit: pagination.limit,
+		page: pagination?.page ?? DEFAULT_PAGE,
+		limit: pagination?.limit ?? DEFAULT_LIMIT,
 		from,
 		to,
 		totalItems: count || 0,
