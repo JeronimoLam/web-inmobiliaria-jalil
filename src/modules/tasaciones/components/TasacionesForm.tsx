@@ -11,6 +11,26 @@ import { sendTasacionesForm } from "@/modules/tasaciones/actions/sendTasacionesF
 import { SuccessMessage } from "@/modules/propiedades/components/propiedad-detail/SuccessMessage";
 import Link from "next/link";
 import { useTasacionesFormState } from "../hooks/useTasacionesFormState";
+import { Spinner } from "@/components/ui/Spinner";
+import { useFormStatus } from "react-dom";
+
+const SubmitButton = () => {
+	const isLoading = useFormStatus();
+	return (
+		<>
+			{isLoading.pending ? (
+				<Button type="submit" className="text-sm md:text-base py-5 px-7">
+					<Spinner size={16} color="#34344c" />
+					Enviando...
+				</Button>
+			) : (
+				<Button type="submit" className="text-sm md:text-base py-5 px-7">
+					Enviar
+				</Button>
+			)}
+		</>
+	);
+};
 
 export const TasacionesForm = () => {
 	const { formValues, setFormValues, initialState } = useTasacionesFormState();
@@ -72,19 +92,16 @@ export const TasacionesForm = () => {
 								</Label>
 							</div>
 							<div className="flex items-center gap-2">
-								<RadioGroupItem value="comprar" id="comprar" className="bg-white cursor-pointer" />
-								<Label
-									htmlFor="comprar"
-									className="font-normal cursor-pointer text-sm md:text-base"
-								>
-									Quiero <span className="text-secondary font-bold">comprar</span> mi propiedad
+								<RadioGroupItem value="vender" id="vender" className="bg-white cursor-pointer" />
+								<Label htmlFor="vender" className="font-normal cursor-pointer text-sm md:text-base">
+									Quiero <span className="text-secondary font-bold">vender</span> mi propiedad
 								</Label>
 							</div>
 						</RadioGroup>
 						<div className="flex flex-col gap-4">
 							<Input
 								type="text"
-								placeholder="Dirección"
+								placeholder="Dirección de la propiedad"
 								className="bg-white text-sm md:text-base"
 								name="address"
 								value={formValues.address}
@@ -146,9 +163,7 @@ export const TasacionesForm = () => {
 									Prefiero que me llamen
 								</Label>
 							</div>
-							<Button type="submit" className="text-sm md:text-base py-5 px-7">
-								Enviar
-							</Button>
+							<SubmitButton />
 						</div>
 					</div>
 				</form>

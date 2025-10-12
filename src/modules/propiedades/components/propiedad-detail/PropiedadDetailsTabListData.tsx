@@ -28,11 +28,11 @@ export const ShowDetailList = ({
 	const filteredList = propiedadList.filter(([, value]) => value);
 	return (
 		<div>
-			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
+			<ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2">
 				{filteredList.map(([key]) => (
-					<li key={key} className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap">{formatWord(key)}</p>
+					<li key={key} className="flex gap-2 items-start">
+						<CheckCircleIcon className="text-primary flex-shrink-0" width={20} />
+						<p className="whitespace-normal break-words">{formatWord(key)}</p>
 					</li>
 				))}
 			</ul>
@@ -59,10 +59,8 @@ export const PropiedadCaracteristicas = ({ propiedad }: PropiedadTabsDataProps) 
 };
 
 export const PropiedadDetalles = ({ propiedad }: PropiedadTabsDataProps) => {
-	// Excluir campos técnicos
 	const excludedFields = ["id", "created_at", "updated_at"];
 
-	// Filtrar los detalles que tienen valor y no están en la lista de exclusión
 	const detallesEntries = Object.entries(propiedad.detalles).filter(
 		([key, value]) => !excludedFields.includes(key) && !!value,
 	);
@@ -89,11 +87,11 @@ export const PropiedadDetalles = ({ propiedad }: PropiedadTabsDataProps) => {
 
 	return (
 		<div>
-			<ul className="grid grid-cols-1 sm:grid-flow-col sm:grid-rows-8 gap-x-10 gap-y-2">
+			<ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-2">
 				{detallesEntries.map(([key, value]) => (
-					<li key={key} className="flex gap-2">
-						<CheckCircleIcon className="text-primary" width={20} />
-						<p className="whitespace-nowrap flex gap-2">
+					<li key={key} className="flex gap-2 items-start">
+						<CheckCircleIcon className="text-primary flex-shrink-0" width={20} />
+						<p className="whitespace-normal break-words">
 							{formatWord(key)}: <span className="font-semibold">{formatValue(key, value)}</span>
 						</p>
 					</li>
