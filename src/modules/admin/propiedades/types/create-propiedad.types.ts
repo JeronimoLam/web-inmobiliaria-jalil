@@ -11,6 +11,9 @@ export type CreatePropiedad = {
 			coordinates: [number, number];
 		};
 		descripcion: string;
+		has_expensas: boolean;
+		expensas_value: number | undefined;
+		expensas_divisa: string | undefined;
 		tipo_propiedad: number | undefined;
 		destacada: boolean;
 	};

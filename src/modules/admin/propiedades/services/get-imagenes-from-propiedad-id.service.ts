@@ -35,6 +35,6 @@ export const getImagenesFromPropiedadId = async (
 	);
 
 	if (error || !data) throw new Error(error?.message || "Error al obtener las imágenes");
-	console.log("data", data);
+
 	return data.items;
 };

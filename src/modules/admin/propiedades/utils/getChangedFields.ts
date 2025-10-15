@@ -155,5 +155,12 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 		changes.imagenes = modifiedData.imagenes;
 	}
 
+	if (modifiedData.propiedad.expensas_value !== originalData.propiedad.expensas_value) {
+		changes.expensas_value = modifiedData.propiedad.expensas_value;
+	}
+	if (modifiedData.propiedad.expensas_divisa !== originalData.propiedad.expensas_divisa) {
+		changes.expensas_divisa = modifiedData.propiedad.expensas_divisa;
+	}
+
 	return changes;
 };

@@ -236,5 +236,25 @@ export const formDataValidator = (formData: CreatePropiedadType, images: ImageFi
 		}
 	}
 
+	if (formData.propiedad.has_expensas) {
+		if (
+			formData.propiedad.expensas_value === undefined ||
+			formData.propiedad.expensas_value === null
+		) {
+			toast.error("El importe de las expensas es obligatorio");
+			return false;
+		}
+	}
+
+	if (formData.propiedad.has_expensas) {
+		if (
+			formData.propiedad.expensas_divisa === undefined ||
+			formData.propiedad.expensas_divisa === null
+		) {
+			toast.error("La divisa de las expensas es obligatoria");
+			return false;
+		}
+	}
+
 	return true;
 };
