@@ -38,16 +38,15 @@ export const useSubmitPropiedadForm = ({
 
 		try {
 			if (context === "create") {
-				const dataWithCode = {
+				const newPropiedad = {
 					...propiedadFormData,
 					propiedad: {
 						...propiedadFormData.propiedad,
-						codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
 					},
 					imagenes: [],
 				};
 
-				const createdPropiedad = await createPropiedad(dataWithCode);
+				const createdPropiedad = await createPropiedad(newPropiedad);
 
 				if (images.length > 0) {
 					setUploadingImages(true);

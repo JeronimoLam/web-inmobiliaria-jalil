@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useEffect } from "react";
 
 export const ExpensasForm = () => {
 	const {
@@ -19,12 +19,27 @@ export const ExpensasForm = () => {
 		formState: { errors },
 		watch,
 		setValue,
+		trigger,
 	} = useFormContext<CreatePropiedad>();
 
-	const [hasExpensas, setHasExpensas] = useState(false);
+	const hasExpensas = watch("propiedad.has_expensas");
 
-	console.log(watch("propiedad.expensas_value"));
-	console.log(watch("propiedad.expensas_divisa"));
+	useEffect(() => {
+		register("propiedad.expensas_divisa", {
+			required: hasExpensas ? "La divisa es obligatoria" : false,
+		});
+	}, [register, hasExpensas]);
+
+	const handleExpensasChange = (checked: boolean) => {
+		setValue("propiedad.has_expensas", checked, { shouldValidate: true });
+
+		if (!checked) {
+			setValue("propiedad.expensas_value", undefined, { shouldValidate: true });
+			setValue("propiedad.expensas_divisa", undefined, { shouldValidate: true });
+		} else {
+			trigger(["propiedad.expensas_value", "propiedad.expensas_divisa"]);
+		}
+	};
 
 	return (
 		<Card className="py-6">
@@ -33,10 +48,9 @@ export const ExpensasForm = () => {
 					<CardTitle>Expensas</CardTitle>
 					<div className="flex items-center space-x-2">
 						<Checkbox
-							id="expensas_value"
-							{...register("propiedad.has_expensas")}
+							id="has_expensas"
 							checked={hasExpensas}
-							onCheckedChange={(checked) => setHasExpensas(checked === true)}
+							onCheckedChange={handleExpensasChange}
 							className="border-secondary"
 						/>
 					</div>
@@ -76,7 +90,9 @@ export const ExpensasForm = () => {
 							<Input
 								type="number"
 								placeholder="ej: 10000"
-								{...register("propiedad.expensas_value", { required: "El importe es obligatorio" })}
+								{...register("propiedad.expensas_value", {
+									required: hasExpensas ? "El importe es obligatorio" : false,
+								})}
 							/>
 							{errors.propiedad?.expensas_value && (
 								<p className="text-sm text-red-500 mt-2">
