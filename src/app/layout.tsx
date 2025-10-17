@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layouts/Footer";
+import { globalMetadata } from "@/config/seo/metadata";
 
 const poppins = Poppins({
 	variable: "--font-poppins",
@@ -9,11 +10,7 @@ const poppins = Poppins({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-	title: "Jalil Propiedades",
-	description:
-		"Somos una empresa dedicada y especializada en el asesoramiento integral para operaciones de compraventa y alquiler de inmuebles brindándole al cliente seguridad y calidez en su trato personalizado.",
-};
+export const metadata: Metadata = globalMetadata;
 
 export default function RootLayout({
 	children,
