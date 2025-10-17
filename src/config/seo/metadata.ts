@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 
 export const globalMetadata: Metadata = {
 	title: {
-		default: "Propiedades en Venta y Alquiler en La Plata | Jalil Propiedades",
+		default: "Propiedades en Venta y Alquiler | Jalil Propiedades",
 		template: "%s | Jalil Propiedades",
 	},
 	description:
-		"Encontrá propiedades en venta y alquiler en La Plata y alrededores. Casas, departamentos, oficinas, locales y terrenos.",
+		"Encontrá propiedades en venta y alquiler. Casas, departamentos, oficinas, locales y terrenos.",
 	keywords: [
 		"inmobiliaria",
 		"propiedades en venta",
@@ -27,23 +27,23 @@ export const globalMetadata: Metadata = {
 		type: "website",
 		locale: "es_AR",
 		siteName: "Jalil Propiedades",
-		title: "Propiedades en Venta y Alquiler en La Plata | Jalil Propiedades",
+		title: "Propiedades en Venta y Alquiler | Jalil Propiedades",
 		description:
-			"Encontrá propiedades en venta y alquiler en La Plata y alrededores. Experiencia, transparencia y atención personalizada.",
+			"Encontrá propiedades en venta y alquiler. Experiencia, transparencia y atención personalizada.",
 		url: "https://jalilpropiedades.com.ar",
 		images: [
 			{
 				url: "/images/logo.webp",
 				width: 336,
 				height: 206,
-				alt: "Jalil Propiedades - Inmobiliaria en La Plata",
+				alt: "Jalil Propiedades - Inmobiliaria",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Propiedades en Venta y Alquiler en La Plata | Jalil Propiedades",
-		description: "Encontrá propiedades en venta y alquiler en La Plata y alrededores.",
+		title: "Propiedades en Venta y Alquiler | Jalil Propiedades",
+		description: "Encontrá propiedades en venta y alquiler.",
 		images: ["/images/logo.webp"],
 	},
 	robots: {
@@ -59,7 +59,7 @@ export const globalMetadata: Metadata = {
 		apple: [{ url: "/images/logo.webp", sizes: "180x180", type: "image/webp" }],
 	},
 	appleWebApp: {
-		title: "Propiedades en Venta y Alquiler en La Plata | Jalil Propiedades",
+		title: "Propiedades en Venta y Alquiler | Jalil Propiedades",
 		capable: true,
 		statusBarStyle: "default",
 	},
@@ -70,7 +70,7 @@ export const globalMetadata: Metadata = {
 };
 
 export const nosotrosMetadata: Metadata = {
-	title: "Sobre Nosotros | Jalil Propiedades",
+	title: "Sobre Nosotros",
 	description: "Conoce a la inmobiliaria Jalil Propiedades y nuestros valores.",
 	keywords: ["nosotros", "historia", "misión", "visión", "valores"],
 	alternates: {
@@ -79,9 +79,9 @@ export const nosotrosMetadata: Metadata = {
 };
 
 export const tasacionesMetadata: Metadata = {
-	title: "Tasaciones | Jalil Propiedades",
-	description: "Tasaciones inmobiliarias en La Plata y alrededores.",
-	keywords: ["tasaciones", "inmobiliarias", "La Plata", "alrededores"],
+	title: "Tasaciones",
+	description: "Tasaciones inmobiliarias.",
+	keywords: ["tasaciones", "inmobiliarias"],
 	alternates: {
 		canonical: "/tasaciones",
 	},
