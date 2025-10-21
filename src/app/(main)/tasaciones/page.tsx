@@ -1,6 +1,9 @@
 import { PageContainer } from "@/components/layouts/PageContainer";
 import { AnimatedSlide } from "@/components/AnimatedSlide";
 import { TasacionesForm } from "@/modules/tasaciones/components/TasacionesForm";
+import { tasacionesMetadata } from "@/config/seo/metadata";
+
+export const metadata = tasacionesMetadata;
 
 export default function TasacionesPage() {
 	return (

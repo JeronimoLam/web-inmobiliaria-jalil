@@ -2,6 +2,9 @@ import { NavBar } from "@/components/layouts/NavBar";
 import { CheckIcon, HomeIcon, KeyIcon, ScaleIcon, LightbulbIcon } from "@/components/Icons";
 import Image from "next/image";
 import { AnimatedSlide } from "@/components/AnimatedSlide";
+import { nosotrosMetadata } from "@/config/seo/metadata";
+
+export const metadata = nosotrosMetadata;
 
 interface ServiceItem {
 	text: string;

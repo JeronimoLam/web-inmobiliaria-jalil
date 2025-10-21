@@ -5,10 +5,19 @@ import { Suspense } from "react";
 import PropiedadesContainer from "@/modules/propiedades/components/server/PropiedadesContainer.server";
 import SubNavbar from "@/modules/propiedades/components/SubNavbar";
 import { PropiedadesListSkeleton } from "@/modules/propiedades/components/PropiedadesListSkeleton";
+import { Metadata } from "next";
+import { generatePropiedadesMetadata } from "@/config/seo/metadata";
 
 interface PropiedadesPageProps {
 	params: Promise<{ operacion: string }>;
 	searchParams?: Promise<Record<string, string | undefined>>;
+}
+
+export async function generateMetadata({
+	params,
+	searchParams,
+}: PropiedadesPageProps): Promise<Metadata> {
+	return generatePropiedadesMetadata({ params, searchParams });
 }
 
 export default async function PropiedadesPage({ params, searchParams }: PropiedadesPageProps) {
