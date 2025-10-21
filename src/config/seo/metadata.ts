@@ -63,9 +63,6 @@ export const globalMetadata: Metadata = {
 			follow: true,
 		},
 	},
-	verification: {
-		google: "google-site-verification-code", // Cambiar al código real
-	},
 	icons: {
 		icon: [{ url: "/images/logo.webp", sizes: "any" }],
 		apple: [{ url: "/images/logo.webp", sizes: "336x206" }],
