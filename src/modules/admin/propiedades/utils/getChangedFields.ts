@@ -25,11 +25,28 @@ export const getChangedFields = (originalPropiedad: Propiedad, modifiedData: Cre
 	if (modifiedData.propiedad.destacada !== originalData.propiedad.destacada) {
 		propiedadChanges.destacada = modifiedData.propiedad.destacada;
 	}
+	if (modifiedData.propiedad.has_expensas !== originalData.propiedad.has_expensas) {
+		propiedadChanges.has_expensas = modifiedData.propiedad.has_expensas;
+	}
 	if (
 		JSON.stringify(modifiedData.propiedad.map_location) !==
 		JSON.stringify(originalData.propiedad.map_location)
 	) {
 		propiedadChanges.map_location = modifiedData.propiedad.map_location;
+	}
+
+	const modifiedExpensasValue = modifiedData.propiedad.expensas_value ?? null;
+	const originalExpensasValue = originalData.propiedad.expensas_value ?? null;
+
+	if (modifiedExpensasValue !== originalExpensasValue) {
+		propiedadChanges.expensas_value = modifiedData.propiedad.expensas_value;
+	}
+
+	const modifiedExpensasDivisa = modifiedData.propiedad.expensas_divisa ?? null;
+	const originalExpensasDivisa = originalData.propiedad.expensas_divisa ?? null;
+
+	if (modifiedExpensasDivisa !== originalExpensasDivisa) {
+		propiedadChanges.expensas_divisa = modifiedData.propiedad.expensas_divisa;
 	}
 
 	if (Object.keys(propiedadChanges).length > 0) {

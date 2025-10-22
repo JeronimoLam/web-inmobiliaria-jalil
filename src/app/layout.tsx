@@ -21,7 +21,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="es">
+		<html lang="es" suppressHydrationWarning>
 			<body className={`${poppins.className} antialiased flex flex-col min-h-screen`}>
 				{children}
 				<Footer />
