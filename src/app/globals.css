@@ -179,6 +179,11 @@ body:has([data-state="closed"][data-slot*="sheet"]) {
 	padding-right: 0 !important;
 }
 
+/* Evita el salto de contenido al abrir el componente Select */
+html body[data-scroll-locked] {
+	margin-right: 0px !important;
+}
+
 /* Evita el scroll del body al abrir la galería */
 html:has(body.yarl__no_scroll) {
 	overflow: hidden !important;

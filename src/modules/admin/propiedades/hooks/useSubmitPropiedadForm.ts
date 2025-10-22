@@ -38,16 +38,15 @@ export const useSubmitPropiedadForm = ({
 
 		try {
 			if (context === "create") {
-				const dataWithCode = {
+				const newPropiedad = {
 					...propiedadFormData,
 					propiedad: {
 						...propiedadFormData.propiedad,
-						codigo: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
 					},
 					imagenes: [],
 				};
 
-				const createdPropiedad = await createPropiedad(dataWithCode);
+				const createdPropiedad = await createPropiedad(newPropiedad);
 
 				if (images.length > 0) {
 					setUploadingImages(true);
@@ -232,6 +231,26 @@ export const formDataValidator = (formData: CreatePropiedadType, images: ImageFi
 		const hasPrincipal = images.some((img) => img.principal);
 		if (!hasPrincipal) {
 			toast.error("Debe seleccionar una imagen principal");
+			return false;
+		}
+	}
+
+	if (formData.propiedad.has_expensas) {
+		if (
+			formData.propiedad.expensas_value === undefined ||
+			formData.propiedad.expensas_value === null
+		) {
+			toast.error("El importe de las expensas es obligatorio");
+			return false;
+		}
+	}
+
+	if (formData.propiedad.has_expensas) {
+		if (
+			formData.propiedad.expensas_divisa === undefined ||
+			formData.propiedad.expensas_divisa === null
+		) {
+			toast.error("La divisa de las expensas es obligatoria");
 			return false;
 		}
 	}

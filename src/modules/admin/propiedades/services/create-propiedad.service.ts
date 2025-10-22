@@ -4,7 +4,6 @@ import { CreatePropiedad, PropiedadCreatedResponse } from "../types/create-propi
 export const createPropiedad = async (
 	newPropiedad: CreatePropiedad,
 ): Promise<PropiedadCreatedResponse> => {
-	console.log("New propiedad:", newPropiedad);
 	const supabase = createClient();
 
 	const response = await supabase.functions.invoke("create-propiedad", {
@@ -19,8 +18,6 @@ export const createPropiedad = async (
 	if (!response.data) {
 		throw new Error("No se recibió respuesta del servidor");
 	}
-
-	console.log("Response:", response.data);
 
 	return response.data;
 };
