@@ -92,6 +92,7 @@ export const ExpensasForm = () => {
 								placeholder="ej: 10000"
 								{...register("propiedad.expensas_value", {
 									required: hasExpensas ? "El importe es obligatorio" : false,
+									setValueAs: (value) => (value === "" ? undefined : Number(value)),
 								})}
 							/>
 							{errors.propiedad?.expensas_value && (
