@@ -26,10 +26,6 @@ export const getPropiedadesFiltred = async (
 		to = range.to;
 	}
 
-	console.log(filters);
-	// console.log(filters.divisa);
-	// Llega un precioMin y un precioMax
-
 	const filterBuilder = supabase.from(tableName).select("*", { count: "exact" });
 
 	if (filters.destacadas) {
@@ -66,8 +62,8 @@ export const getPropiedadesFiltred = async (
 		filterBuilder.lte("detalles->>superficie_lote", filters.superficieMax);
 	}
 
-	/* Para filtrar por rango de precios, se busca primero los IDs de las propiedades que cumplen con el filtro
-	y luego se filtran por esos IDs */
+	/* Para filtrar por rango de precios, se busca primero los IDs de las propiedades que cumplen con el filtro en memoria
+	y luego se filtran esos IDs en el query principal mediante Supabase con .in() -> filtra por array de IDs */
 	if (filters.precioMin || filters.precioMax) {
 		let propiedadesFilteredIds: number[] | null = null;
 
