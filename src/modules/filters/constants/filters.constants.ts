@@ -2,7 +2,7 @@ import { PropiedadFilters } from "@/modules/filters/types/filters.type";
 
 export const LIMITS = {
 	MAX_DORMITORIOS: 10,
-	MAX_PRECIO: 1000000,
+	MAX_PRECIO: 100000000,
 	MIN_PRECIO: 0,
 	MIN_COUNTER_VALUE: 0,
 } as const;
