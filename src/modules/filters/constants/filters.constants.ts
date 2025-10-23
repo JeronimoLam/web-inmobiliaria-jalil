@@ -18,6 +18,7 @@ export const DEFAULT_FILTERS: PropiedadFilters = {
 	servicios: [],
 	superficieMin: undefined,
 	superficieMax: undefined,
+	divisa: "ARS",
 	banos: undefined,
 	ambientesContador: undefined,
 	pisos: undefined,

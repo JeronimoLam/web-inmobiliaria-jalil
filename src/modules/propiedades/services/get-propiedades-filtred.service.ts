@@ -26,6 +26,10 @@ export const getPropiedadesFiltred = async (
 		to = range.to;
 	}
 
+	console.log(filters);
+	// console.log(filters.divisa);
+	// Llega un precioMin y un precioMax
+
 	const filterBuilder = supabase.from(tableName).select("*", { count: "exact" });
 
 	if (filters.destacadas) {
@@ -51,11 +55,8 @@ export const getPropiedadesFiltred = async (
 		filterBuilder.eq("detalles->>pisos", filters.pisos);
 	}
 
-	if (filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) {
-		filterBuilder.gte("precios->0->>importe", filters.precioMin);
-	}
-	if (filters.precioMax) {
-		filterBuilder.lte("precios->0->>importe", filters.precioMax);
+	if (filters.divisa && (filters.precioMin || filters.precioMax)) {
+		filterBuilder.filter("precios", "cs", JSON.stringify([{ divisa: filters.divisa }]));
 	}
 
 	if (filters.superficieMin) {
@@ -63,6 +64,44 @@ export const getPropiedadesFiltred = async (
 	}
 	if (filters.superficieMax) {
 		filterBuilder.lte("detalles->>superficie_lote", filters.superficieMax);
+	}
+
+	/* Para filtrar por rango de precios, se busca primero los IDs de las propiedades que cumplen con el filtro
+	y luego se filtran por esos IDs */
+	if (filters.precioMin || filters.precioMax) {
+		let propiedadesFilteredIds: number[] | null = null;
+
+		const { data: prelimData, error: prelimError } = await supabase
+			.from(tableName)
+			.select("id, precios");
+
+		if (prelimError) throw prelimError;
+
+		const propsfilteredByPriceRange = (prelimData ?? []).filter((propiedad: Partial<Propiedad>) => {
+			const precio = propiedad.precios?.find((p) => p.divisa === filters.divisa);
+			if (!precio) return false;
+			return (
+				(!filters.precioMin || precio.importe >= filters.precioMin) &&
+				(!filters.precioMax || precio.importe <= filters.precioMax)
+			);
+		});
+
+		propiedadesFilteredIds = propsfilteredByPriceRange.map((propiedad) => Number(propiedad.id));
+
+		if (propiedadesFilteredIds.length > 0) {
+			filterBuilder.in("id", propiedadesFilteredIds);
+		} else {
+			return {
+				data: [],
+				pagination: createPaginationResponse({
+					page,
+					limit,
+					from,
+					to,
+					totalItems: 0,
+				}),
+			};
+		}
 	}
 
 	if (pagination) {
@@ -92,7 +131,7 @@ export const getPropiedadesFiltred = async (
 		pagination: paginationResponse,
 	};
 
-	// Se filtra en memoria, ya que supabase no soporta filtros dinámicos en campos JSON
+	/* Se filtra en memoria, ya que supabase no soporta filtros dinámicos en campos JSON */
 	// Filtros de características, ambientes y servicios (checkboxes)
 	if (filters.caracteristicas && filters.caracteristicas.length > 0) {
 		filteredData.data = filteredData.data.filter((propiedad: Propiedad) => {

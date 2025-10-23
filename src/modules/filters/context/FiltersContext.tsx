@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import {
 	CheckboxField,
 	CounterField,
@@ -24,6 +24,7 @@ interface FiltersContextType {
 	updatePrecio: (min: number, max: number) => void;
 	updateSuperficie: (field: "superficieMin" | "superficieMax", value: string) => void;
 	updateOperacion: (value: OperacionesEnum) => void;
+	updateDivisa: (value: "ARS" | "USD") => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
@@ -139,6 +140,13 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		setOperacion(value);
 	};
 
+	const updateDivisa = (value: "ARS" | "USD") => {
+		setFilters((prev) => ({
+			...prev,
+			divisa: value,
+		}));
+	};
+
 	const value: FiltersContextType = {
 		filters,
 		operacion,
@@ -153,6 +161,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		updatePrecio,
 		updateSuperficie,
 		updateOperacion,
+		updateDivisa,
 	};
 
 	return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;

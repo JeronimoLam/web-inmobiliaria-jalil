@@ -34,6 +34,7 @@ export default async function PropiedadesPage({ params, searchParams }: Propieda
 		dormitorios: queryParams.dormitorios ? parseInt(queryParams.dormitorios) : undefined,
 		precioMin: queryParams.precioMin ? parseInt(queryParams.precioMin) : undefined,
 		precioMax: queryParams.precioMax ? parseInt(queryParams.precioMax) : undefined,
+		divisa: queryParams.divisa === "USD" ? "USD" : "ARS",
 		caracteristicas: queryParams.caracteristicas?.split(",").filter(Boolean) || undefined,
 		ambientes: queryParams.ambientes?.split(",").filter(Boolean) || undefined,
 		servicios: queryParams.servicios?.split(",").filter(Boolean) || undefined,

@@ -10,6 +10,7 @@ export interface PropiedadFilters {
 	servicios?: string[];
 	superficieMin?: number;
 	superficieMax?: number;
+	divisa: "ARS" | "USD";
 	banos?: number;
 	ambientesContador?: number;
 	pisos?: number;
