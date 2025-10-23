@@ -63,10 +63,6 @@ export const globalMetadata: Metadata = {
 		capable: true,
 		statusBarStyle: "default",
 	},
-	viewport: {
-		width: "device-width",
-		initialScale: 1,
-	},
 };
 
 export const nosotrosMetadata: Metadata = {
