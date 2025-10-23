@@ -1,5 +1,4 @@
 import { supabase } from "@/lib/supabaseClient";
-import { LIMITS } from "../../filters/constants/filters.constants";
 import { type PropiedadFilters } from "../../filters/types/filters.type";
 import { type Propiedad } from "../types/propiedad.type";
 import {
@@ -62,42 +61,18 @@ export const getPropiedadesFiltred = async (
 		filterBuilder.lte("detalles->>superficie_lote", filters.superficieMax);
 	}
 
-	/* Para filtrar por rango de precios, se busca primero los IDs de las propiedades que cumplen con el filtro en memoria
+	/* Para filtrar por rango de precios, caracteristicas, ambientes y servicios, 
+	se busca primero los IDs de las propiedades que cumplen con el filtro en memoria
 	y luego se filtran esos IDs en el query principal mediante Supabase con .in() -> filtra por array de IDs */
-	if (filters.precioMin || filters.precioMax) {
-		let propiedadesFilteredIds: number[] | null = null;
+	const filteredIds = await propiedadesInMemoryFilter(filters, tableName);
 
-		const { data: prelimData, error: prelimError } = await supabase
-			.from(tableName)
-			.select("id, precios");
-
-		if (prelimError) throw prelimError;
-
-		const propsfilteredByPriceRange = (prelimData ?? []).filter((propiedad: Partial<Propiedad>) => {
-			const precio = propiedad.precios?.find((p) => p.divisa === filters.divisa);
-			if (!precio) return false;
-			return (
-				(!filters.precioMin || precio.importe >= filters.precioMin) &&
-				(!filters.precioMax || precio.importe <= filters.precioMax)
-			);
-		});
-
-		propiedadesFilteredIds = propsfilteredByPriceRange.map((propiedad) => Number(propiedad.id));
-
-		if (propiedadesFilteredIds.length > 0) {
-			filterBuilder.in("id", propiedadesFilteredIds);
-		} else {
-			return {
-				data: [],
-				pagination: createPaginationResponse({
-					page,
-					limit,
-					from,
-					to,
-					totalItems: 0,
-				}),
-			};
-		}
+	if (filteredIds && filteredIds.length > 0) {
+		filterBuilder.in("id", filteredIds);
+	} else if (filteredIds && filteredIds.length === 0) {
+		return {
+			data: [],
+			pagination: createPaginationResponse({ page, limit, from, to, totalItems: 0 }),
+		};
 	}
 
 	if (pagination) {
@@ -127,48 +102,55 @@ export const getPropiedadesFiltred = async (
 		pagination: paginationResponse,
 	};
 
-	/* Se filtra en memoria, ya que supabase no soporta filtros dinámicos en campos JSON */
-	// Filtros de características, ambientes y servicios (checkboxes)
-	if (filters.caracteristicas && filters.caracteristicas.length > 0) {
-		filteredData.data = filteredData.data.filter((propiedad: Propiedad) => {
-			return filters.caracteristicas!.every(
-				(caracteristica) =>
-					propiedad.caracteristicas && propiedad.caracteristicas[caracteristica] === true,
-			);
-		});
-	}
-
-	if (filters.ambientes && filters.ambientes.length > 0) {
-		filteredData.data = filteredData.data.filter((propiedad: Propiedad) => {
-			return filters.ambientes!.every(
-				(ambiente) => propiedad.ambientes && propiedad.ambientes[ambiente] === true,
-			);
-		});
-	}
-
-	if (filters.servicios && filters.servicios.length > 0) {
-		filteredData.data = filteredData.data.filter((propiedad: Propiedad) => {
-			return filters.servicios!.every(
-				(servicio) => propiedad.servicios && propiedad.servicios[servicio] === true,
-			);
-		});
-	}
-
-	// Si hubo filtros en memoria, recalcular paginación
-	if (
-		(filters.caracteristicas && filters.caracteristicas.length > 0) ||
-		(filters.ambientes && filters.ambientes.length > 0) ||
-		(filters.servicios && filters.servicios.length > 0)
-	) {
-		const totalItems = filteredData.data.length;
-		filteredData.pagination = createPaginationResponse({
-			page,
-			limit,
-			from,
-			to,
-			totalItems,
-		});
-	}
-
 	return filteredData;
+};
+
+const propiedadesInMemoryFilter = async (
+	filters: PropiedadFilters,
+	tableName: string,
+): Promise<number[] | null> => {
+	let filteredIds: number[] | null = null;
+
+	const { data } = await supabase
+		.from(tableName)
+		.select("id, precios, caracteristicas, ambientes, servicios");
+
+	if (filters.precioMin || filters.precioMax) {
+		const idsP = (data ?? [])
+			.filter((p: Partial<Propiedad>) => {
+				const precio = p.precios?.find((pr) => pr.divisa === filters.divisa);
+				return (
+					precio &&
+					(!filters.precioMin || precio.importe >= filters.precioMin) &&
+					(!filters.precioMax || precio.importe <= filters.precioMax)
+				);
+			})
+			.map((p) => Number(p.id));
+		filteredIds = idsP;
+	}
+
+	if (filters.caracteristicas?.length) {
+		const idsC = (data ?? [])
+			.filter((p: Partial<Propiedad>) =>
+				filters.caracteristicas!.every((c) => p.caracteristicas?.[c] === true),
+			)
+			.map((p) => Number(p.id));
+		filteredIds = filteredIds ? filteredIds.filter((id) => idsC.includes(id)) : idsC;
+	}
+
+	if (filters.ambientes?.length) {
+		const idsA = (data ?? [])
+			.filter((p: Partial<Propiedad>) => filters.ambientes!.every((a) => p.ambientes?.[a] === true))
+			.map((p) => Number(p.id));
+		filteredIds = filteredIds ? filteredIds.filter((id) => idsA.includes(id)) : idsA;
+	}
+
+	if (filters.servicios?.length) {
+		const idsS = (data ?? [])
+			.filter((p: Partial<Propiedad>) => filters.servicios!.every((s) => p.servicios?.[s] === true))
+			.map((p) => Number(p.id));
+		filteredIds = filteredIds ? filteredIds.filter((id) => idsS.includes(id)) : idsS;
+	}
+
+	return filteredIds;
 };
