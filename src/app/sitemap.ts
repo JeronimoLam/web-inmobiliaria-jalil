@@ -1,33 +1,35 @@
 import { MetadataRoute } from "next";
 
+const appUrlProduction = process.env.NEXT_PUBLIC_APP_URL_PRODUCTION!;
+
 export default function sitemap(): MetadataRoute.Sitemap {
 	return [
 		{
-			url: "https://jalilpropiedades.com.ar",
+			url: appUrlProduction,
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
-			url: "https://jalilpropiedades.com.ar/nosotros",
+			url: `${appUrlProduction}/nosotros`,
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 0.5,
 		},
 		{
-			url: "https://jalilpropiedades.com.ar/tasaciones",
+			url: `${appUrlProduction}/tasaciones`,
 			lastModified: new Date(),
 			changeFrequency: "never",
 			priority: 0.5,
 		},
 		{
-			url: "https://jalilpropiedades.com.ar/propiedades/alquiler",
+			url: `${appUrlProduction}/propiedades/alquiler`,
 			lastModified: new Date(),
 			changeFrequency: "monthly",
 			priority: 0.8,
 		},
 		{
-			url: "https://jalilpropiedades.com.ar/propiedades/venta",
+			url: `${appUrlProduction}/propiedades/venta`,
 			lastModified: new Date(),
 			changeFrequency: "monthly",
 			priority: 0.8,

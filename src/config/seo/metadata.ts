@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 
+const appUrlProduction = process.env.NEXT_PUBLIC_APP_URL_PRODUCTION!;
+
 export const globalMetadata: Metadata = {
 	title: {
 		default: "Propiedades en Venta y Alquiler | Jalil Propiedades",
 		template: "%s | Jalil Propiedades",
 	},
 	description:
-		"Encontrá propiedades en venta y alquiler. Casas, departamentos, oficinas, locales y terrenos.",
+		"Encontrá propiedades en venta y alquiler. Casas, departamentos, locales y terrenos.",
 	keywords: [
 		"inmobiliaria",
 		"propiedades en venta",
@@ -19,7 +21,7 @@ export const globalMetadata: Metadata = {
 		"asesoramiento inmobiliario",
 	],
 	authors: [{ name: "Jalil Propiedades" }],
-	metadataBase: new URL("https://jalilpropiedades.com.ar"),
+	metadataBase: new URL(appUrlProduction),
 	alternates: {
 		canonical: "/",
 	},
@@ -29,8 +31,8 @@ export const globalMetadata: Metadata = {
 		siteName: "Jalil Propiedades",
 		title: "Propiedades en Venta y Alquiler | Jalil Propiedades",
 		description:
-			"Encontrá propiedades en venta y alquiler. Experiencia, transparencia y atención personalizada.",
-		url: "https://jalilpropiedades.com.ar",
+			"Encontrá propiedades en venta y alquiler. Casas, departamentos, locales y terrenos.",
+		url: appUrlProduction,
 		images: [
 			{
 				url: "/images/logo.webp",
@@ -43,7 +45,8 @@ export const globalMetadata: Metadata = {
 	twitter: {
 		card: "summary_large_image",
 		title: "Propiedades en Venta y Alquiler | Jalil Propiedades",
-		description: "Encontrá propiedades en venta y alquiler.",
+		description:
+			"Encontrá propiedades en venta y alquiler. Casas, departamentos, locales y terrenos.",
 		images: ["/images/logo.webp"],
 	},
 	robots: {
