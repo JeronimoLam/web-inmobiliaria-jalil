@@ -1,5 +1,4 @@
 import { PropiedadFilters } from "@/modules/filters/types/filters.type";
-import { LIMITS } from "@/modules/filters/constants/filters.constants";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
 export const parseOperacionFromURL = (pathname: string): OperacionesEnum => {
@@ -23,6 +22,7 @@ export const parseFiltersFromURL = (searchParams: URLSearchParams): PropiedadFil
 		pisos: searchParams.get("pisos") ? parseInt(searchParams.get("pisos")!) : undefined,
 		precioMin: searchParams.get("precioMin") ? parseInt(searchParams.get("precioMin")!) : undefined,
 		precioMax: searchParams.get("precioMax") ? parseInt(searchParams.get("precioMax")!) : undefined,
+		divisa: (searchParams.get("divisa") as "USD" | "ARS" | undefined) || undefined,
 		caracteristicas: searchParams.get("caracteristicas")?.split(",").filter(Boolean) || undefined,
 		ambientes: searchParams.get("ambientes")?.split(",").filter(Boolean) || undefined,
 		servicios: searchParams.get("servicios")?.split(",").filter(Boolean) || undefined,
@@ -53,12 +53,10 @@ export const buildFilterURL = (filters: PropiedadFilters, pathname: string): str
 		params.set("superficieMax", filters.superficieMax.toString());
 
 	// Rango de Precio
-	if (
-		(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
-		(filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO)
-	) {
+	if (filters.precioMin || filters.precioMax || filters.divisa) {
 		if (filters.precioMin) params.set("precioMin", filters.precioMin.toString());
 		if (filters.precioMax) params.set("precioMax", filters.precioMax.toString());
+		if (filters.divisa) params.set("divisa", filters.divisa);
 	}
 
 	// Arrays

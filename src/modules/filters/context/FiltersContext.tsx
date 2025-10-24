@@ -6,7 +6,11 @@ import {
 	CounterField,
 	PropiedadFilters,
 } from "@/modules/filters/types/filters.type";
-import { LIMITS, DEFAULT_FILTERS } from "@/modules/filters/constants/filters.constants";
+import {
+	LIMITS,
+	DEFAULT_FILTERS,
+	getMaxPrecio,
+} from "@/modules/filters/constants/filters.constants";
 import { useURLSync } from "@/modules/filters/hooks/useURLSync";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
@@ -24,6 +28,7 @@ interface FiltersContextType {
 	updatePrecio: (min: number, max: number) => void;
 	updateSuperficie: (field: "superficieMin" | "superficieMax", value: string) => void;
 	updateOperacion: (value: OperacionesEnum) => void;
+	updateDivisa: (value: "ARS" | "USD") => void;
 }
 
 const FiltersContext = createContext<FiltersContextType | null>(null);
@@ -66,11 +71,15 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		if (filters.banos && filters.banos > 0) count++;
 		if (filters.ambientesContador && filters.ambientesContador > 0) count++;
 		if (filters.pisos && filters.pisos > 0) count++;
-		if (
-			(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
-			(filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO)
-		)
-			count++;
+		if (filters.divisa) {
+			const MAX_PRECIO = getMaxPrecio(filters.divisa, operacion);
+			if (
+				(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
+				(filters.precioMax && filters.precioMax < MAX_PRECIO)
+			) {
+				count++;
+			}
+		}
 		if (filters.caracteristicas && filters.caracteristicas.length > 0) count++;
 		if (filters.ambientes && filters.ambientes.length > 0) count++;
 		if (filters.servicios && filters.servicios.length > 0) count++;
@@ -137,6 +146,32 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 	const updateOperacion = (value: OperacionesEnum) => {
 		setOperacion(value);
+		if (value === OperacionesEnum.VENTA) {
+			updateDivisa("USD");
+		}
+		if (value === OperacionesEnum.ALQUILER) {
+			updateDivisa("ARS");
+		}
+		setFilters((prev) => {
+			const MAX_PRECIO = getMaxPrecio(prev.divisa!, value);
+			return {
+				...prev,
+				precioMin: LIMITS.MIN_PRECIO,
+				precioMax: MAX_PRECIO,
+			};
+		});
+	};
+
+	const updateDivisa = (value: "ARS" | "USD") => {
+		if (value === filters.divisa) return;
+		const MAX_PRECIO = getMaxPrecio(value, operacion);
+
+		setFilters((prev) => ({
+			...prev,
+			divisa: value,
+			precioMin: LIMITS.MIN_PRECIO,
+			precioMax: MAX_PRECIO,
+		}));
 	};
 
 	const value: FiltersContextType = {
@@ -153,6 +188,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		updatePrecio,
 		updateSuperficie,
 		updateOperacion,
+		updateDivisa,
 	};
 
 	return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;

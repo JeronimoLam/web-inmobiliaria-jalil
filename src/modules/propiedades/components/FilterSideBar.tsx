@@ -18,7 +18,7 @@ import { TabOperationSelector } from "./filters/TabOperationSelector";
 import { TipoPropiedadFilter } from "./filters/TipoPropiedadFilter";
 import { LocalidadFilter } from "./filters/LocalidadFilter";
 import { CounterFilter } from "./filters/CounterFilter";
-// import { PriceRangeFilter } from "./filters/PriceRangeFilter";
+import { PriceRangeFilter } from "./filters/PriceRangeFilter";
 import { CheckboxGroupFilter } from "./filters/CheckboxGroupFilter";
 import { AdvancedOptionsFilter } from "./filters/AdvancedOptionsFilter";
 import { useState } from "react";
@@ -71,6 +71,7 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 					<div className="space-y-6">
 						<TipoPropiedadFilter options={filterData.tiposPropiedad} />
 						<LocalidadFilter options={filterData.localidades} />
+
 						<div className="space-y-3">
 							<CounterFilter
 								label="Dormitorios"
@@ -78,8 +79,9 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 								className="bg-gray-50 rounded-lg p-3"
 							/>
 						</div>
-						{/* TODO: Rango de precio oculto (funcionalidad ya implementada, hay que arreglarlo) */}
-						{/* <PriceRangeFilter /> */}
+
+						<PriceRangeFilter />
+
 						<CheckboxGroupFilter
 							placeholder="Características"
 							options={filterData.caracteristicas}
