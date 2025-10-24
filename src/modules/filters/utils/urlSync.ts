@@ -1,5 +1,4 @@
 import { PropiedadFilters } from "@/modules/filters/types/filters.type";
-import { LIMITS } from "@/modules/filters/constants/filters.constants";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
 
 export const parseOperacionFromURL = (pathname: string): OperacionesEnum => {

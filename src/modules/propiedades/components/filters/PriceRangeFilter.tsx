@@ -3,14 +3,14 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
-import { LIMITS } from "@/modules/filters/constants/filters.constants";
+import { getMaxPrecio, LIMITS } from "@/modules/filters/constants/filters.constants";
 import { Badge } from "@/components/ui/badge";
 import { OperacionesEnum } from "../../enums/propiedades.enum";
 
 export const PriceRangeFilter = () => {
 	const { filters, updatePrecio, updateDivisa, operacion } = useFiltersContext();
 
-	const MAX_PRECIO = filters.divisa === "ARS" ? LIMITS.MAX_PRECIO_ARS : LIMITS.MAX_PRECIO_USD;
+	const MAX_PRECIO = getMaxPrecio(filters.divisa!, operacion);
 	const currentMin = filters.precioMin ?? LIMITS.MIN_PRECIO;
 	const currentMax = filters.precioMax ?? MAX_PRECIO;
 
