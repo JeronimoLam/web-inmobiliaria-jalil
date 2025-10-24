@@ -15,7 +15,7 @@ export const PriceRangeFilter = () => {
 	const currentMax = filters.precioMax ?? MAX_PRECIO;
 
 	const isAlquiler = filters.divisa === "ARS";
-	const isVenta = filters.divisa === "USD";
+	const isVenta = filters.divisa === "USD" || operacion === OperacionesEnum.VENTA;
 
 	const handleDivisaChange = (divisa: "ARS" | "USD") => {
 		updateDivisa(divisa);
