@@ -10,12 +10,15 @@ import { OperacionesEnum } from "../../enums/propiedades.enum";
 export const PriceRangeFilter = () => {
 	const { filters, updatePrecio, updateDivisa, operacion } = useFiltersContext();
 
-	const MAX_PRECIO = getMaxPrecio(filters.divisa!, operacion);
+	const divisa = filters.divisa || (operacion === OperacionesEnum.ALQUILER ? "ARS" : "USD");
+	const MAX_PRECIO = getMaxPrecio(divisa, operacion);
 	const currentMin = filters.precioMin ?? LIMITS.MIN_PRECIO;
 	const currentMax = filters.precioMax ?? MAX_PRECIO;
 
-	const isAlquiler = filters.divisa === "ARS";
-	const isVenta = filters.divisa === "USD" || operacion === OperacionesEnum.VENTA;
+	const isARS = divisa === "ARS" && operacion === OperacionesEnum.ALQUILER;
+	const isUSD =
+		divisa === "USD" &&
+		(operacion === OperacionesEnum.VENTA || operacion === OperacionesEnum.ALQUILER);
 
 	const handleDivisaChange = (divisa: "ARS" | "USD") => {
 		updateDivisa(divisa);
@@ -31,7 +34,7 @@ export const PriceRangeFilter = () => {
 							className="flex items-center cursor-pointer"
 							onClick={() => handleDivisaChange("ARS")}
 						>
-							<Badge className="text-xs" variant={isAlquiler ? "default" : "outline"}>
+							<Badge className="text-xs" variant={isARS ? "default" : "outline"}>
 								ARS
 							</Badge>
 						</div>
@@ -40,7 +43,7 @@ export const PriceRangeFilter = () => {
 						className="flex items-center cursor-pointer"
 						onClick={() => handleDivisaChange("USD")}
 					>
-						<Badge className="text-xs" variant={isVenta ? "default" : "outline"}>
+						<Badge className="text-xs" variant={isUSD ? "default" : "outline"}>
 							USD
 						</Badge>
 					</div>

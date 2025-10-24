@@ -22,7 +22,7 @@ export const parseFiltersFromURL = (searchParams: URLSearchParams): PropiedadFil
 		pisos: searchParams.get("pisos") ? parseInt(searchParams.get("pisos")!) : undefined,
 		precioMin: searchParams.get("precioMin") ? parseInt(searchParams.get("precioMin")!) : undefined,
 		precioMax: searchParams.get("precioMax") ? parseInt(searchParams.get("precioMax")!) : undefined,
-		divisa: searchParams.get("divisa") === "USD" ? "USD" : "ARS",
+		divisa: (searchParams.get("divisa") as "USD" | "ARS" | undefined) || undefined,
 		caracteristicas: searchParams.get("caracteristicas")?.split(",").filter(Boolean) || undefined,
 		ambientes: searchParams.get("ambientes")?.split(",").filter(Boolean) || undefined,
 		servicios: searchParams.get("servicios")?.split(",").filter(Boolean) || undefined,
