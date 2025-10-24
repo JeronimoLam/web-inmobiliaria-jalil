@@ -54,10 +54,7 @@ export const buildFilterURL = (filters: PropiedadFilters, pathname: string): str
 		params.set("superficieMax", filters.superficieMax.toString());
 
 	// Rango de Precio
-	if (
-		(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
-		(filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO)
-	) {
+	if (filters.precioMin || filters.precioMax || filters.divisa) {
 		if (filters.precioMin) params.set("precioMin", filters.precioMin.toString());
 		if (filters.precioMax) params.set("precioMax", filters.precioMax.toString());
 		if (filters.divisa) params.set("divisa", filters.divisa);

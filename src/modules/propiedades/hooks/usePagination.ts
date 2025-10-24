@@ -21,7 +21,6 @@ export const usePagination = <T>({
 }: UsePaginationProps<T>): UsePaginationReturn<T> => {
 	const [currentPage, setCurrentPage] = useState(1);
 
-	// Cálculos de paginación
 	const totalItems = items.length;
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
@@ -32,10 +31,8 @@ export const usePagination = <T>({
 		[items, startIndex, endIndex],
 	);
 
-	// Función para cambiar página
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
-		// Scroll hacia arriba cuando cambie de página
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 

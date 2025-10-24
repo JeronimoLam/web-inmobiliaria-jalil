@@ -71,6 +71,7 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 					<div className="space-y-6">
 						<TipoPropiedadFilter options={filterData.tiposPropiedad} />
 						<LocalidadFilter options={filterData.localidades} />
+
 						<div className="space-y-3">
 							<CounterFilter
 								label="Dormitorios"
@@ -78,8 +79,9 @@ export const FilterSideBar = ({ filterData }: FilterSideBarProps) => {
 								className="bg-gray-50 rounded-lg p-3"
 							/>
 						</div>
-						{/* TODO: Rango de precio oculto (funcionalidad ya implementada, hay que arreglarlo) */}
+
 						<PriceRangeFilter />
+
 						<CheckboxGroupFilter
 							placeholder="Características"
 							options={filterData.caracteristicas}

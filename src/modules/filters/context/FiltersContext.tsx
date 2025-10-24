@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
 import {
 	CheckboxField,
 	CounterField,
@@ -60,6 +60,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 	const getActiveFiltersCount = () => {
 		let count = 0;
+		const MAX_PRECIO = filters.divisa === "ARS" ? LIMITS.MAX_PRECIO_ARS : LIMITS.MAX_PRECIO_USD;
 
 		if (filters.tipoPropiedad) count++;
 		if (filters.localidad) count++;
@@ -69,7 +70,7 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 		if (filters.pisos && filters.pisos > 0) count++;
 		if (
 			(filters.precioMin && filters.precioMin > LIMITS.MIN_PRECIO) ||
-			(filters.precioMax && filters.precioMax < LIMITS.MAX_PRECIO)
+			(filters.precioMax && filters.precioMax < MAX_PRECIO)
 		)
 			count++;
 		if (filters.caracteristicas && filters.caracteristicas.length > 0) count++;
@@ -138,12 +139,22 @@ export const FiltersProvider = ({ children }: FiltersProviderProps) => {
 
 	const updateOperacion = (value: OperacionesEnum) => {
 		setOperacion(value);
+		if (value === OperacionesEnum.VENTA) {
+			updateDivisa("USD");
+		}
+		if (value === OperacionesEnum.ALQUILER) {
+			updateDivisa("ARS");
+		}
 	};
 
 	const updateDivisa = (value: "ARS" | "USD") => {
+		const MAX_PRECIO = value === "ARS" ? LIMITS.MAX_PRECIO_ARS : LIMITS.MAX_PRECIO_USD;
+
 		setFilters((prev) => ({
 			...prev,
 			divisa: value,
+			precioMin: LIMITS.MIN_PRECIO,
+			precioMax: MAX_PRECIO,
 		}));
 	};
 

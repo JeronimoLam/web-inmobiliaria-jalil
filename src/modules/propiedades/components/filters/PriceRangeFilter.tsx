@@ -5,45 +5,28 @@ import { Slider } from "@/components/ui/slider";
 import { useFiltersContext } from "@/modules/filters/context/FiltersContext";
 import { LIMITS } from "@/modules/filters/constants/filters.constants";
 import { Badge } from "@/components/ui/badge";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { OperacionesEnum } from "../../enums/propiedades.enum";
 
 export const PriceRangeFilter = () => {
-	const { filters, updatePrecio, updateDivisa } = useFiltersContext();
+	const { filters, updatePrecio, updateDivisa, operacion } = useFiltersContext();
 
-	const pathname = usePathname();
-	const isAlquilerPath = pathname.includes("/propiedades/alquiler");
-	const isVentaPath = pathname.includes("/propiedades/venta");
-
+	const MAX_PRECIO = filters.divisa === "ARS" ? LIMITS.MAX_PRECIO_ARS : LIMITS.MAX_PRECIO_USD;
 	const currentMin = filters.precioMin ?? LIMITS.MIN_PRECIO;
-	const currentMax = filters.precioMax ?? LIMITS.MAX_PRECIO;
+	const currentMax = filters.precioMax ?? MAX_PRECIO;
 
 	const isAlquiler = filters.divisa === "ARS";
 	const isVenta = filters.divisa === "USD";
 
-	useEffect(() => {
-		if (isAlquilerPath) {
-			updateDivisa("ARS");
-		}
-		if (isVentaPath) {
-			updateDivisa("USD");
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isAlquilerPath, isVentaPath]);
-
 	const handleDivisaChange = (divisa: "ARS" | "USD") => {
 		updateDivisa(divisa);
 	};
-
-	console.log(filters.divisa);
 
 	return (
 		<div className="space-y-4">
 			<div className="flex items-center justify-between">
 				<Label className="block text-sm font-semibold">Rango de precio</Label>
 				<div className="flex gap-2">
-					{isAlquilerPath && (
+					{operacion === OperacionesEnum.ALQUILER && (
 						<div
 							className="flex items-center cursor-pointer"
 							onClick={() => handleDivisaChange("ARS")}
@@ -67,7 +50,7 @@ export const PriceRangeFilter = () => {
 				<Slider
 					value={[currentMin, currentMax]}
 					onValueChange={(value) => updatePrecio(value[0], value[1])}
-					max={LIMITS.MAX_PRECIO}
+					max={MAX_PRECIO}
 					min={LIMITS.MIN_PRECIO}
 					step={10000}
 					className="w-full"
