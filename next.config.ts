@@ -2,19 +2,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	images: {
-		// Configuración para desarrollo: permite cualquier hostname
+		unoptimized: false,
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "**", // wildcard para desarrollo
+				hostname: process.env.NEXT_PUBLIC_SUPABASE_URL!.replace(/^https?:\/\//, ""),
 			},
+			{ protocol: "https", hostname: "images.unsplash.com" },
+			{ protocol: "https", hostname: "ejemplo.com" },
 		],
 
-		// Configuración recomendada para producción:
-		// remotePatterns: [
-		//   { protocol: 'https', hostname: 'ejemplo.com' },
-		//   { protocol: 'https', hostname: 'otra-imagen.com' },
-		// ],
+		formats: ["image/avif", "image/webp"],
 	},
 };
 
