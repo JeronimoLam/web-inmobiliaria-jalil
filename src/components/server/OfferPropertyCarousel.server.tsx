@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getPropiedades } from "@/modules/propiedades/services/get-propiedades.service";
 import { OfferPropertyCarousel } from "../OfferPropertyCarousel";
 import { OperacionesEnum } from "@/modules/propiedades/enums/propiedades.enum";
