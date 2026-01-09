@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NavBar } from "@/components/layouts/NavBar";
 import { OurBestOfferSection } from "@/components/OurBestOfferSection";
 import WhatsappFloatingButton from "@/components/WhatsappFloatingButton";
