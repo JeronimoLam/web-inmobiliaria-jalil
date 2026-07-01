@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Footer } from "@/components/layouts/Footer";
-import { globalMetadata } from "@/config/seo/metadata";
 
 const poppins = Poppins({
 	variable: "--font-poppins",
@@ -10,7 +8,11 @@ const poppins = Poppins({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = globalMetadata;
+export const metadata: Metadata = {
+	title: "Sitio fuera de servicio | Jalil Propiedades",
+	description: "Estamos realizando tareas de mantenimiento. Volveremos pronto.",
+	robots: { index: false, follow: false },
+};
 
 export default function RootLayout({
 	children,
@@ -19,10 +21,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es" suppressHydrationWarning>
-			<body className={`${poppins.className} antialiased flex flex-col min-h-screen`}>
-				{children}
-				<Footer />
-			</body>
+			<body className={`${poppins.className} antialiased`}>{children}</body>
 		</html>
 	);
 }
